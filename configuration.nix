@@ -30,6 +30,7 @@
       backgroundColor = "#000000";
       splashImage = ./res/nixos-boot-background-scaled.png;
       configurationName = "NixOS";
+      # Get gfxmodes from the grub cli with `videoinfo`
       gfxmodeEfi = "1280x1024";
     };
   };
