@@ -61,7 +61,11 @@
   time.timeZone = "Europe/Berlin";
 
   environment.variables = { EDITOR = "vim"; };
-  environment.shellAliases = { mnt = "bashmount"; };
+  environment.shellAliases = {
+    mnt = "bashmount";
+    ll = "ls -lFh";
+    la = "ls -alFh";
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
