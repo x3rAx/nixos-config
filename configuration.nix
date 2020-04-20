@@ -12,10 +12,26 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = false;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = false;
+      efiSysMountPoint = "/boot/efi";
+    };
+    # Use the systemd-boot EFI boot loader.
+    #systemd-boot.enable = true;
+    grub = {
+      enable = true;
+      version = 2;
+      device = "nodev";
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      #configurationLimit = 100;
+      memtest86.enable = true;
+      backgroundColor = "#000000";
+      configurationName = "NixOS";
+      gfxmodeEfi = "1024x768";
+    };
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
