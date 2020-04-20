@@ -60,6 +60,7 @@
   time.timeZone = "Europe/Berlin";
 
   environment.variables = { EDITOR = "vim"; };
+  environment.shellAliases = { mnt = "bashmount"; };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -68,6 +69,9 @@
     brave
     wget
     parted
+    bashmount
+    cryptsetup
+    git
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
