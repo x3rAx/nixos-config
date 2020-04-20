@@ -28,8 +28,9 @@
       #configurationLimit = 100;
       memtest86.enable = true;
       backgroundColor = "#000000";
+      splashImage = ./res/nixos-boot-background-scaled.png;
       configurationName = "NixOS";
-      gfxmodeEfi = "1024x768";
+      gfxmodeEfi = "1280x1024";
     };
   };
 
