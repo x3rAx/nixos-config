@@ -40,12 +40,15 @@
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
+  environment.variables = { EDITOR = "vim"; };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim
+    (neovim.override { vimAlias = true; })
     brave
-    wget vim
+    wget
+    parted
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
