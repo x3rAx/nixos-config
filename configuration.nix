@@ -69,6 +69,7 @@
     mnt = "bashmount";
     ll = "ls -lFh";
     la = "ls -alFh";
+    sudocode = "sudo code --user-data-dir /root/.config/sudocode";
   };
 
   # List packages installed in system profile. To search, run:
