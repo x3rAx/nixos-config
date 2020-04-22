@@ -32,6 +32,7 @@
       configurationName = "NixOS";
       # Get gfxmodes from the grub cli with `videoinfo`
       gfxmodeEfi = "1280x1024";
+      enableCryptodisk = true;
     };
   };
 
