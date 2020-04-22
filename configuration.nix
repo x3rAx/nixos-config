@@ -127,7 +127,7 @@
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.root = { password = ""; };
+  users.users.root = { hashedPassword = "!"; };
   users.users.x3ro = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
