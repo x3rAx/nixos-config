@@ -138,6 +138,7 @@
   users.users.root = { hashedPassword = "!"; };
   users.users.x3ro = {
     isNormalUser = true;
+    uid = 1000;
     extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
       "networkmanager"
