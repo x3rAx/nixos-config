@@ -29,14 +29,14 @@
       memtest86.enable = true;
       backgroundColor = "#000000";
       splashImage = ./res/nixos-boot-background-scaled.png;
-      configurationName = "NixOS";
+      configurationName = "Kirbix";
       # Get gfxmodes from the grub cli with `videoinfo`
       gfxmodeEfi = "1280x1024";
       enableCryptodisk = true;
     };
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "kirbix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
