@@ -126,12 +126,20 @@
   };
   services.xserver.desktopManager.plasma5.enable = true;
 
+  # Set users to be immutable. This will revert all manual changes to users on system activation.
+  #users.mutableUsers = false;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  # (generate hashed passwords with `mkpasswd -m sha512`)
   users.users.root = { hashedPassword = "!"; };
   users.users.x3ro = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
-    password = "";
+    extraGroups = [
+      "wheel" # Enable ‘sudo’ for the user.
+      "networkmanager"
+    ];
+    initialHashedPassword = "$6$/0TqsMFIYp1w$X87E80x0hegDCshjhk/98GrW.IN22blu6xXAOQYg5761ATZR/LHWdmFtwH35mvP5Z0KNpkU6hYjsLeUEo7N0v1";
+  };
   };
 
   # This value determines the NixOS release with which your system is to be
