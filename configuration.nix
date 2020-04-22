@@ -119,8 +119,11 @@
   services.xserver.libinput.naturalScrolling = true;
 
   # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.autoNumlock = true;
+  services.xserver.displayManager.sddm = {
+    enable = true;
+    autoNumlock = true;
+    enableHidpi = true;
+  };
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
