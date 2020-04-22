@@ -120,6 +120,8 @@
   services.xserver.enable = true;
   services.xserver.layout = "eu";
   services.xserver.xkbOptions = "caps:escape";
+  services.xserver.autoRepeatDelay = 200;
+  services.xserver.autoRepeatInterval = 25; # 1000/25 = 40 keys/sec
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
