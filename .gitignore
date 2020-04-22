@@ -1,2 +1,4 @@
 hardware-configuration.nix
 .*.swp
+crypto_keyfiles/*
+*.local.nix

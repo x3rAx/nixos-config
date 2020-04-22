@@ -1,0 +1,22 @@
+# Copy this file and remove the `.example` extension.
+# This file adds encryption specific settings for `hardware-configuration.nix`
+
+{ ... }:
+{
+    boot.initrd.luks.devices."ssd_crypt" = {
+        keyFile = "/crypto-keyfiles/crypto-keyfile.bin";
+        #preLVM = true;
+        #allowDiscards = true;
+    };
+
+    # Data mount
+    #fileSystems."/data" = {
+    #    device = "/dev/disk/by-uuid/79630267-5766-4c7d-85a5-1d5f1dcd58ad"; # UUID for /dev/mapper/crypted-data
+    #    encrypted = {
+    #        enable = true;
+    #        label = "crypted-data";
+    #        blkDev = "/dev/disk/by-uuid/3476cb09-b3c4-4301-9ec9-84f60f32828a"; # UUID for /dev/sda1
+    #        keyFile = "/keyfile1.bin";
+    #    };
+    #};
+}

@@ -8,6 +8,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./encryption-configuration.local.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -33,6 +34,7 @@
       # Get gfxmodes from the grub cli with `videoinfo`
       gfxmodeEfi = "1280x1024";
       enableCryptodisk = true;
+      extraInitrd = /boot/initrd.keys.gz;
     };
   };
 
