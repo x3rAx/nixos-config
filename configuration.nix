@@ -83,6 +83,7 @@
     inkscape
     vscode
     tmux
+    btrfs-progs
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
