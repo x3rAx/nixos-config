@@ -148,6 +148,17 @@
       '';
       deps = [];
     };
+    fixVsCodeWriteAsSudo = {
+      text = ''
+        mkdir -m 0755 -p /bin
+        # HACK: Get path dynamically from
+        ln -sf "/run/current-system/sw/bin/bash" /bin/.bash.tmp
+        mv /bin/.bash.tmp /bin/bash # atomically replace it
+        # HACK: Get path dynamically from
+        ln -sf "/run/wrappers/bin/pkexec" /usr/bin/.pkexec.tmp
+        mv /usr/bin/.pkexec.tmp /usr/bin/pkexec # atomically replace it
+      '';
+      deps = [];
     };
   };
 
