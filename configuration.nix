@@ -82,15 +82,15 @@
     gimp
     inkscape
     vscode
-    tmux
-    btrfs-progs
-    # Example: Build vscode with extra dependencies
-    #(vscode.overrideAttrs (oldAttrs: {
-    #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
-    #}))
-  ];
+      tmux
+      btrfs-progs
+      # Example: Build vscode with extra dependencies
+      #(vscode.overrideAttrs (oldAttrs: {
+      #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
+      #}))
+    ];
 
-  # Some programs need SUID wrappers, can be configured further or are
+    # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
@@ -153,6 +153,7 @@
       deps = [];
     };
     fixVsCodeWriteAsSudo = {
+      # GitHub issue: https://github.com/NixOS/nixpkgs/issues/49643
       text = ''
         mkdir -m 0755 -p /bin
         # HACK: Get path dynamically from
