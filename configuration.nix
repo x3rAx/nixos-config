@@ -84,6 +84,10 @@
     vscode
     tmux
     btrfs-progs
+    # Example: Build vscode with extra dependencies
+    #(vscode.overrideAttrs (oldAttrs: {
+    #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
+    #}))
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
