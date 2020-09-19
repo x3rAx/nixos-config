@@ -84,6 +84,11 @@
     ll = "ls -lFh";
     la = "ls -alFh";
     sudocode = "sudo code --user-data-dir /root/.config/sudocode";
+    hdd-sleep = "sudo hdparm -S 1 /dev/disk/by-id/ata-ST1000LM014-1EJ164_W770GLTD";
+    doc = "docker-compose";
+    ssh-tmp = "ssh -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
+    scp-tmp = "scp -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
+    nixos-config = "sudocode /etc/nixos/{,{configuration,hardware-configuration}.nix}";
   };
 
   # List packages installed in system profile. To search, run:
