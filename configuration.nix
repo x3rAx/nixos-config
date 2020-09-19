@@ -159,10 +159,24 @@
     tdesktop
   ];
 
-    # Some programs need SUID wrappers, can be configured further or are
+  # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.ssh.extraConfig = ''
+    # Add the below line to the users `~/.ssh/config` to automatically add keys
+    # when they are used.
+    # DO NOT SET THIS HERE TO PREVENT LEAKING KEYS FROM SUDO TO REGULAR USER!
+    #AddKeysToAgent yes
+
+    Host jarvis
+        HostName jarvis.x3ro.net
+        User x3ro
+
+    Host badwolf
+        HostName badwolf.x3ro.net
+        User x3ro
+  '';
 
   # List services that you want to enable:
 
