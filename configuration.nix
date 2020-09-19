@@ -14,6 +14,7 @@
   nixpkgs.config.allowUnfree = true;
 
   boot.loader = {
+    timeout = 1;
     efi = {
       canTouchEfiVariables = false;
       efiSysMountPoint = "/boot/efi";
