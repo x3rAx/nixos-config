@@ -235,6 +235,11 @@
   services.xserver.desktopManager.plasma5.enable = true;
 
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host = {
+    enable = true;
+    enableExtensionPack = true;
+  };
+
   # Set users to be immutable. This will revert all manual changes to users on system activation.
   #users.mutableUsers = false;
 
