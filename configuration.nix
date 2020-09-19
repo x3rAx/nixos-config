@@ -16,7 +16,7 @@
   boot.loader = {
     timeout = 1;
     efi = {
-      canTouchEfiVariables = false;
+      canTouchEfiVariables = true;
       efiSysMountPoint = "/boot/efi";
     };
     # Use the systemd-boot EFI boot loader.
@@ -26,7 +26,7 @@
       version = 2;
       device = "nodev";
       efiSupport = true;
-      efiInstallAsRemovable = true;
+      efiInstallAsRemovable = false;
       #configurationLimit = 100;
       memtest86.enable = true;
       backgroundColor = "#000000";
