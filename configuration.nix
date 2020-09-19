@@ -177,6 +177,7 @@
         HostName badwolf.x3ro.net
         User x3ro
   '';
+  programs.ssh.startAgent = true;
 
   # List services that you want to enable:
 
