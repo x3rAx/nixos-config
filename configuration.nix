@@ -104,13 +104,60 @@
     gimp
     inkscape
     vscode
-      tmux
-      btrfs-progs
-      # Example: Build vscode with extra dependencies
-      #(vscode.overrideAttrs (oldAttrs: {
-      #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
-      #}))
-    ];
+    tmux
+    btrfs-progs
+    nodejs
+    rnix-lsp
+    # Example: Build vscode with extra dependencies
+    #(vscode.overrideAttrs (oldAttrs: {
+    #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
+    #}))
+    spotify
+    docker-compose
+
+    rustup
+
+    # Custom bash-bin defined above
+    #zettlr
+
+    anydesk
+    appimage-run
+    ark
+    bc
+    birdtray
+    borgbackup
+    brave
+    direnv
+    dropbox
+    file
+    fzf
+    glib
+    hdparm
+    htop
+    mariadb-client
+    mumble
+    ncdu
+    nomacs
+    octave
+    okular
+    ack
+    pkg-config
+    postman
+    python3
+    glances
+    ranger
+    restic
+    ripgrep
+    rustup
+    rxvt-unicode
+    shellcheck
+    thunderbird
+    translate-shell
+    unzip
+
+    # Telegram Desktop
+    tdesktop
+  ];
 
     # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
