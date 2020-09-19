@@ -35,8 +35,31 @@
       # Get gfxmodes from the grub cli with `videoinfo`
       gfxmodeEfi = "1280x1024";
       enableCryptodisk = true;
-      extraInitrd = /boot/initrd.keys.gz;
+      # - The option definition `boot.loader.grub.extraInitrd' in `/etc/nixos/configuration.nix' no longer has any effect; please remove it.
+      # This option has been replaced with the bootloader agnostic
+      # boot.initrd.secrets option. To migrate to the initrd secrets system,
+      # extract the extraInitrd archive into your main filesystem:
+      # 
+      #   # zcat /boot/extra_initramfs.gz | cpio -idvmD /etc/secrets/initrd
+      #   /path/to/secret1
+      #   /path/to/secret2
+      # 
+      # then replace boot.loader.grub.extraInitrd with boot.initrd.secrets:
+      # 
+      #   boot.initrd.secrets = {
+      #     "/path/to/secret1" = "/etc/secrets/initrd/path/to/secret1";
+      #     "/path/to/secret2" = "/etc/secrets/initrd/path/to/secret2";
+      #   };
+      # 
+      # See the boot.initrd.secrets option documentation for more information.
+      #extraInitrd = /boot/initrd.keys.gz;
     };
+  };
+
+  boot.initrd.secrets = {
+    # ATTENTION: Always use quotes for the paths. Otherwise the secret will be
+    #            copied into the Nix store and will be WORLD READABLE!
+    "/crypto_keyfile.bin" = "/etc/secrets/initrd/crypto_keyfile.bin";
   };
 
   networking.hostName = "kirbix"; # Define your hostname.
