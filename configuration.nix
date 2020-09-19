@@ -303,6 +303,15 @@
     };
   };
 
+  environment.etc."clamav/helper.sh" = {
+    mode = "0644";
+    text = ''
+      [pull]
+          ff = only
+    '';
+    #source = ./git-system-config
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
