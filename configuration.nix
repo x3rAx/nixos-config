@@ -204,6 +204,14 @@
   # Update Intel microcode
   hardware.cpu.intel.updateMicrocode = true;
 
+  # Use the new Gallium `iris` driver for Intel graphics
+  environment.variables = {
+    MESA_LOADER_DRIVER_OVERRIDE = "iris";
+  };
+  hardware.opengl.package = (pkgs.mesa.override {
+    galliumDrivers = [ "nouveau" "virgl" "swrast" "iris" ];
+  }).drivers;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "eu";
