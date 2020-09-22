@@ -308,6 +308,8 @@
     text = ''
       [pull]
           ff = only
+      [merge]
+          ff = false
     '';
     #source = ./git-system-config
   };
