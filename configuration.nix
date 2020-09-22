@@ -303,7 +303,7 @@
     };
   };
 
-  environment.etc."clamav/helper.sh" = {
+  environment.etc."gitconfig" = {
     mode = "0644";
     text = ''
       [pull]
