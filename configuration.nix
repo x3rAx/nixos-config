@@ -280,7 +280,7 @@
       "docker"
       "vboxusers"
     ];
-    initialHashedPassword = "$6$/0TqsMFIYp1w$X87E80x0hegDCshjhk/98GrW.IN22blu6xXAOQYg5761ATZR/LHWdmFtwH35mvP5Z0KNpkU6hYjsLeUEo7N0v1";
+    initialPassword = "changeMe!";
   };
 
   system.activationScripts = {
