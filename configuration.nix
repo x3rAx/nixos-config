@@ -314,6 +314,25 @@
     #source = ./git-system-config
   };
 
+  nix.buildMachines = [ {
+    hostName = "nix-builder";
+    system = "x86_64-linux";
+    # if the builder supports building for multiple architectures, 
+    # replace the previous line by, e.g.,
+    # systems = ["x86_64-linux" "aarch64-linux"];
+    maxJobs = 1;
+    speedFactor = 2;
+    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    mandatoryFeatures = [ ];
+  }] ;
+
+  nix.distributedBuilds = true;
+
+  # optional, useful when the builder has a faster internet connection than yours
+  nix.extraOptions = ''
+    builders-use-substitutes = true
+  '';
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
