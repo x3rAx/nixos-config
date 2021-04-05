@@ -194,6 +194,9 @@ in
 
     # Telegram Desktop
     tdesktop
+
+    # For mounting SMB
+    cifs-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
