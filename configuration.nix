@@ -283,6 +283,15 @@ in
 
   systemd.services.anydesk.enable = true;
 
+  services = {
+    syncthing = {
+      enable = true;
+      user = "x3ro";
+      dataDir = "/home/x3ro/Syncthing";
+      configDir = "/home/x3ro/.config/syncthing";
+    };
+  };
+
   # Set users to be immutable. This will revert all manual changes to users on system activation.
   #users.mutableUsers = false;
 
