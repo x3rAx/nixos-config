@@ -328,6 +328,19 @@ in
     };
   };
 
+  # Logind config
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "ignore";
+    extraConfig = ''
+      HandlePowerKey=hibernate
+      HandleSuspendKey=suspend
+      HandleHibernateKey=hibernate
+      HandleRebootKey=reboot
+    '';
+  };
+
   # Set users to be immutable. This will revert all manual changes to users on system activation.
   #users.mutableUsers = false;
 
