@@ -118,6 +118,10 @@ in
   networking.interfaces.enp8s0.useDHCP = true;
   networking.interfaces.wlp7s0.useDHCP = true;
 
+  networking.hosts = {
+    #"127.0.0.1" = [ "myapp.local" ];
+  };
+
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
