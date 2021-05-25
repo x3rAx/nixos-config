@@ -74,6 +74,39 @@ in
     "/crypto_keyfile.bin" = "/etc/secrets/initrd/crypto_keyfile.bin";
   };
 
+  powerManagement = {
+    powerDownCommands = ''
+      sleep_before_power_down=1
+
+      echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] START blocking"
+      ${pkgs.utillinux}/bin/rfkill -rno SOFT,DEVICE |  ${pkgs.gawk}/bin/awk '/unblocked/ { print $2 }' >/run/rfkill-blocked-devices
+      while read dev; do
+        echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] rfkill block device ''${dev}"
+        ${pkgs.utillinux}/bin/rfkill -rno DEVICE,ID \
+        | ${pkgs.gawk}/bin/awk -v DEV="$dev" '$1 == DEV { print $2 }' \
+        | ${pkgs.findutils}/bin/xargs -i ${pkgs.utillinux}/bin/rfkill block '{}';
+        echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] rfkill block device ''${dev} done"
+      done </run/rfkill-blocked-devices
+      echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] sleep for ''${sleep_before_power_down} seconds"
+      ${pkgs.coreutils}/bin/sleep $sleep_before_power_down
+      echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] END blocking"
+    '';
+    powerUpCommands = ''
+      echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] START unblocking"
+      while read dev; do
+        echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] rfkill unblock device ''${dev}"
+        ${pkgs.utillinux}/bin/rfkill -rno DEVICE,ID \
+        | ${pkgs.gawk}/bin/awk -v DEV="$dev" '$1 == DEV { print $2 }' \
+        | ${pkgs.findutils}/bin/xargs -i ${pkgs.utillinux}/bin/rfkill unblock '{}';
+        echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] rfkill unblock device ''${dev} done"
+      done </run/rfkill-blocked-devices
+      echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] rm /run/rfkill-blocked-devices"
+      rm /run/rfkill-blocked-devices
+      echo >>/var/log/rfkill-blocked-devices.log "[$(date -Ins)] END unblocking"
+    '';
+  };
+
+
   networking.hostName = "kirbix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
