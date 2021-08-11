@@ -75,6 +75,8 @@ in
   };
 
   powerManagement = {
+    cpuFreqGovernor = "performance";
+
     powerDownCommands = ''
       sleep_before_power_down=1
 
