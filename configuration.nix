@@ -181,6 +181,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     nvidia-offload
+    sddm-kcm # For SDDM settings to appear in KDE settings
 
     (neovim.override { vimAlias = true; })
     brave
