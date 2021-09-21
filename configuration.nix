@@ -90,45 +90,52 @@ in
     cpuFreqGovernor = "performance";
 
     powerDownCommands = ''
-      sleep_before_power_down=3
-      log='/var/log/rfkill-blocked-devices.log'
+      sleep_before_power_down=1
+      sleep_after_block=1
+      logfile='/var/log/rfkill-blocked-devices.log'
 
-      echo >>"$log" "[$(date -Ins)] -- START blocking"
+      _log() { echo >>"$logfile" "[$(date -Ins)] $@"; }
+
+      _log "-- START blocking"
       
       devices="''$(${pkgs.utillinux}/bin/rfkill -rno SOFT,DEVICE)"
-      echo >>"$log" "[$(date -Ins)] devices: $(echo "''$devices" | ${pkgs.gnused}/bin/sed ':a;N;$!ba;s/\n/ | /g')"
+      _log "devices: $(echo "''$devices" | ${pkgs.gnused}/bin/sed ':a;N;$!ba;s/\n/ | /g')"
       unblocked="''$(echo "''$devices" | ${pkgs.gawk}/bin/awk '/^unblocked/ { print $2 }')"
-      echo >>"$log" "[$(date -Ins)] unblocked: $(echo "''$unblocked" | ${pkgs.gnused}/bin/sed ':a;N;$!ba;s/\n/ | /g')"
+      _log "unblocked: $(echo "''$unblocked" | ${pkgs.gnused}/bin/sed ':a;N;$!ba;s/\n/ | /g')"
       echo "''$unblocked" >/run/rfkill-blocked-devices
       while read dev; do
         if [[ -z $dev ]]; then continue; fi
-        echo >>"$log" "[$(date -Ins)] rfkill block device ''${dev}"
+        _log "rfkill block device ''${dev}"
         ${pkgs.utillinux}/bin/rfkill -rno DEVICE,ID \
         | ${pkgs.gawk}/bin/awk -v DEV="$dev" '$1 == DEV { print $2 }' \
         | ${pkgs.findutils}/bin/xargs -i ${pkgs.utillinux}/bin/rfkill block '{}';
-        echo >>"$log" "[$(date -Ins)] DONE: rfkill block device ''${dev}"
+        _log "DONE: rfkill block device ''${dev}"
+        _log "sleep ''${sleep_after_block}"
+        sleep ''${sleep_after_block}
+        _log "syncing"
+        ${pkgs.coreutils}/bin/sync
       done </run/rfkill-blocked-devices
-      echo >>"$log" "[$(date -Ins)] syncing"
-      ${pkgs.coreutils}/bin/sync
-      echo >>"$log" "[$(date -Ins)] sleep for ''${sleep_before_power_down} seconds"
+      _log "sleep for ''${sleep_before_power_down} seconds"
       ${pkgs.coreutils}/bin/sleep $sleep_before_power_down
-      echo >>"$log" "[$(date -Ins)] -- END blocking"
+      _log "-- END blocking"
     '';
     powerUpCommands = ''
-      log='/var/log/rfkill-blocked-devices.log'
+      logfile='/var/log/rfkill-blocked-devices.log'
 
-      echo >>"$log" "[$(date -Ins)] -- START unblocking"
+      _log() { echo >>"$logfile" "[$(date -Ins)] $@"; }
+
+      _log "-- START unblocking"
       while read dev; do
         if [[ -z $dev ]]; then continue; fi
-        echo >>"$log" "[$(date -Ins)] rfkill unblock device ''${dev}"
+        _log "rfkill unblock device ''${dev}"
         ${pkgs.utillinux}/bin/rfkill -rno DEVICE,ID \
         | ${pkgs.gawk}/bin/awk -v DEV="$dev" '$1 == DEV { print $2 }' \
         | ${pkgs.findutils}/bin/xargs -i ${pkgs.utillinux}/bin/rfkill unblock '{}';
-        echo >>"$log" "[$(date -Ins)] DONE: rfkill unblock device ''${dev}"
+        _log "DONE: rfkill unblock device ''${dev}"
       done </run/rfkill-blocked-devices
-      echo >>"$log" "[$(date -Ins)] rm /run/rfkill-blocked-devices"
+      _log "rm /run/rfkill-blocked-devices"
       rm /run/rfkill-blocked-devices
-      echo >>"$log" "[$(date -Ins)] -- END unblocking"
+      _log "-- END unblocking"
     '';
   };
 
