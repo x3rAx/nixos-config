@@ -21,9 +21,15 @@ in
   ];
 
   nixpkgs.config.allowUnfree = true;
+
   # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
   # TODO: Find a way to copy all config files that are imported
   system.copySystemConfiguration = true;
+  # Copy other files to store and link them to `/run/current-system/`
+  system.extraSystemBuilderCmds = ''
+    # !!! DO NOT DO THIS !!! # ln -s ${./.} $out/full-config 
+    ln -s ${./hardware-configuration.nix} $out/hardware-configuration.nix
+  '';
 
   boot.loader = {
     timeout = 1;
