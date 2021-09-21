@@ -80,6 +80,12 @@ in
     "/crypto_keyfile.bin" = "/etc/secrets/initrd/crypto_keyfile.bin";
   };
 
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+    #"fs.inotify.max_user_watches" = 524288;
+    #"vm.swappiness" = 1;
+  };
+
   powerManagement = {
     cpuFreqGovernor = "performance";
 
