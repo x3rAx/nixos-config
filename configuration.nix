@@ -209,6 +209,7 @@ in
     bashmount
     cryptsetup
     git
+    delta # Better `git diff`
     gimp
     inkscape
     vscode
@@ -263,11 +264,9 @@ in
     translate-shell
     unzip
 
-    # Telegram Desktop
-    tdesktop
+    tdesktop # Telegram Desktop
 
-    # For mounting SMB
-    cifs-utils
+    cifs-utils # For mounting SMB
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
