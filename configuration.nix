@@ -75,6 +75,8 @@ in
     };
   };
 
+  boot.supportedFilesystems = [ "ntfs-3g" ];
+
   boot.initrd.secrets = {
     # ATTENTION: Always use quotes for the paths. Otherwise the secret will be
     #            copied into the Nix store and will be WORLD READABLE!
