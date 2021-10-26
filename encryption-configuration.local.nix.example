@@ -3,20 +3,45 @@
 
 { ... }:
 {
-    boot.initrd.luks.devices."ssd_crypt" = {
-        keyFile = "/crypto-keyfiles/crypto-keyfile.bin";
-        #preLVM = true;
-        #allowDiscards = true;
+    boot.initrd.luks.devices = {
+        "sdXZ_crypt" = {
+            keyFile = "/crypto_keyfile.bin";
+            preLVM = true;
+            #allowDiscards = true;
+        };
+        "swap_crypt" = {
+            device = "/dev/disk/by-uuid/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
+            keyFile = "/crypto_keyfile.bin";
+            preLVM = true;
+            #allowDiscards = true;
+        };
     };
+    boot.resumeDevice = "/dev/mapper/swap_crypt";
 
     # Data mount
     #fileSystems."/data" = {
-    #    device = "/dev/disk/by-uuid/79630267-5766-4c7d-85a5-1d5f1dcd58ad"; # UUID for /dev/mapper/crypted-data
+    #    device = "/dev/mapper/data_crypt";
+    #    fsType = "btrfs";
+    #    options = [ "subvol=@data" ];
     #    encrypted = {
     #        enable = true;
-    #        label = "crypted-data";
-    #        blkDev = "/dev/disk/by-uuid/3476cb09-b3c4-4301-9ec9-84f60f32828a"; # UUID for /dev/sda1
-    #        keyFile = "/keyfile1.bin";
+    #        label = "data_crypt";
+    #        blkDev = "/dev/disk/by-uuid/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"; # UUID for encrypted disk
+    #        keyFile = "/crypto_keyfile.bin";
     #    };
     #};
+
+
+    swapDevices = [
+        { device = "/dev/mapper/swap_crypt"; }
+        # In case swap is not encrypted in initrd to be used as resume device:
+        #{ device = "/dev/mapper/swap_crypt";
+        #    encrypted = {
+        #        enable = true;
+        #        label = "swap_crypt";
+        #        blkDev = "/dev/disk/by-uuid/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"; # UUID for encrypted disk
+        #        keyFile = "/crypto_keyfile.bin";
+        #    };
+        #}
+    ];
 }
