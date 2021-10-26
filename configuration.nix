@@ -20,6 +20,7 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./encryption-configuration.local.nix
+    ./rfkill-powerDown.nix
   ];
 
   #nixpkgs.config = baseconfig;
