@@ -5,6 +5,8 @@
 { config, pkgs, ... }:
 
 let
+  baseconfig = { allowUnfree = true; };
+  unstable = import <nixos-unstable> { config = baseconfig; };
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
@@ -20,7 +22,14 @@ in
     ./encryption-configuration.local.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config = baseconfig;
+  # NOTE: This also replaces the packages when they are used as dependency for
+  #       other packages
+  nixpkgs.config = baseconfig // {
+    packageOverrides = pkgs: {
+      gdu = unstable.gdu;
+    };
+  };
 
   # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
   # TODO: Find a way to copy all config files that are imported
@@ -219,6 +228,7 @@ in
     tdesktop # Telegram Desktop
 
     cifs-utils # For mounting SMB
+    gdu
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
