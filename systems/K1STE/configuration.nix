@@ -356,6 +356,14 @@ rec {
       '';
       deps = [];
     };
+    addBinBash = {
+      text = ''
+        mkdir -m 0755 -p /bin
+        ln -sf "${pkgs.bash}/bin/bash" /bin/.bash.tmp
+        mv /bin/.bash.tmp /bin/bash # atomically replace it
+      '';
+      deps = [];
+    };
     #fixVsCodeWriteAsSudo = {
     #  # GitHub issue: https://github.com/NixOS/nixpkgs/issues/49643
     #  text = ''
