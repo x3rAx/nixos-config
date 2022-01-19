@@ -315,6 +315,8 @@ rec {
     teamspeak_client
     tmate
     tree
+
+    virt-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -398,6 +400,7 @@ rec {
 
 
   virtualisation.docker.enable = true;
+  virtualisation.libvirtd.enable = true;
   virtualisation.virtualbox.host = {
     enable = true;
     enableExtensionPack = true;
