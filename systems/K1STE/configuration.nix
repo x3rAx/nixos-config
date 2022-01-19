@@ -49,6 +49,9 @@ rec {
   # NOTE: This also replaces the packages when they are used as dependency for
   #       other packages
   nixpkgs.config = baseconfig // {
+    permittedInsecurePackages = [
+      "electron-11.5.0" # For `super-productivity`
+    ];
     packageOverrides = pkgs: {
       gdu = unstable.gdu;
     };
