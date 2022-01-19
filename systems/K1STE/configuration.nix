@@ -108,6 +108,7 @@ in
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
+  time.hardwareClockInLocalTime = true;
 
   # Select internationalisation properties.
   i18n = {
