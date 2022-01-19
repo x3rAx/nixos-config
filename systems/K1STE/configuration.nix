@@ -470,9 +470,13 @@ rec {
       "docker"
       "vboxusers"
       "plugdev" # Enable access to keyboard eg. for ZSA Moonlander training tool
+      "input"
+      "tty"
+      "libvirtd"
     ];
     initialPassword = "changeMe!";
   };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
