@@ -7,6 +7,11 @@
 let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
+  pinned-for-virtualbox = builtins.fetchTarball {
+    #name = "nixos-pinned-for-virtualbox";
+    url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.05.tar.gz";
+    sha256 = "1ckzhh24mgz6jd1xhfgx0i9mijk6xjqxwsshnvq789xsavrmsc36";
+  };
   # Copy other files to store and link them to `/run/current-system/`
   copyExtraConfigFiles = paths:
     let
@@ -28,6 +33,12 @@ rec {
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./encryption-configuration.local.nix
+  ] ++ [
+    # Overridden Modules
+    "${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
+  ];
+  disabledModules = [
+    "virtualisation/virtualbox-host.nix"
   ];
 
   # Copies `configuration.nix` and links it from the resulting system to
