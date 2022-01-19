@@ -186,6 +186,8 @@ rec {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    nix-bash-completions
+
     sddm-kcm # For SDDM settings to appear in KDE settings
 
     (neovim.override { vimAlias = true; })
@@ -221,7 +223,6 @@ rec {
     bc
     birdtray
     borgbackup
-    brave
     direnv
     dropbox
     file
@@ -254,6 +255,55 @@ rec {
 
     cifs-utils # For mounting SMB
     gdu
+
+    xdotool
+
+    anydesk
+    bat
+    bind
+    copyq
+    corectrl
+    exa
+    fd
+    ferdi
+    firefox
+    jq
+    killall
+    lshw
+    mpc-qt
+    obs-studio
+    pciutils
+    signal-desktop
+    trash-cli
+    trilium-desktop
+    usbutils
+    xclip
+
+    wally-cli # Mechanical keyboard flashing tool
+
+    arandr
+    corectrl
+    feh
+    gitui
+    httpie
+    keepassxc
+    libnotify
+    libqalculate
+    nix-direnv
+    nox
+    sxhkd
+    syncthing
+    syncthingtray
+    autokey
+    entr
+    glances
+    pv
+    rofi
+    rofimoji
+    super-productivity
+    teamspeak_client
+    tmate
+    tree
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -278,6 +328,8 @@ rec {
         User x3ro
   '';
   programs.ssh.startAgent = true;
+
+  programs.steam.enable = true;
 
   # List services that you want to enable:
 
