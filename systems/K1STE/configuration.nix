@@ -7,14 +7,34 @@
 let
   baseconfig = { allowUnfree = true; };
   unstable = import <nixos-unstable> { config = baseconfig; };
+  # Copy other files to store and link them to `/run/current-system/`
+  copyExtraConfigFiles = paths:
+    let
+      newline = ''
+      '';
+      makeLinkCommand = path:
+        let relativePath = builtins.toString path;
+        in ''
+          target="''${out}/extra-config-files/$(realpath --canonicalize-missing --relative-base=/etc/nixos "${relativePath}")"
+          mkdir -p "$(dirname "''$target")"
+          ln -s '${path}' "''$target"
+        '';
+      linkCommands = map makeLinkCommand paths;
+    in
+      builtins.concatStringsSep newline linkCommands;
 in
-{
+rec {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./encryption-configuration.local.nix
   ];
 
+  # Copies `configuration.nix` and links it from the resulting system to
+  # `/run/current-system/configuration.nix`
+  system.copySystemConfiguration = true;
+  # !!! DO NOT DO THIS !!! # copyExtraConfigFiles [ ./. ]
+  system.extraSystemBuilderCmds = copyExtraConfigFiles ([ ./configuration.nix ] ++ imports);
   # NOTE: This also replaces the packages when they are used as dependency for
   #       other packages
   nixpkgs.config = baseconfig // {
@@ -22,16 +42,6 @@ in
       gdu = unstable.gdu;
     };
   };
-
-  # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
-  # TODO: Find a way to copy all config files that are imported
-  system.copySystemConfiguration = true;
-  # Copy other files to store and link them to `/run/current-system/`
-  system.extraSystemBuilderCmds = ''
-    # !!! DO NOT DO THIS !!! # ln -s ${./.} $out/full-config 
-    ln -s ${./hardware-configuration.nix} $out/hardware-configuration.nix
-    ln -s ${./encryption-configuration.local.nix} $out/encryption-configuration.local.nix
-  '';
 
   boot.loader = {
     timeout = 1;
@@ -383,4 +393,3 @@ in
   system.stateVersion = "21.05"; # Did you read the comment?
 
 }
-
