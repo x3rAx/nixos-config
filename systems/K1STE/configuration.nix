@@ -382,6 +382,10 @@ rec {
   # Update Intel microcode
   hardware.cpu.intel.updateMicrocode = true;
 
+  # Enable udev rules for ZSA keyboards (Moonlander)
+  hardware.keyboard.zsa.enable = true;
+
+
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host = {
     enable = true;
@@ -451,6 +455,7 @@ rec {
       "networkmanager"
       "docker"
       "vboxusers"
+      "plugdev" # Enable access to keyboard eg. for ZSA Moonlander training tool
     ];
     initialPassword = "changeMe!";
   };
