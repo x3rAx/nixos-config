@@ -407,6 +407,11 @@ rec {
   # Update Intel microcode
   hardware.cpu.intel.updateMicrocode = true;
 
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true; # Enables `solaar`
+  };
+
   # Enable udev rules for ZSA keyboards (Moonlander)
   hardware.keyboard.zsa.enable = true;
 
