@@ -59,7 +59,7 @@ in
       #configurationLimit = 100;
       memtest86.enable = true;
       backgroundColor = "#000000";
-      splashImage = ./res/nixos-boot-background-scaled.png;
+      splashImage = ../res/nixos-boot-background-scaled.png;
       configurationName = "Kirbix";
       # Get gfxmodes from the grub cli with `videoinfo`
       gfxmodeEfi = "1280x1024";
