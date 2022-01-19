@@ -1,3 +1,4 @@
+/current-configuration
 hardware-configuration.nix
 .*.swp
 crypto_keyfiles/*
