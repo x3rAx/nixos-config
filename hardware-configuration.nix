@@ -1,0 +1,1 @@
+current-configuration/hardware-configuration.nix
