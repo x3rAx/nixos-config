@@ -356,17 +356,17 @@ rec {
       '';
       deps = [];
     };
-    fixVsCodeWriteAsSudo = {
-      # GitHub issue: https://github.com/NixOS/nixpkgs/issues/49643
-      text = ''
-        mkdir -m 0755 -p /bin
-        ln -sf "${pkgs.bash}/bin/bash" /bin/.bash.tmp
-        mv /bin/.bash.tmp /bin/bash # atomically replace it
-        ln -sf "${pkgs.polkit}/bin/pkexec" /usr/bin/.pkexec.tmp
-        mv /usr/bin/.pkexec.tmp /usr/bin/pkexec # atomically replace it
-      '';
-      deps = [];
-    };
+    #fixVsCodeWriteAsSudo = {
+    #  # GitHub issue: https://github.com/NixOS/nixpkgs/issues/49643
+    #  text = ''
+    #    mkdir -m 0755 -p /bin
+    #    ln -sf "${pkgs.bash}/bin/bash" /bin/.bash.tmp
+    #    mv /bin/.bash.tmp /bin/bash # atomically replace it
+    #    ln -sf "${pkgs.polkit}/bin/pkexec" /usr/bin/.pkexec.tmp
+    #    mv /usr/bin/.pkexec.tmp /usr/bin/pkexec # atomically replace it
+    #  '';
+    #  deps = [];
+    #};
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
