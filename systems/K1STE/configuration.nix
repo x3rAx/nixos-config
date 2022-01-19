@@ -183,6 +183,17 @@ rec {
     #source = ./git-system-config
   };
 
+  nixpkgs.overlays = [
+    (slef: super: {
+        speechd = super.speechd.override {
+          withEspeak = false; withPico = true; withFlite = false;
+       };
+        mumble = super.mumble.override {
+          speechdSupport = true; 
+       };
+    } )
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
