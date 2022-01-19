@@ -53,7 +53,8 @@ rec {
       "electron-11.5.0" # For `super-productivity`
     ];
     packageOverrides = pkgs: {
-      gdu = unstable.gdu;
+      #inherit unstable;
+      #gdu = unstable.gdu;
     };
   };
 
