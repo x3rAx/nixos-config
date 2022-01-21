@@ -180,8 +180,8 @@ rec {
     # consoleFont = "Lat2-Terminus16";
     # consoleKeyMap = "us";
     supportedLocales = [
-    	"en_US.UTF-8/UTF-8"
-    	"de_DE.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8"
+      "de_DE.UTF-8/UTF-8"
     ];
     defaultLocale = "en_US.UTF-8";
     #extraLocaleSettings = {
@@ -482,18 +482,18 @@ rec {
 
   system.activationScripts = {
     createMntDir = {
+      deps = [];
       text = ''
         mkdir -p /mnt
       '';
-      deps = [];
     };
     addBinBash = {
+      deps = [];
       text = ''
         mkdir -m 0755 -p /bin
         ln -sf "${pkgs.bash}/bin/bash" /bin/.bash.tmp
         mv /bin/.bash.tmp /bin/bash # atomically replace it
       '';
-      deps = [];
     };
     #fixVsCodeWriteAsSudo = {
     #  # GitHub issue: https://github.com/NixOS/nixpkgs/issues/49643
