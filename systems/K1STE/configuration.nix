@@ -393,6 +393,8 @@ rec {
 
   programs.dconf.enable = true;
 
+  programs.kdeconnect.enable = true;
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
