@@ -1,5 +1,10 @@
 /current-configuration
+/result
+
+/NOTES.local.md
+
 hardware-configuration.nix
-.*.swp
+
 crypto_keyfiles/*
 *.local.nix
+.*.swp
