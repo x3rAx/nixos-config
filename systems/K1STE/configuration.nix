@@ -402,6 +402,10 @@ rec {
     enable = true;
     passwordAuthentication = false;
     permitRootLogin = "no";
+    extraConfig = ''
+      Match Address 127.0.0.1,::1
+          PermitRootLogin prohibit-password
+    '';
   };
 
   # Open ports in the firewall.
