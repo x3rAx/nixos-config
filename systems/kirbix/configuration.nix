@@ -23,7 +23,6 @@ in
     ./rfkill-powerDown.nix
   ];
 
-  #nixpkgs.config = baseconfig;
   # NOTE: This also replaces the packages when they are used as dependency for
   #       other packages
   nixpkgs.config = baseconfig // {
@@ -39,6 +38,7 @@ in
   system.extraSystemBuilderCmds = ''
     # !!! DO NOT DO THIS !!! # ln -s ${./.} $out/full-config 
     ln -s ${./hardware-configuration.nix} $out/hardware-configuration.nix
+    ln -s ${./encryption-configuration.local.nix} $out/encryption-configuration.local.nix
     ln -s ${./rfkill-powerDown.nix} $out/rfkill-powerDown.nix
   '';
 
