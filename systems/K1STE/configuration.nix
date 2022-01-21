@@ -78,6 +78,7 @@ rec {
   system.copySystemConfiguration = true;
   # !!! DO NOT DO THIS !!! # copyExtraConfigFiles [ ./. ]
   system.extraSystemBuilderCmds = copyExtraConfigFiles ([ ./configuration.nix ] ++ imports);
+
   # NOTE: This also replaces the packages when they are used as dependency for
   #       other packages
   nixpkgs.config = baseconfig // {
@@ -389,6 +390,8 @@ rec {
   programs.ssh.startAgent = true;
 
   programs.steam.enable = true;
+
+  programs.dconf.enable = true;
 
   # List services that you want to enable:
 
