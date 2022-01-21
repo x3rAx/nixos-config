@@ -205,6 +205,7 @@ rec {
   };
 
   environment.shellAliases = {
+    sudo = "\\sudo EDITOR=vim";
     mnt = "bashmount";
     ll = "ls -lFh";
     la = "ls -alFh";
