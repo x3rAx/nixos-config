@@ -1,5 +1,7 @@
-/current-configuration
+/hostname.nix
+
 /result
+/result.*
 
 /NOTES.local.md
 
