@@ -5,6 +5,6 @@ let
     hostname = import ./hostname.nix;
 in {
     imports = [
-        (lib.toPath "./systems/${hostname}/configuration.nix")
+        (lib.toPath "./configuration/${hostname}/configuration.nix")
     ];
 }
