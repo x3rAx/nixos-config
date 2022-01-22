@@ -27,44 +27,17 @@ let
       linkCommands = map makeLinkCommand paths;
     in
       builtins.concatStringsSep newline linkCommands;
-  nixos-rebuild-wrapper =
-    pkgs.writeShellScriptBin "nixos-rebuild" ''
-      orig_PWD="$PWD"
-      check=false
-      if [ $1 == '--force-plz-i-fcked-up' ]; then
-          shift
-      else
-          for arg in "$@"; do
-              # Allow only arguments starting with a minus (to support e.g. `--help`) and `dry-*` commands
-              if [[ ! "$arg" =~ ^- ]] && [[ ! "$arg" =~ ^dry- ]]; then
-                  check=true
-              fi
-          done
-      fi
-      if [[ $check == true ]]; then
-          nixosConfig="$(echo $NIX_PATH | tr : $'\n' | awk '/^nixos-config=/ { st = index($0, "="); print substr($0, st+1) }')"
-          configDir="$(dirname "$nixosConfig")"
-          cd "$configDir"
-          if ! $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-              # Warn if config is not in a git repository
-              echo >&2 -ne "\n $(tput bold; tput setab 226; tput setaf 0)  WARNING  $(tput sgr0) "
-              echo >&2 -e "No git repository found in \"''${configDir}\".\n"
-          elif [ -n "$(git status --porcelain)" ]; then
-              # Fail when dirty
-              echo >&2 -ne "\n $(tput bold; tput setab 124; tput setaf 255)  ERROR  $(tput sgr0) "
-              echo >&2 -e "Uncommitted changes in \"''${configDir}\". Please commit them first.\n"
-              exit 1
-          fi
-      fi
-      cd "$orig_PWD"
-      ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$@"
-    '';
 in
 rec {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./encryption-configuration.local.nix
+
+    ../../roles/common.nix
+    ../../roles/mostly-common.nix
+    ../../roles/desktop.nix
+    ../../roles/development.nix
   ] ++ [
     # Overridden Modules
     "${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
@@ -243,127 +216,54 @@ rec {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    nixos-rebuild-wrapper
-    nix-bash-completions
 
-    sddm-kcm # For SDDM settings to appear in KDE settings
+        sddm-kcm # For SDDM settings to appear in KDE settings
 
-    (neovim.override { vimAlias = true; })
-    brave
-    wget
-    parted
-    bashmount
-    cryptsetup
-    git
-    delta # Better `git diff`
-    gimp
-    inkscape
-    vscode
-    tmux
-    btrfs-progs
-    nodejs
-    rnix-lsp
-    # Example: Build vscode with extra dependencies
-    #(vscode.overrideAttrs (oldAttrs: {
-    #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
-    #}))
-    spotify
-    docker-compose
+        parted
+        cryptsetup
+        btrfs-progs
+        rnix-lsp
+        # Example: Build vscode with extra dependencies
+        #(vscode.overrideAttrs (oldAttrs: {
+        #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
+        #}))
+        docker-compose
 
-    rustup
 
-    # Custom bash-bin defined above
-    #zettlr
+        # Custom bash-bin defined above
+        #zettlr
 
-    anydesk
-    appimage-run
-    ark
-    bc
-    birdtray
-    borgbackup
-    direnv
-    dropbox
-    file
-    fzf
-    glib
-    hdparm
-    htop
-    mariadb-client
-    mumble
-    ncdu
-    nomacs
-    octave
-    okular
-    ack
-    pkg-config
-    postman
-    python3
-    glances
-    ranger
-    restic
-    ripgrep
-    rustup
-    rxvt-unicode
-    shellcheck
-    thunderbird
-    translate-shell
-    unzip
+        borgbackup
+        dropbox
+        glib
+        hdparm
+        mariadb-client
+        octave
+        ack # Alternative grep "for sourcecode"
+        pkg-config
+        glances
+        restic
+        rxvt-unicode
+        translate-shell
 
-    tdesktop # Telegram Desktop
 
-    cifs-utils # For mounting SMB
-    gdu
+        cifs-utils # For mounting SMB
 
-    xdotool
 
-    anydesk
-    bat
-    bind
-    copyq
-    corectrl
-    exa
-    fd
-    ferdi
-    firefox
-    jq
-    killall
-    lshw
-    mpc-qt
-    obs-studio
-    pciutils
-    signal-desktop
-    trash-cli
-    trilium-desktop
-    usbutils
-    xclip
+        bind
+        corectrl
+        lshw
+        pciutils
 
-    wally-cli # Mechanical keyboard flashing tool
 
-    arandr
-    corectrl
-    feh
-    gitui
-    httpie
-    keepassxc
-    libnotify
-    libqalculate
-    nix-direnv
-    nox
-    sxhkd
-    syncthing
-    syncthingtray
-    autokey
-    entr
-    glances
-    pv
-    rofi
-    rofimoji
-    super-productivity
-    teamspeak_client
-    tmate
-    tree
+        corectrl
+        libnotify
+        libqalculate
+        nix-direnv
+        nox
+        autokey
 
-    virt-manager
+        virt-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
