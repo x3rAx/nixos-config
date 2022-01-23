@@ -18,15 +18,6 @@ in rec {
         ../../roles/desktop.nix
     ];
 
-    # NOTE: This also replaces the packages when they are used as dependency for
-    #       other packages
-    # TODO: Remove after update to 21.11
-    nixpkgs.config = baseconfig // {
-        packageOverrides = pkgs: {
-            gdu = unstable.gdu;
-        };
-    };
-
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
     # TODO: Find a way to copy all config files that are imported
     system.copySystemConfiguration = true;
