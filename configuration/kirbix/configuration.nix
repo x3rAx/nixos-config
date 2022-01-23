@@ -19,8 +19,9 @@ in rec {
         ../../roles/nvidia.nix
     ];
 
+    # TODO: system.nixos.label
+
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
-    # TODO: Find a way to copy all config files that are imported
     system.copySystemConfiguration = true;
     # !!! DO NOT DO THIS --> # lib.createCopyExtraConfigFilesScript [ ./. ] !!!
     system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
@@ -94,24 +95,6 @@ in rec {
         rnix-lsp
     ];
 
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
-    # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-    programs.ssh.extraConfig = ''
-        # Add the below line to the users `~/.ssh/config` to automatically add keys
-        # when they are used.
-        # DO NOT SET THIS HERE TO PREVENT LEAKING KEYS FROM SUDO TO REGULAR USER!
-        #AddKeysToAgent yes
-
-        Host jarvis
-                HostName jarvis.x3ro.net
-                User x3ro
-
-        Host badwolf
-                HostName badwolf.x3ro.net
-                User x3ro
-    '';
     programs.ssh.startAgent = true;
 
     # Enable Bluetooth

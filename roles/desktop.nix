@@ -131,7 +131,6 @@ in rec {
         # Custom derivations
         nixos-rebuild-wrapper
     ] ++ [
-        #zettlr # Custom bash-bin defined above
         ack # Alternative grep "for sourcecode"
         anydesk
         appimage-run
@@ -156,7 +155,6 @@ in rec {
         gimp
         gitui
         glances
-        htop
         httpie
         inkscape
         jq
