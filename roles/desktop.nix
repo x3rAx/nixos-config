@@ -8,8 +8,8 @@ let
     unstable = import <nixos-unstable> { config = baseconfig; };
     pinned-for-virtualbox = builtins.fetchTarball {
         #name = "nixos-pinned-for-virtualbox";
-        url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.05.tar.gz";
-        sha256 = "1ckzhh24mgz6jd1xhfgx0i9mijk6xjqxwsshnvq789xsavrmsc36";
+        url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.11.tar.gz";
+        sha256 = "162dywda2dvfj1248afxc45kcrg83appjd0nmdb541hl7rnncf02";
     };
     nixos-rebuild-wrapper =
         pkgs.writeShellScriptBin "nixos-rebuild" ''
