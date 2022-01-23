@@ -18,7 +18,7 @@
         trash-cli
         tree
         unzip
-        bla
+        btrfs-progs
     ];
 
     # Select internationalisation properties.
