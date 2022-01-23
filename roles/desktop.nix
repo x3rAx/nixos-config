@@ -2,6 +2,8 @@
 { config, pkgs, ... }:
 
 let
+    lib = import ../lib.nix;
+
     baseconfig = { allowUnfree = true; };
     unstable = import <nixos-unstable> { config = baseconfig; };
     pinned-for-virtualbox = builtins.fetchTarball {
@@ -41,7 +43,7 @@ let
             cd "$orig_PWD"
             ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$@"
         '';
-in {
+in rec {
     disabledModules = [
         "virtualisation/virtualbox-host.nix"
     ];
@@ -49,6 +51,7 @@ in {
         # Overridden Modules
         "${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
     ];
+    system.extraSystemBuilderCmds = lib.createLinkExtraConfigFilesScript imports;
 
     # Enable Flakes
     nix = {

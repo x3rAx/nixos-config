@@ -5,23 +5,8 @@
 { config, pkgs, ... }:
 
 let
-    # Copy other files to store and link them to `/run/current-system/`
-    copyExtraConfigFiles = paths:
-        let
-            newline = ''
-            '';
-            makeLinkCommand = path:
-                let relativePath = builtins.toString path;
-                in ''
-                    target="''${out}/extra-config-files/$(realpath --canonicalize-missing --relative-base=/etc/nixos "${relativePath}")"
-                    mkdir -p "$(dirname "''$target")"
-                    ln -s '${path}' "''$target"
-                '';
-            linkCommands = map makeLinkCommand paths;
-        in
-            builtins.concatStringsSep newline linkCommands;
-in
-rec {
+    lib = import ../../lib.nix;
+in rec {
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
@@ -35,8 +20,8 @@ rec {
     # Copies `configuration.nix` and links it from the resulting system to
     # `/run/current-system/configuration.nix`
     system.copySystemConfiguration = true;
-    # !!! DO NOT DO THIS --> # copyExtraConfigFiles [ ./. ] !!!
-    system.extraSystemBuilderCmds = copyExtraConfigFiles ([ ./configuration.nix ] ++ imports);
+    # !!! DO NOT DO THIS --> # lib.createLinkExtraConfigFilesScript [ ./. ] !!!
+    system.extraSystemBuilderCmds = lib.createLinkExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
     boot.loader = {
         grub = {
