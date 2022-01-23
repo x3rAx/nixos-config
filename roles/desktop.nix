@@ -51,7 +51,7 @@ in rec {
         # Overridden Modules
         "${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
     ];
-    system.extraSystemBuilderCmds = lib.createLinkExtraConfigFilesScript imports;
+    system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript imports;
 
     # Enable Flakes
     nix = {
@@ -149,7 +149,6 @@ in rec {
         direnv
         docker-compose
         dropbox
-        feh
         ferdi
         file
         firefox

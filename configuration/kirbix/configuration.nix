@@ -4,7 +4,9 @@
 
 { config, pkgs, ... }:
 
-{
+let
+    lib = import ../../lib.nix;
+in rec {
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
@@ -28,13 +30,8 @@
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
     # TODO: Find a way to copy all config files that are imported
     system.copySystemConfiguration = true;
-    # Copy other files to store and link them to `/run/current-system/`
-    system.extraSystemBuilderCmds = ''
-        # !!! DO NOT DO THIS -> # ln -s ${./.} $out/full-config !!!
-        ln -s ${./hardware-configuration.nix} $out/hardware-configuration.nix
-        ln -s ${./encryption-configuration.local.nix} $out/encryption-configuration.local.nix
-        ln -s ${./rfkill-powerDown.nix} $out/rfkill-powerDown.nix
-    '';
+    # !!! DO NOT DO THIS --> # lib.createCopyExtraConfigFilesScript [ ./. ] !!!
+    system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
     boot.loader = {
         grub = {

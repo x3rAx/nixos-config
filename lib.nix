@@ -12,7 +12,7 @@ in rec {
         ;
 
     # Copy other files to store and link them to `/run/current-system/`
-    createLinkExtraConfigFilesScript = paths:
+    createCopyExtraConfigFilesScript = paths:
         let
             newline = ''
             '';

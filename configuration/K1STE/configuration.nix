@@ -19,9 +19,9 @@ in rec {
 
     # Copies `configuration.nix` and links it from the resulting system to
     # `/run/current-system/configuration.nix`
-    system.copySystemConfiguration = true;
-    # !!! DO NOT DO THIS --> # lib.createLinkExtraConfigFilesScript [ ./. ] !!!
-    system.extraSystemBuilderCmds = lib.createLinkExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
+    #system.copySystemConfiguration = true;
+    # !!! DO NOT DO THIS --> # lib.createCopyExtraConfigFilesScript [ ./. ] !!!
+    system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
     boot.loader = {
         grub = {
