@@ -16,6 +16,7 @@ in rec {
         ../../roles/common.nix
         ../../roles/mostly-common.nix
         ../../roles/desktop.nix
+        ../../roles/nvidia.nix
     ];
 
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
@@ -181,4 +182,3 @@ in rec {
     system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-
