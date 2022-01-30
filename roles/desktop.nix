@@ -241,6 +241,7 @@ in rec {
         #enableHidpi = true;
     };
     services.xserver.desktopManager.plasma5.enable = true;
+    services.xserver.windowManager.bspwm.enable = true;
 
     # Enable sound.
     sound.enable = true;
