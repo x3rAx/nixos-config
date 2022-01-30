@@ -176,7 +176,7 @@ in rec {
         okular
         parted
         pciutils
-        picom
+        picom-next
         postman
         python3
         ranger
