@@ -1,3 +1,11 @@
+# My NixOS Configuration
+
+- `git clone git@gitlab.com:x3ro/nixos-config.git`
+- `cp hostname.example.nix hostname.nix`
+- `vim hostname.nix`
+
+
+
 Create Initrd for Crypto Keyfiles
 ---------------------------------
 
