@@ -148,6 +148,7 @@ in rec {
         direnv
         docker-compose
         dropbox
+        feh
         ferdi
         file
         firefox
@@ -175,6 +176,7 @@ in rec {
         okular
         parted
         pciutils
+        picom
         postman
         python3
         ranger
