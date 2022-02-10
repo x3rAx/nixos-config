@@ -57,6 +57,10 @@ in rec {
     nix = {
         package = pkgs.nixFlakes;
         extraOptions = ''
+            # For nix-direnv
+            keep-outputs = true
+            keep-derivations = true
+            # For nix flakes
             experimental-features = nix-command flakes
         '';
     };
