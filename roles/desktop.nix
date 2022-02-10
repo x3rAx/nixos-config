@@ -178,7 +178,6 @@ in rec {
         pciutils
         picom-next
         postman
-        python3
         ranger
         restic
         rofi

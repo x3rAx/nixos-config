@@ -71,7 +71,7 @@ in rec {
         #(vscode.overrideAttrs (oldAttrs: {
         #  buildInputs = oldAttrs.buildInputs ++ [ polkit ];
         #}))
-        
+
         bind
         cifs-utils # For mounting SMB
         corectrl

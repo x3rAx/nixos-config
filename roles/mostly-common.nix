@@ -6,6 +6,7 @@
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+        btrfs-progs
         entr
         exa
         file
@@ -13,11 +14,11 @@
         glances
         ncdu
         pv
+        python3
         ranger
         trash-cli
         tree
         unzip
-        btrfs-progs
     ];
 
     # Select internationalisation properties.
