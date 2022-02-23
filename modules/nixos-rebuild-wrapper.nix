@@ -6,22 +6,20 @@ let
         pkgs.writeShellScriptBin "nixos-rebuild" ''
             orig_PWD="$PWD"
             check=false
-            if [ $1 == '--force-plz-i-fcked-up' ]; then
-                shift
-            else
-                for arg in "$@"; do
-                    # Allow only arguments starting with a minus and actions that do not change system state
-                    case $arg in
-                        '-'*) ;;
-                        'dry-'*) ;;
-                        'build') ;;
-                        'build-vm'|'build-vm-'*) ;;
-                        'edit') ;;
-                        'test') ;;
-                        *) check=true ;;
-                    esac
-                done
-            fi
+
+            for arg in "$@"; do
+                # Allow only arguments starting with a minus and actions that do not change system state
+                case $arg in
+                    '-'*) ;;
+                    'dry-'*) ;;
+                    'build') ;;
+                    'build-vm'|'build-vm-'*) ;;
+                    'edit') ;;
+                    'test') ;;
+                    *) check=true ;;
+                esac
+            done
+
             if [[ $check == true ]]; then
                 nixosConfig="$(echo $NIX_PATH | tr : $'\n' | awk '/^nixos-config=/ { st = index($0, "="); print substr($0, st+1) }')"
                 configDir="$(dirname "$nixosConfig")"
@@ -37,6 +35,7 @@ let
                     exit 1
                 fi
             fi
+
             cd "$orig_PWD"
             ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$@"
         '';
