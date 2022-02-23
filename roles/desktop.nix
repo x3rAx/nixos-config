@@ -19,10 +19,16 @@ let
                 shift
             else
                 for arg in "$@"; do
-                    # Allow only arguments starting with a minus (to support e.g. `--help`) and `dry-*` commands
-                    if [[ ! "$arg" =~ ^- ]] && [[ ! "$arg" =~ ^dry- ]]; then
-                        check=true
-                    fi
+                    # Allow only arguments starting with a minus and actions that do not change system state
+                    case $arg in
+                        '-'*) ;;
+                        'dry-'*) ;;
+                        'build') ;;
+                        'build-vm'|'build-vm-'*) ;;
+                        'edit') ;;
+                        'test') ;;
+                        *) check=true ;;
+                    esac
                 done
             fi
             if [[ $check == true ]]; then
