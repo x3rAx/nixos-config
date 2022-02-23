@@ -74,9 +74,6 @@ in rec {
     nixpkgs.overlays = [
         # Speech support for mumble
         (slef: super: {
-	    #virtualbox = pinned-for-virtualbox.pkgs.virtualbox;
-	    #virtualboxExtpack = pinned-for-virtualbox.virtualboxExtpack;
-
             speechd = super.speechd.override {
                 withEspeak = false; withPico = true; withFlite = false;
             };
@@ -145,55 +142,92 @@ in rec {
         nixos-rebuild-wrapper
     ] ++ [
         ack # Alternative grep "for sourcecode"
+        alacritty
         anydesk
         appimage-run
         arandr
         ark # KDE archive gui (.tar.gz, etc.)
+        audacious
+        audacity
         autokey
         bashmount
         bc
         birdtray
+        blanket
         borgbackup
         brave
+        broot
+        btop
         copyq
         cryptsetup
         delta # Better `git diff`
+        deno
         direnv
         docker-compose
         dropbox
+        entr
+        escrotum
+        ethtool
+        exfat
         feh
         ferdi
+        ferdi
+        ffmpeg
         file
+        firefox
         firefox
         fzf
         gimp
+        gimp
         gitui
         glances
+        glances
+        gnumake # for `dake`
+        handbrake
         httpie
+        humanity-icon-theme # fix missing icons in virt-manager
+        imagemagick
         inkscape
         jq
         keepassxc
+        kopia
+        ksnip
         libnotify
         libqalculate
+        libreoffice
         lshw
         mariadb-client
+        minio-client
         mpc-qt
+        mtr
         mumble
         ncdu
         nix-direnv
+        nodePackages.pnpm
+        nodePackages.zx
+        nodejs
         nodejs
         nomacs
         nox
+        nushell
         obs-studio
         octave
         okular
         parted
         pciutils
+        pdfmixtool
         picom-next
+        playerctl # Control media players from cli
+        polybar
         postman
+        pv
+        python3Packages.bpython # Alternative python repl
+        quickemu
         ranger
         restic
         rofi
+        rofi
+        rofimoji
         rofimoji
         rustup
         rxvt-unicode
@@ -202,22 +236,36 @@ in rec {
         signal-desktop
         spotify
         super-productivity
+        super-productivity
         sxhkd
+        syncthing
         syncthing
         syncthingtray
         tdesktop # Telegram Desktop
         teamspeak_client
         thunderbird
         tmate
+        tmate
+        tor-browser-bundle-bin
         translate-shell
+        tree
         trilium-desktop
+        ueberzug # To show images in ranger
+        unrar
         unzip
         usbutils
+        ventoy-bin
+        veracrypt
         virt-manager
+        vlc
         vscode
         wally-cli # Mechanical keyboard flashing tool
         xclip
         xdotool #desktop
+        xorg.xev
+        xxd
+        youtube-dl
+        zip
     ];
 
     environment.shellAliases = {
