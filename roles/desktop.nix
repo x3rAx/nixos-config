@@ -6,11 +6,11 @@ let
 
     baseconfig = { allowUnfree = true; };
     unstable = import <nixos-unstable> { config = baseconfig; };
-    pinned-for-virtualbox = builtins.fetchTarball {
-        #name = "nixos-pinned-for-virtualbox";
-        url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.11.tar.gz";
-        sha256 = "162dywda2dvfj1248afxc45kcrg83appjd0nmdb541hl7rnncf02";
-    };
+    #pinned-for-virtualbox = builtins.fetchTarball {
+    #    #name = "nixos-pinned-for-virtualbox";
+    #    url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.11.tar.gz";
+    #    sha256 = "162dywda2dvfj1248afxc45kcrg83appjd0nmdb541hl7rnncf02";
+    #};
     nixos-rebuild-wrapper =
         pkgs.writeShellScriptBin "nixos-rebuild" ''
             orig_PWD="$PWD"
@@ -45,11 +45,11 @@ let
         '';
 in rec {
     disabledModules = [
-        "virtualisation/virtualbox-host.nix"
+        #"virtualisation/virtualbox-host.nix"
     ];
     imports = [
         # Overridden Modules
-        "${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
+        #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
     ];
     system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript imports;
 
@@ -68,6 +68,9 @@ in rec {
     nixpkgs.overlays = [
         # Speech support for mumble
         (slef: super: {
+	    #virtualbox = pinned-for-virtualbox.pkgs.virtualbox;
+	    #virtualboxExtpack = pinned-for-virtualbox.virtualboxExtpack;
+
             speechd = super.speechd.override {
                 withEspeak = false; withPico = true; withFlite = false;
             };
@@ -368,9 +371,10 @@ in rec {
 
     virtualisation.docker.enable = true;
     virtualisation.libvirtd.enable = true;
-    virtualisation.virtualbox.host = {
-        enable = true;
-        enableExtensionPack = true;
-    };
+    #virtualisation.virtualbox.host = {
+    #    enable = true;
+    #    enableExtensionPack = true;
+    #    package = pinned-for-virtualbox.pkgs.virtualbox;
+    #};
 
 }
