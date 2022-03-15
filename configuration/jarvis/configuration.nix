@@ -22,6 +22,26 @@
     # Define on which hard drive you want to install Grub.
     boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
+    # Enable SSH during boot to unlock disk
+    boot.initrd.network.enable = true;
+    boot.initrd.network.ssh = {
+        enable = true;
+        port = 22;
+        authorizedKeys = [
+            # x3ro @ kirbix
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFV/z+PGoYH+5ZMqqIH5FoDTr45fEyRHVjrDxalcYC/y x3ro@kirbix [-o -a 100 -t ed25519]"
+            # x3ro @ K1STE (NixOS)
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBww8Z8g6xUhdDhoJKlYlfrapuHM5/44D3P3WrOtLlfc x3ro@K1STE"
+        ];
+        hostKeys = [
+            # Generate using these commands:
+            #     ssh-keygen -t rsa -N "" -f /etc/secrets/initrd/ssh_host_rsa_key
+            #     ssh-keygen -t ed25519 -N "" -f /etc/secrets/initrd/ssh_host_ed25519_key
+            "/etc/secrets/initrd/ssh_host_rsa_key"
+            "/etc/secrets/initrd/ssh_host_ed25519_key"
+        ];
+    };
+
     networking.hostName = "jarvis"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
