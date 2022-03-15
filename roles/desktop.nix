@@ -281,20 +281,7 @@ in rec {
     #   enable = true;
     #   enableSSHSupport = true;
     # };
-    programs.ssh.extraConfig = ''
-        # Add the below line to the users `~/.ssh/config` to automatically add keys
-        # when they are used.
-        # DO NOT SET THIS HERE TO PREVENT LEAKING KEYS FROM SUDO TO REGULAR USER!
-        #AddKeysToAgent yes
 
-        Host jarvis
-            HostName jarvis.x3ro.net
-            User x3ro
-
-        Host badwolf
-            HostName badwolf.x3ro.net
-            User x3ro
-    '';
     programs.ssh.startAgent = true;
 
     programs.steam.enable = true;
@@ -304,17 +291,6 @@ in rec {
     programs.kdeconnect.enable = true;
 
     # List services that you want to enable:
-
-    # Enable the OpenSSH daemon.
-    services.openssh = {
-        enable = true;
-        passwordAuthentication = false;
-        permitRootLogin = "no";
-        extraConfig = ''
-            Match Address 127.0.0.1,::1
-                PermitRootLogin prohibit-password
-        '';
-    };
 
     # Open ports in the firewall.
     # networking.firewall.allowedTCPPorts = [ ... ];

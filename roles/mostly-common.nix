@@ -48,6 +48,35 @@
 
     # Set your time zone.
     time.timeZone = "Europe/Berlin";
+
     # TODO: Is it safe to do this everywhere?
     #time.hardwareClockInLocalTime = true;
+
+    programs.ssh.extraConfig = ''
+        # Add the below line to the users `~/.ssh/config` to automatically add keys
+        # when they are used.
+        # DO NOT SET THIS HERE TO PREVENT LEAKING KEYS FROM SUDO TO REGULAR USER!
+        #AddKeysToAgent yes|ask
+
+        Host jarvis
+            HostName jarvis.x3ro.net
+            User x3ro
+
+        Host badwolf
+            HostName badwolf.x3ro.net
+            User x3ro
+    '';
+
+    # Enable the OpenSSH daemon.
+    services.openssh = {
+        enable = true;
+        passwordAuthentication = false;
+        permitRootLogin = "prohibit-password";
+        extraConfig = ''
+            Match Address 127.0.0.1,::1
+                PermitRootLogin prohibit-password
+        '';
+    };
+
+    virtualisation.docker.enable = true;
 }
