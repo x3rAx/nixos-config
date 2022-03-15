@@ -46,8 +46,9 @@ in rec {
         #"vm.swappiness" = 1;
     };
 
-    powerManagement.cpuFreqGovernor = "performance";
+    services.xserver.desktopManager.plasma5.enable = true;
 
+    powerManagement.cpuFreqGovernor = "performance";
 
     networking.hostName = "kirbix"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

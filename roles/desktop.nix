@@ -265,7 +265,6 @@ in rec {
         autoNumlock = true;
         #enableHidpi = true;
     };
-    services.xserver.desktopManager.plasma5.enable = true;
     services.xserver.windowManager.bspwm.enable = true;
 
     # Enable sound.
