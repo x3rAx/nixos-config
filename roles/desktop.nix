@@ -126,7 +126,6 @@ in rec {
         delta # Better `git diff`
         deno
         direnv
-        docker-compose
         dropbox
         entr
         escrotum
@@ -386,7 +385,6 @@ in rec {
         #};
     };
 
-    virtualisation.docker.enable = true;
     virtualisation.libvirtd.enable = true;
     #virtualisation.virtualbox.host = {
     #    enable = true;

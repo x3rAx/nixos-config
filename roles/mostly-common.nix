@@ -7,6 +7,7 @@
     # $ nix search wget
     environment.systemPackages = with pkgs; [
         btrfs-progs
+        docker-compose
         entr
         exa
         file
@@ -20,6 +21,10 @@
         tree
         unzip
     ];
+
+    environment.shellAliases = {
+        #doc = "docker-compose";
+    };
 
     # Select internationalisation properties.
     i18n = {

@@ -11,6 +11,7 @@
 
         ../../roles/common.nix
         ../../roles/mostly-common.nix
+        ../../roles/server.nix
     ];
 
     # Use the GRUB 2 boot loader.
