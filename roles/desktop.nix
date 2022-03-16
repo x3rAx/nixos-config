@@ -303,6 +303,8 @@ in rec {
 
     programs.kdeconnect.enable = true;
 
+    programs.nm-applet.enable = true;
+
     # List services that you want to enable:
 
     # Enable the OpenSSH daemon.
