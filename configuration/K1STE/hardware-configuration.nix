@@ -19,7 +19,7 @@
       options = [ "subvol=NixOS/@" ];
     };
 
-  boot.initrd.luks.devices."sda2_crypt".device = "/dev/disk/by-uuid/8aedd2c2-2518-49fd-8d14-d22a64804fc1";
+  boot.initrd.luks.devices."sda3_crypt".device = "/dev/disk/by-uuid/8aedd2c2-2518-49fd-8d14-d22a64804fc1";
 
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
