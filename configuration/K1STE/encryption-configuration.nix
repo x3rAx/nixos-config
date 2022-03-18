@@ -9,6 +9,17 @@
     };
     boot.resumeDevice = "/dev/mapper/sda3_crypt";
 
+    fileSystems."/data/extended" =
+      { device = "/dev/disk/by-uuid/8a9ff2f6-75b1-41fa-8ad2-84668ceacaaa";
+        fsType = "btrfs";
+      };
+    boot.initrd.luks.devices."extended_crypt" =
+      { device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776";
+        keyFile = "/crypto_keyfile.bin";
+        #preLVM = true;
+        #allowDiscards = true;
+      };
+
     # Data mount
     #fileSystems."/data" = {
     #    device = "/dev/mapper/data_crypt";
