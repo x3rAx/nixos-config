@@ -1,5 +1,5 @@
 /hostname.nix
-/current-configuration.nix
+/current-host
 
 /result
 /result.*
