@@ -6,8 +6,6 @@
 
 /NOTES.local.md
 
-hardware-configuration.nix
-
 crypto_keyfiles/*
 *.local.nix
 .*.swp
