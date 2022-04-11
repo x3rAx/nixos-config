@@ -1,5 +1,9 @@
 { ... }:
 {
+    imports = [
+        (../../modules/x3ro/btrfs-swapfile.nix)
+    ];
+
     boot.initrd.luks.devices = {
         "sda3_crypt" = {
             allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
@@ -99,9 +103,13 @@
     #    '';
     #  };
     #};
-    boot.kernelParams = [ "resume=/var/swapfile" "resume_offset=5780096" ];
-    swapDevices = [
-        { device = "/swap/swapfile"; size = 20 * 1024; }
-    ];
+    x3ro.btrfs-swapfile = {
+        enable = true;
+        location = "/swap/SWAPFILE";
+        hibernation = {
+            enable = true;
+            resume_offset = 5780096;
+        };
+    };
 }
 
