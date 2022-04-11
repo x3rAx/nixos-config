@@ -2,6 +2,8 @@
 {
     boot.initrd.luks.devices = {
         "sda3_crypt" = {
+            allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
+            bypassWorkqueues = true; # Improve SSD performance
             keyFile = "/crypto_keyfile.bin";
             preLVM = true;
             #allowDiscards = true;
