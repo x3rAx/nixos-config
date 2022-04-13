@@ -21,10 +21,9 @@
 
   boot.initrd.luks.devices."rootfs_crypt".device = "/dev/disk/by-uuid/8aedd2c2-2518-49fd-8d14-d22a64804fc1";
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
-      fsType = "btrfs";
-      options = [ "subvol=NixOS/@home" ];
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/AC26-5FEB";
+      fsType = "vfat";
     };
 
   fileSystems."/etc/nixos" =
@@ -33,9 +32,10 @@
       options = [ "subvol=NixOS/@etc@nixos" ];
     };
 
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/AC26-5FEB";
-      fsType = "vfat";
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
+      fsType = "btrfs";
+      options = [ "subvol=NixOS/@home" ];
     };
 
   fileSystems."/swap" =
@@ -44,6 +44,20 @@
       options = [ "subvol=NixOS/@swap" ];
     };
 
+  fileSystems."/data/extended" =
+    { device = "/dev/disk/by-uuid/8a9ff2f6-75b1-41fa-8ad2-84668ceacaaa";
+      fsType = "btrfs";
+    };
+
+  boot.initrd.luks.devices."extended_crypt".device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776";
+
   swapDevices = [ ];
 
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.useDHCP = lib.mkDefault false;
+  networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
+
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
