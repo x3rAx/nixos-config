@@ -1,3 +1,4 @@
+# This comment enables syntax highlighting in nvim 🤪
 { ... }:
 {
     imports = [
