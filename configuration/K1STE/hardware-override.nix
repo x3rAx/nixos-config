@@ -13,7 +13,7 @@
         keyFile = "/crypto_keyfile.bin";
         preLVM = true;
     };
-    fileSystems."/".options = [ "ssd" "noatime" "discard" "autodefrag" ]
+    fileSystems."/".options = [ "ssd" "noatime" "discard" "autodefrag" ];
 
     # Data mount
     #fileSystems."/data/extended" = {
@@ -37,7 +37,7 @@
         device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776"; # UUID for encrypted disk
         keyFile = "/crypto_keyfile.bin";
     };
-    fileSystems."/data/extended".options = [ "ssd" "noatime" "discard" "autodefrag" ]
+    fileSystems."/data/extended".options = [ "ssd" "noatime" "discard" "autodefrag" ];
 
     x3ro.btrfs-swapfile = {
         enable = true;
