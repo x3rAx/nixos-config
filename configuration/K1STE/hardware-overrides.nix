@@ -6,7 +6,7 @@
     ];
 
     boot.initrd.luks.devices = {
-        "sda3_crypt" = {
+        "rootfs_crypt" = {
             allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
             bypassWorkqueues = true; # Improve SSD performance
             keyFile = "/crypto_keyfile.bin";
@@ -14,7 +14,7 @@
             #allowDiscards = true;
         };
     };
-    boot.resumeDevice = "/dev/mapper/sda3_crypt";
+    boot.resumeDevice = "/dev/mapper/rootfs_crypt";
 
     # Data mount
     #fileSystems."/data" = {
