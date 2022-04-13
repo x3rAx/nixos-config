@@ -10,7 +10,7 @@ in rec {
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        ./encryption-configuration.nix
+        ./hardware-override.nix
 
         ../../roles/common.nix
         ../../roles/mostly-common.nix
