@@ -21,10 +21,9 @@
 
   boot.initrd.luks.devices."sda3_crypt".device = "/dev/disk/by-uuid/b2953919-8d01-4b8a-9ceb-e37a81de12c2";
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/c3e27699-ec88-4863-9891-588c59c3642f";
-      fsType = "btrfs";
-      options = [ "subvol=NixOS/@home" ];
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/289a0d49-17e8-4a89-89d8-3664dfd59d42";
+      fsType = "ext4";
     };
 
   fileSystems."/etc/nixos" =
@@ -45,11 +44,19 @@
       options = [ "subvol=NixOS/@srv" ];
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/289a0d49-17e8-4a89-89d8-3664dfd59d42";
-      fsType = "ext4";
+  fileSystems."/swap" =
+    { device = "/dev/disk/by-uuid/c3e27699-ec88-4863-9891-588c59c3642f";
+      fsType = "btrfs";
+      options = [ "subvol=NixOS/@swap" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/c3e27699-ec88-4863-9891-588c59c3642f";
+      fsType = "btrfs";
+      options = [ "subvol=NixOS/@home" ];
     };
 
   swapDevices = [ ];
 
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
