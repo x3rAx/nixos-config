@@ -42,8 +42,8 @@ in {
                    
                     Fill swapfile
                    
-                        size_MB=2048
-                        dd if=/dev/zero of="$swapfile" bs=1M count=2048 status=progress
+                        size_MB=$((2 * 1024))
+                        dd if=/dev/zero of="$swapfile" bs=1M count="$size_MB" status=progress
 
                     OPTIONAL:
                    
