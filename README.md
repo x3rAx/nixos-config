@@ -3,6 +3,7 @@
 - `git clone git@gitlab.com:x3ro/nixos-config.git`
 - `cp hostname.example.nix hostname.nix`
 - `vim hostname.nix`
+- `ln -s configuration/<hostname> current-host`
 
 
 
