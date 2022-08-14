@@ -10,7 +10,7 @@ in rec {
     imports = [
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
-        ./encryption-configuration.local.nix
+        ./hardware-overrides.nix
         ./rfkill-powerDown.nix
 
         ../../roles/common.nix
