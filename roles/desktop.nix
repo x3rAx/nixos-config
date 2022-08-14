@@ -132,8 +132,7 @@ in rec {
         ethtool
         exfat
         feh
-        ferdi
-        ferdi
+        #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
         ffmpeg
         file
         firefox
