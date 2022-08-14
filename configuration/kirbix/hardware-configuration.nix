@@ -19,7 +19,7 @@
       options = [ "subvol=NixOS/@" ];
     };
 
-  boot.initrd.luks.devices."ssd_crypt".device = "/dev/disk/by-uuid/a39302ef-abb4-464e-8fa1-fc332f8102e0";
+  boot.initrd.luks.devices."rootfs_crypt".device = "/dev/disk/by-uuid/a39302ef-abb4-464e-8fa1-fc332f8102e0";
 
   fileSystems."/etc/nixos" =
     { device = "/dev/disk/by-uuid/c6236c49-3465-4de2-9208-4432b27cf3a9";
