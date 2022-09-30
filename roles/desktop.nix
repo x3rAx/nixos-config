@@ -16,7 +16,7 @@ in rec {
         #"virtualisation/virtualbox-host.nix"
     ];
     imports = [
-        ../modules/nixos-rebuild-wrapper.nix
+        #../modules/nixos-rebuild-wrapper.nix
     ] ++ [
         # Overridden Modules
         #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
