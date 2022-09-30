@@ -16,6 +16,7 @@ in rec {
         ../../roles/common.nix
         ../../roles/mostly-common.nix
         ../../roles/desktop.nix
+        ../../roles/desktop-kde.nix
         ../../roles/nvidia.nix
     ];
 
@@ -45,8 +46,6 @@ in rec {
         #"fs.inotify.max_user_watches" = 524288;
         #"vm.swappiness" = 1;
     };
-
-    services.xserver.desktopManager.plasma5.enable = true;
 
     powerManagement.cpuFreqGovernor = "performance";
 
@@ -104,11 +103,6 @@ in rec {
     # Enable touchpad support.
     services.xserver.libinput.enable = true;
     services.xserver.libinput.touchpad.naturalScrolling = true;
-
-    # Enable the KDE Desktop Environment.
-    services.xserver.displayManager.sddm = {
-        enableHidpi = true;
-    };
 
     services.xserver.xkbOptions = "caps:escape";
 

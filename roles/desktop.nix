@@ -192,7 +192,6 @@ in rec {
         rofimoji
         rustup
         rxvt-unicode
-        sddm-kcm # For SDDM settings to appear in KDE settings
         shellcheck
         signal-desktop
         spotify
@@ -256,15 +255,6 @@ in rec {
     #services.xserver.xkbOptions = "caps:escape";
     services.xserver.autoRepeatDelay = 200;
     services.xserver.autoRepeatInterval = 25; # 1000/25 = 40 keys/sec
-
-    # Enable the Plasma 5 Desktop Environment.
-    services.xserver.displayManager.sddm = {
-        enable = true;
-        autoNumlock = true;
-        #enableHidpi = true;
-    };
-    services.xserver.desktopManager.plasma5.enable = true;
-    services.xserver.windowManager.bspwm.enable = true;
 
     # Enable sound.
     sound.enable = true;

@@ -15,6 +15,7 @@ in rec {
         ../../roles/common.nix
         ../../roles/mostly-common.nix
         ../../roles/desktop.nix
+        ../../roles/desktop-bspwm.nix
     ];
 
     # Copies `configuration.nix` and links it from the resulting system to
