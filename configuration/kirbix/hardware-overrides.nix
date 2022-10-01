@@ -20,10 +20,6 @@
             blkDev = "/dev/disk/by-uuid/25a0ebf8-1961-40e9-84a5-e92a6de13ccd"; # UUID for encrypted disk
             keyFile = "/crypto_keyfile.bin";
         };
-        # This should maybe be in `hardware-configuration.nix`
-        device = "/dev/mapper/hdd_crypt";
-        fsType = "btrfs";
-        options = [ "subvol=@data" ];
     };
 
     x3ro.btrfs-swapfile = {
