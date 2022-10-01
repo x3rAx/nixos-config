@@ -1,19 +1,16 @@
 { ... }:
 {
+    imports = [
+        ../../modules/x3ro/btrfs-swapfile.nix
+    ];
+
     boot.initrd.luks.devices = {
         "rootfs_crypt" = {
             keyFile = "/crypto_keyfile.bin";
             preLVM = true;
             #allowDiscards = true;
         };
-        "swap_crypt" = {
-            device = "/dev/disk/by-uuid/4af02479-695d-443a-84f4-a50c0bf39b9d";
-            keyFile = "/crypto_keyfile.bin";
-            preLVM = true;
-            #allowDiscards = true;
-        };
     };
-    boot.resumeDevice = "/dev/mapper/swap_crypt";
 
     # Data mount
     fileSystems."/data" = {
@@ -29,16 +26,12 @@
         options = [ "subvol=@data" ];
     };
 
-
-    swapDevices = [
-        { device = "/dev/mapper/swap_crypt"; }
-        #{ device = "/dev/disk/by-uuid/c0154c0f-1985-45f5-a733-d10254bb3df7";
-        #    encrypted = {
-        #        enable = true;
-        #        label = "swap_crypt";
-        #        blkDev = "/dev/disk/by-uuid/4af02479-695d-443a-84f4-a50c0bf39b9d"; # UUID for encrypted disk
-        #        keyFile = "/crypto_keyfile.bin";
-        #    };
-        #}
-    ];
+    x3ro.btrfs-swapfile = {
+        enable = true;
+        location = "/swap/SWAPFILE";
+        hibernation = {
+            enable = true;
+            resume_offset = 96971939840;
+        };
+    };
 }
