@@ -67,25 +67,32 @@ in {
                 example = 38912;
                 description = ''
                     The offset where the SWAPFILE is located on the partition.
-
                     This is needed to resume from hibernation.
 
                     To get the offset, follow below instructions:
 
-                    Get the file fragments:
+                    Usually, the file fragments could be received by using `filefrag -v "$swapfile"`.
+                    However, this might result in false offsets on btrfs.
+                    (See: https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file_on_Btrfs)
+                    Instead we compile and use the tool mentioned in the Arch link above:
+
+                        tmpdir=$(mktemp -d --tmpdir)
+                        url='https://raw.githubusercontent.com/osandov/osandov-linux/8855b642753cfceff0e8a06a56be091466ca89de/scripts/btrfs_map_physical.c'
+                        nix-shell -p wget gcc --run "cd '$tmpdir' && wget '$url' && gcc -O2 -o btrfs_map_physical btrfs_map_physical.c"
+
+                    Now run the program to get the file fragments:
+
+                        swapfile="/swap/SWAPFILE"
+                        "$tmpdir/btrfs_map_physical" "$swapfile"
                    
-                        filefrag -v "$swapfile"
-                   
-                    In the column `physical_offset`, use the left value of the first line
-                    (the one that ends with "..". In the example below, it is the value
-                    `38912` (surrounded by two stars `**`):
-                   
-                        Filesystem type is: ef53
-                        File size of /swap/SWAPFILE is 4294967296 (1048576 blocks of 4096 bytes)
-                         ext:     logical_offset:        physical_offset: length:   expected: flags:
-                           0:        0..       0:    **38912..**   38912:      1:            
-                           1:        1..   22527:      38913..     61439:  22527:             unwritten
-                           2:    22528..   53247:     899072..    929791:  30720:      61440: unwritten
+                    Use the value from the `PHYSICAL OFFSET` column. In the example table below,
+                    the value is 96971939840. It has been surrounded by two stars (`**`) to make
+                    it more visible.
+
+                        FILE OFFSET     FILE SIZE       EXTENT OFFSET   EXTENT TYPE     LOGICAL SIZE    LOGICAL OFFSET  PHYSICAL SIZE   DEVID   PHYSICAL OFFSET
+                        0       134217728       0       regular 134217728       96971939840     134217728       1       **96971939840**
+                        134217728       134217728       0       regular 134217728       97830686720     134217728       1       97830686720
+                        268435456       134217728       0       regular 134217728       101694009344    134217728       1       101694009344
                         ...
                 '';
             };
