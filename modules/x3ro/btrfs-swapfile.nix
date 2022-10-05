@@ -83,7 +83,7 @@ in {
                     Now run the program to get the file fragments:
 
                         swapfile="/swap/SWAPFILE"
-                        "$tmpdir/btrfs_map_physical" "$swapfile"
+                        "$tmpdir/btrfs_map_physical" "$swapfile" | head
                    
                     Use the value from the `PHYSICAL OFFSET` column. In the example table below,
                     the value is 96971939840. It has been surrounded by two stars (`**`) to make
@@ -94,6 +94,10 @@ in {
                         134217728       134217728       0       regular 134217728       97830686720     134217728       1       97830686720
                         268435456       134217728       0       regular 134217728       101694009344    134217728       1       101694009344
                         ...
+
+                    Finally, we use this physical size to calculate the reume offset:
+
+                        96971939840 / 4096 = 23674790
                 '';
             };
                    
