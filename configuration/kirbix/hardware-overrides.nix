@@ -28,7 +28,7 @@
         hibernation = {
             enable = true;
             resume_device = "/dev/mapper/rootfs_crypt";
-            resume_offset = 96971939840;
+            resume_offset = 23674789;
         };
     };
 }
