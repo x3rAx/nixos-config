@@ -2,6 +2,7 @@
 {
     imports = [
         ../../modules/x3ro/btrfs-swapfile.nix
+        ../../modules/x3ro/hdd-sleep-service.nix
     ];
 
     boot.initrd.luks.devices = {
@@ -30,5 +31,11 @@
             resume_device = "/dev/mapper/rootfs_crypt";
             resume_offset = 23674789;
         };
+    };
+
+    x3ro.hdd-sleep-service = {
+      enable = true;
+      device = "/dev/disk/by-id/ata-ST1000LM014-1EJ164_W770GLTD";
+      timeout-level = 12; # 12 = 60 seconds
     };
 }
