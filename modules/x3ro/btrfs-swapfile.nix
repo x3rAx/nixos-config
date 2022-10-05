@@ -52,13 +52,13 @@ in {
                 '';
             };
 
-            size = mkOption {
-                type = types.ints.unsigned;
-                example = "20 * 1024";
-                description = ''
-                    The size of the SWAPFILE in MIB
-                '';
-            };
+            #size = mkOption {
+            #    type = types.ints.unsigned;
+            #    example = "20 * 1024";
+            #    description = ''
+            #        The size of the SWAPFILE in MIB
+            #    '';
+            #};
 
             hibernation.enable = mkEnableOption "hibernation";
 
@@ -127,7 +127,10 @@ in {
             then [ "resume_offset=${toString cfg.hibernation.resume_offset}" ]
             else [];
         swapDevices = [
-            { device = cfg.location; size = 20 * 1024; }
+            {
+                device = cfg.location;
+                #size = cfg.size;
+            }
         ];
     };
 }
