@@ -44,12 +44,6 @@
       options = [ "subvol=NixOS/@swap" ];
     };
 
-  fileSystems."/var/lib/docker/btrfs" =
-    { device = "/swap/NixOS/@home/NixOS/@/var/lib/docker/btrfs";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
   fileSystems."/data" =
     { device = "/dev/disk/by-uuid/7a6602b8-3573-453f-b028-81f320807fd5";
       fsType = "btrfs";
