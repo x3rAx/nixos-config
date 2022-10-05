@@ -3,8 +3,8 @@
 {
   powerManagement = {
     powerDownCommands = ''
-      sleep_before_power_down=1
-      sleep_after_block=1
+      sleep_before_power_down=0
+      sleep_after_block=0
       logfile='/var/log/rfkill-blocked-devices.log'
 
       _log() { echo >>"$logfile" "[$(date -Ins)] $@"; }
