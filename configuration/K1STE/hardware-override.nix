@@ -5,8 +5,6 @@
         (../../modules/x3ro/btrfs-swapfile.nix)
     ];
 
-    boot.resumeDevice = "/dev/mapper/rootfs_crypt";
-
     boot.initrd.luks.devices."rootfs_crypt" = {
         allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
         bypassWorkqueues = true; # Improve SSD performance
@@ -44,6 +42,7 @@
         location = "/swap/SWAPFILE";
         hibernation = {
             enable = true;
+            resume_device = "/dev/mapper/rootfs_crypt";
             resume_offset = 5780096;
         };
     };

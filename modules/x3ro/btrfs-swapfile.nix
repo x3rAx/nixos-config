@@ -62,6 +62,16 @@ in {
 
             hibernation.enable = mkEnableOption "hibernation";
 
+            hibernation.resume_device = mkOption {
+                type = types.str;
+                example = "/dev/mapper/rootfs_crypt";
+                description = ''
+                    The device that should be used for resume.
+
+                    The value is directly passed to `boot.resumeDevice`.
+                '';
+            };
+
             hibernation.resume_offset = mkOption {
                 type = types.ints.unsigned;
                 example = 38912;
@@ -122,10 +132,10 @@ in {
     };
 
     config = mkIf cfg.enable {
-        boot.kernelParams = if cfg.hibernation.enable
-            #then [ "resume=${cfg.loation}" "resume_offset=${toString cfg.hibernation.resume_offset}" ]
-            then [ "resume_offset=${toString cfg.hibernation.resume_offset}" ]
-            else [];
+        boot = mkIf cfg.hibernation.enable {
+            resumeDevice = cfg.hibernation.resume_device;
+            kernelParams = [ "resume_offset=${toString cfg.hibernation.resume_offset}" ];
+        };
         swapDevices = [
             {
                 device = cfg.location;
