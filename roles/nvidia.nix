@@ -15,6 +15,11 @@ in {
         nvidia-offload
     ];
 
+    #services.xserver.videoDrivers = [ "nvidia" ];
+    #hardware.opengl.enable = true;
+
+    #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+
     # Use the new Gallium `iris` driver for Intel graphics
     #--- REMOVE FROM HERE
     #environment.variables = {
