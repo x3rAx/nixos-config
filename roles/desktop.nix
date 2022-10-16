@@ -335,18 +335,18 @@ in rec {
 
     system.activationScripts = {
         createMntDir = {
-        deps = [];
-        text = ''
-            mkdir -p /mnt
-        '';
+            deps = [];
+            text = ''
+                mkdir -p /mnt
+            '';
         };
         addBinBash = {
-        deps = [];
-        text = ''
-            mkdir -m 0755 -p /bin
-            ln -sf "${pkgs.bash}/bin/bash" /bin/.bash.tmp
-            mv /bin/.bash.tmp /bin/bash # atomically replace it
-        '';
+            deps = [];
+            text = ''
+                mkdir -m 0755 -p /bin
+                ln -sf "${pkgs.bash}/bin/bash" /bin/.bash.tmp
+                mv /bin/.bash.tmp /bin/bash # atomically replace it
+            '';
         };
         #fixVsCodeWriteAsSudo = {
         #    # GitHub issue: https://github.com/NixOS/nixpkgs/issues/49643
