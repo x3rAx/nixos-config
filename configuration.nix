@@ -12,8 +12,12 @@ in {
         symlinkCurrentHost = {
             deps = [];
             text = ''
-                ln -sf "/etc/nixos/configuration/${hostname}" "/etc/nixos/.current-host.tmp"
-                mv /etc/nixos/.current-host.tmp /etc/nixos/current-host # atomically replace it
+                link='/etc/nixos/current-host'
+                dest='/etc/nixos/configuration/${hostname}'
+
+                tmp="$(${pkgs.coreutils}/bin/mktemp)"
+                ln -sf "$dest" "$tmp"
+                mv -T "$tmp" "$link" # atomically replace it
             '';
         };
     };
