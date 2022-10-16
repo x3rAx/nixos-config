@@ -157,6 +157,7 @@ in rec {
     #
     # When do I update `stateVersion`:
     #   https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    system.stateVersion = "20.03"; # Did you read the comment?
+    #system.stateVersion = "20.03"; # Did you read the comment?
+    system.stateVersion = "22.05"; # Did you read the comment?
 
 }
