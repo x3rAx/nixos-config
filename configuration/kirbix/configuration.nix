@@ -2,30 +2,33 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-    lib = import ../../lib.nix;
+    myLib = import ../../lib.nix;
+    importIfExists = path: lib.optional (builtins.pathExists path) path;
 in rec {
-    imports = [
-        # Include the results of the hardware scan.
-        ./hardware-configuration.nix
-        ./hardware-overrides.nix
-        ./rfkill-powerDown.nix
+    imports =
+        [
+            # Include the results of the hardware scan.
+            ./hardware-configuration.nix
+            ./hardware-overrides.nix
+            ./rfkill-powerDown.nix
 
-        ../../roles/common.nix
-        ../../roles/mostly-common.nix
-        ../../roles/desktop.nix
-        ../../roles/desktop-kde.nix
-        ../../roles/nvidia.nix
-    ];
+            ../../roles/common.nix
+            ../../roles/mostly-common.nix
+            ../../roles/desktop.nix
+            ../../roles/desktop-kde.nix
+            ../../roles/nvidia.nix
+        ]
+        ++ importIfExists ./local-configuration.nix;
 
     # TODO: system.nixos.label
 
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
     system.copySystemConfiguration = true;
-    # !!! DO NOT DO THIS --> # lib.createCopyExtraConfigFilesScript [ ./. ] !!!
-    system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
+    # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
     boot.loader = {
         grub = {
