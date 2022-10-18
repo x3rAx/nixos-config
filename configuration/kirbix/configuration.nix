@@ -109,6 +109,9 @@ in rec {
 
     services.xserver.xkbOptions = "caps:escape";
 
+    # Use systemd-resolved for DNS
+    services.resolved.enable = true;
+
     virtualisation = {
         podman = {
             enable = true;
