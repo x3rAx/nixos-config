@@ -87,7 +87,7 @@ in {
                     Instead we compile and use the tool mentioned in the Arch link above:
 
                         tmpdir=$(mktemp -d --tmpdir)
-                        url='https://raw.githubusercontent.com/osandov/osandov-linux/8855b642753cfceff0e8a06a56be091466ca89de/scripts/btrfs_map_physical.c'
+                        url='https://raw.githubusercontent.com/osandov/osandov-linux/d03f560dcef705c05c026b896b0447b53aa00546/scripts/btrfs_map_physical.c'
                         nix-shell -p wget gcc --run "cd '$tmpdir' && wget '$url' && gcc -O2 -o btrfs_map_physical btrfs_map_physical.c"
 
                     Now run the program to get the file fragments:
