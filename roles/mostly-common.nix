@@ -55,10 +55,18 @@
     #time.hardwareClockInLocalTime = true;
 
     programs.ssh.extraConfig = ''
-        # Add the below line to the users `~/.ssh/config` to automatically add keys
-        # when they are used.
-        # DO NOT SET THIS HERE TO PREVENT LEAKING KEYS FROM SUDO TO REGULAR USER!
-        #AddKeysToAgent yes|ask
+        # Add the below lines to the very bottom of the users `~/.ssh/config`
+        # to automatically add keys when they are used (choose between "ask"
+        # and "yes").
+        #
+        # !!! WARNING: DO NOT SET THIS HERE TO PREVENT LEAKING KEYS FROM SUDO TO REGULAR USER !!!
+        #
+        # ```
+        # # NOTE: Keep this at the very bottom
+        # Host *
+        #     AddKeysToAgent yes|ask
+        # # NOTE: Keep this at the very bottom
+        # ```
 
         Host jarvis
             HostName jarvis.x3ro.net
