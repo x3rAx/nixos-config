@@ -51,6 +51,8 @@ in rec {
         };
     };
     hardware.pulseaudio.enable = false;
+
+    hardware.openrazer.enable = true;
     boot.loader = {
         grub = {
             configurationName = "K1STE";
