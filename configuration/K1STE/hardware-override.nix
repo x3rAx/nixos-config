@@ -1,6 +1,14 @@
 # This comment enables syntax highlighting in nvim 🤪
-{ ... }:
-{
+let
+    ssd_options = [
+        "defaults"
+        "ssd"
+        "noatime"
+        "discard=async" # TODO: According to Anselm, this is better than "discard". Is this true?
+        "noautodefrag" # TODO: Might cause freezes? I had no freezes when this was on "autodefrag". But "autodefrag" is bad for SSDs.
+        #"autodefrag" # TODO: This is bad for SSDs but it's a test to see if the freezes go away
+    ];
+in {
     imports = [
         (../../modules/x3ro/btrfs-swapfile.nix)
     ];
@@ -11,7 +19,7 @@
         keyFile = "/crypto_keyfile.bin";
         preLVM = true;
     };
-    fileSystems."/".options = [ "ssd" "noatime" "discard" "autodefrag" ];
+    fileSystems."/".options = ssd_options;
 
     # Data mount
     #fileSystems."/data/extended" = {
@@ -35,7 +43,7 @@
         device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776"; # UUID for encrypted disk
         keyFile = "/crypto_keyfile.bin";
     };
-    fileSystems."/data/extended".options = [ "ssd" "noatime" "discard" "autodefrag" ];
+    fileSystems."/data/extended".options = ssd_options;
 
     x3ro.btrfs-swapfile = {
         enable = true;
