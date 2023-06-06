@@ -53,6 +53,11 @@ in rec {
     hardware.pulseaudio.enable = false;
 
     hardware.openrazer.enable = true;
+
+    # Use the X configuration provided by the nvidia-settings tool
+    services.xserver.config = lib.mkAfter (builtins.readFile ./xserver-nvidia.conf);
+    # For diagnostics, symlink the config to `/etc/X11/xorg.conf`
+    services.xserver.exportConfiguration = true;
     boot.loader = {
         grub = {
             configurationName = "K1STE";
