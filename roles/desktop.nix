@@ -339,14 +339,15 @@ in rec {
         '';
     };
 
-    services.ananicy = {
-        enable = true;
-        package = pkgs.ananicy-cpp;
-        extraRules = ''
-            { "name": "kopia", "nice": 19, "ionice": 7 }
-            { "name": "kopia-ui", "nice": 19, "ionice": 7 }
-        '';
-    };
+    # TODO: Find out how to set up ananicy so that it does not change niceness of other processes
+    #services.ananicy = {
+    #    enable = true;
+    #    package = pkgs.ananicy-cpp;
+    #    extraRules = ''
+    #        { "name": "kopia", "nice": 19, "ionice": 7 }
+    #        { "name": "kopia-ui", "nice": 19, "ionice": 7 }
+    #    '';
+    #};
 
     system.activationScripts = {
         createMntDir = {
