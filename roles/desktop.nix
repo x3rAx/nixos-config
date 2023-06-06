@@ -5,12 +5,19 @@ let
     myLib = import ../lib.nix;
 
     baseconfig = { allowUnfree = true; };
+    stable =
+        let result = builtins.tryEval (import <nixos-stable>);
+        in (
+            if result.success then result.value
+            else import <nixos>
+        ) { config = baseconfig; };
     unstable = import <nixos-unstable> { config = baseconfig; };
     #pinned-for-virtualbox = builtins.fetchTarball {
     #    #name = "nixos-pinned-for-virtualbox";
     #    url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.11.tar.gz";
     #    sha256 = "162dywda2dvfj1248afxc45kcrg83appjd0nmdb541hl7rnncf02";
     #};
+
 in rec {
     disabledModules = [
         #"virtualisation/virtualbox-host.nix"
