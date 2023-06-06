@@ -26,6 +26,31 @@ in rec {
     # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
     system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
+    security.rtkit.enable = true;
+    services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+        # If you want to use JACK applications, uncomment this
+        #jack.enable = true;
+
+        config.pipewire = {
+            "context.properties" = {
+                #"link.max-buffers" = 64;
+                "link.max-buffers" = 16; # version < 3 clients can't handle more than this
+                "log.level" = 2; # https://docs.pipewire.org/page_daemon.html
+                #"default.clock.rate" = 48000;
+                #"default.clock.quantum" = 1024;
+                "default.clock.quantum" = 32;
+                #"default.clock.min-quantum" = 32;
+                "default.clock.min-quantum" = 32;
+                #"default.clock.max-quantum" = 8192;
+                "default.clock.max-quantum" = 2048;
+            };
+        };
+    };
+    hardware.pulseaudio.enable = false;
     boot.loader = {
         grub = {
             configurationName = "K1STE";

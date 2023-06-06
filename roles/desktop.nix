@@ -258,7 +258,7 @@ in rec {
 
     # Enable sound.
     sound.enable = true;
-    hardware.pulseaudio.enable = true;
+    hardware.pulseaudio.enable = lib.mkDefault true; # TODO: Switch to PipeWire by default
 
     # Enable udev rules for ZSA keyboards (Moonlander)
     hardware.keyboard.zsa.enable = true;
