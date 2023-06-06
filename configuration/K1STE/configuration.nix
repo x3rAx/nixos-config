@@ -81,6 +81,7 @@ in rec {
     networking.networkmanager.enable = true;
 
     programs.gamemode.enable = true;
+    programs.corectrl.enable = true;
 
     # Configure network proxy if necessary
     # networking.proxy.default = "http://user:password@proxy:port/";
@@ -105,7 +106,6 @@ in rec {
 
         bind
         cifs-utils # For mounting SMB
-        corectrl
         glib
         hdparm
         pkg-config
