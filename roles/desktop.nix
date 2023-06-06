@@ -233,6 +233,10 @@ in rec {
         zip
     ];
 
+    fonts.fonts = with pkgs; [
+        font-awesome
+    ];
+
     environment.shellAliases = {
         mnt = "bashmount";
         doc = "docker-compose";
