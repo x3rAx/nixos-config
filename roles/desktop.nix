@@ -24,6 +24,7 @@ in rec {
     ];
     imports = [
         #../modules/nixos-rebuild-wrapper.nix
+        ../modules/ios-usb.nix
     ] ++ [
         # Overridden Modules
         #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
