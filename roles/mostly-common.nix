@@ -15,6 +15,7 @@
         glances
         iotop-c
         ncdu
+        nfs-utils
         pv
         python3
         ranger
