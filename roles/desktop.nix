@@ -194,8 +194,6 @@ in rec {
         ranger
         restic
         rofi
-        rofi
-        rofimoji
         rofimoji
         rustup
         rxvt-unicode
