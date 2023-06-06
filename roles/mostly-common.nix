@@ -103,4 +103,19 @@
             defaultNetwork.dnsname.enable = true;
         };
     };
+
+    environment.etc."NIXOS_LUSTRATE.template" = {
+        mode = "0644";
+        text = ''
+            /etc/NIXOS_LUSTRATE.template
+
+            /home
+            /data
+            /etc/secrets
+            /swap
+
+            /mnt
+            /root
+        '';
+    };
 }
