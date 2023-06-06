@@ -1,4 +1,6 @@
 # This comment enables syntax highlighting in nvim 🤪
+{ pkgs, lib, ... }:
+
 let
     ssd_options = [
         "defaults"
@@ -13,6 +15,15 @@ in {
         (../../modules/x3ro/btrfs-swapfile.nix)
     ];
 
+    services.fstrim.enable = true;
+
+    #boot.initrd.availableKernelModules = [
+    #    "xhci_pci" "ehci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod"
+    #    #"delayacct" # For `iotop` to display `SWAPIN` and `IO %` (but seems to be unavailable in NixOS)
+    #];
+
+    boot.resumeDevice = "/dev/mapper/fsroot_crypt";
+
     boot.initrd.luks.devices."fsroot_crypt" = {
         allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
         bypassWorkqueues = true; # Improve SSD performance
@@ -20,6 +31,14 @@ in {
         preLVM = true;
     };
     fileSystems."/".options = ssd_options;
+
+    #boot.initrd.luks.devices."old_rootfs_crypt" = {
+    #    allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
+    #    bypassWorkqueues = true; # Improve SSD performance
+    #    keyFile = "/crypto_keyfile.bin";
+    #    preLVM = true;
+    #};
+    #fileSystems."/home".options = ssd_options;
 
     # Data mount
     #fileSystems."/data/extended" = {
@@ -37,22 +56,36 @@ in {
     #        keyFile = "/mnt-root/etc/secrets/initrd/crypto_keyfile.bin";
     #    };
     #};
-    boot.initrd.luks.devices."extended_crypt" = {
-        allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
-        bypassWorkqueues = true; # Improve SSD performance
-        device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776"; # UUID for encrypted disk
-        keyFile = "/crypto_keyfile.bin";
-    };
-    fileSystems."/data/extended".options = ssd_options;
+    #boot.initrd.luks.devices."extended_crypt" = {
+    #    allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
+    #    bypassWorkqueues = true; # Improve SSD performance
+    #    device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776"; # UUID for encrypted disk
+    #    keyFile = "/crypto_keyfile.bin";
+    #};
+    #fileSystems."/data/extended".options = ssd_options;
 
     x3ro.btrfs-swapfile = {
         enable = true;
         location = "/swap/SWAPFILE";
         hibernation = {
             enable = true;
-            resume_device = "/dev/mapper/fsroot_crypt";
+            resume_device = "/dev/mapper/fsroot_crypt"; # This is new, is this correct?
             resume_offset = 176981550;
         };
     };
+
+    #environment.systemPackages = [ pkgs.cifs-utils ];
+    #fileSystems."/data/NAS/^x3ro" = {
+    #    device = "//NAS/^x3ro";
+    #    fsType = "cifs";
+    #    options = let
+    #        # this line prevents hanging on network split
+    #        automount_opts = "_netdev,x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    #    in ["${automount_opts},credentials=/etc/secrets/samba/x3ro@NAS"];
+    #};
+
+    # TODO: This is set to "powersave" in `hardware-configuration.nix`. Is it a good idea to unset it?
+    powerManagement.cpuFreqGovernor = lib.mkForce null; # "ondemand", "powersave", "performance"
 }
 
