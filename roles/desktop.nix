@@ -258,6 +258,12 @@ in rec {
     # Enable touchpad support (enabled default in most desktopManager).
     # services.xserver.libinput.enable = true;
     # services.xserver.libinput.touchpad.naturalScrolling = true;
+    services.xserver.libinput = {
+        enable = true;
+        mouse = {
+            accelProfile = "flat";
+        };
+    };
 
     # Configure keymap in X11
     services.xserver.layout = "eu";
