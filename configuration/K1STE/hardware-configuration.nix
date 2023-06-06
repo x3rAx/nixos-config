@@ -8,40 +8,46 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
+    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
       fsType = "btrfs";
       options = [ "subvol=NixOS/@" ];
     };
 
-  boot.initrd.luks.devices."rootfs_crypt".device = "/dev/disk/by-uuid/8aedd2c2-2518-49fd-8d14-d22a64804fc1";
-
-  fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/AC26-5FEB";
-      fsType = "vfat";
-    };
-
-  fileSystems."/etc/nixos" =
-    { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
-      fsType = "btrfs";
-      options = [ "subvol=NixOS/@etc@nixos" ];
-    };
+  boot.initrd.luks.devices."fsroot_crypt".device = "/dev/disk/by-uuid/78506b62-7474-4a17-865e-19584d6e0817";
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
+    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
       fsType = "btrfs";
       options = [ "subvol=NixOS/@home" ];
     };
 
+  fileSystems."/etc/nixos" =
+    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
+      fsType = "btrfs";
+      options = [ "subvol=NixOS/@etc@nixos" ];
+    };
+
+  fileSystems."/etc/secrets" =
+    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
+      fsType = "btrfs";
+      options = [ "subvol=NixOS/@etc@secrets" ];
+    };
+
   fileSystems."/swap" =
-    { device = "/dev/disk/by-uuid/e363e774-4238-45ac-94b7-691623bf27b9";
+    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
       fsType = "btrfs";
       options = [ "subvol=NixOS/@swap" ];
+    };
+
+  fileSystems."/boot/efi" =
+    { device = "/dev/disk/by-uuid/2DFE-0F1A";
+      fsType = "vfat";
     };
 
   fileSystems."/data/extended" =
@@ -53,11 +59,14 @@
 
   swapDevices = [ ];
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = lib.mkDefault false;
-  networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
