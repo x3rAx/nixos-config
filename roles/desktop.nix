@@ -175,7 +175,6 @@ in rec {
         nodePackages.pnpm
         nodePackages.zx
         nodejs
-        nodejs
         nomacs
         nox
         nushell
@@ -187,7 +186,7 @@ in rec {
         pdfmixtool
         picom-next
         playerctl # Control media players from cli
-        polybar
+        polybarFull
         postman
         pv
         python3Packages.bpython # Alternative python repl
