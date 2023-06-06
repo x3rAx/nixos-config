@@ -1,8 +1,8 @@
 # Configuration for workstations (desktops / laptops)
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-    lib = import ../lib.nix;
+    myLib = import ../lib.nix;
 
     baseconfig = { allowUnfree = true; };
     unstable = import <nixos-unstable> { config = baseconfig; };
@@ -21,7 +21,7 @@ in rec {
         # Overridden Modules
         #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
     ];
-    system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript imports;
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     # Enable Flakes
     nix = {

@@ -2,10 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
-    lib = import ../../lib.nix;
+    myLib = import ../../lib.nix;
 in rec {
     imports = [
         # Include the results of the hardware scan.
@@ -21,8 +21,8 @@ in rec {
     # Copies `configuration.nix` and links it from the resulting system to
     # `/run/current-system/configuration.nix`
     #system.copySystemConfiguration = true;
-    # !!! DO NOT DO THIS --> # lib.createCopyExtraConfigFilesScript [ ./. ] !!!
-    system.extraSystemBuilderCmds = lib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
+    # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
     boot.loader = {
         grub = {
