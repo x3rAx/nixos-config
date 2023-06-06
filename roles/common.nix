@@ -14,13 +14,17 @@
         bat
         fd
         gdu
-        git
         htop
         killall
         ripgrep
         tmux
         wget
     ];
+
+    programs.git = {
+        enable = true;
+        lfs.enable = true;
+    };
 
     environment.etc."gitconfig" = {
         mode = "0644";
