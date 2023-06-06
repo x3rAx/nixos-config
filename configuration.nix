@@ -15,9 +15,7 @@ in {
                 link='/etc/nixos/current-host'
                 dest='/etc/nixos/configuration/${hostname}'
 
-                tmp="$(${pkgs.coreutils}/bin/mktemp)"
-                ln -sf "$dest" "$tmp"
-                mv -T "$tmp" "$link" # atomically replace it
+                ln -sfr -T "$dest" "$link"
             '';
         };
     };
