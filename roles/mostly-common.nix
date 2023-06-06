@@ -89,4 +89,18 @@
     };
 
     virtualisation.docker.enable = true;
+
+    boot.enableContainers = false;
+    virtualisation = {
+        podman = {
+            enable = true;
+
+            # Create a `docker` alias for podman, to use it as a drop-in replacement
+            #dockerCompat = true;
+
+            # Required for containers under podman-compose to be able to talk to each other.
+            # This is the definition that was outdated when I updated on 2023-01-09:
+            defaultNetwork.dnsname.enable = true;
+        };
+    };
 }
