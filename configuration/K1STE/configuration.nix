@@ -11,6 +11,7 @@ in rec {
         # Include the results of the hardware scan.
         ./hardware-configuration.nix
         ./hardware-override.nix
+        ./openrgb.nix
 
         ../../roles/common.nix
         ../../roles/mostly-common.nix
