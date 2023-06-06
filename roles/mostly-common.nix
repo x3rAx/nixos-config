@@ -13,6 +13,7 @@
         file
         fzf
         glances
+        iotop-c
         ncdu
         pv
         python3
@@ -23,7 +24,7 @@
     ];
 
     environment.shellAliases = {
-        #doc = "docker-compose";
+        iotop = "sudo iotop-c";
     };
 
     # Select internationalisation properties.
