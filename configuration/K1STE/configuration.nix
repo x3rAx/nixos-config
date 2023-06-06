@@ -17,6 +17,7 @@ in rec {
         ../../roles/mostly-common.nix
         ../../roles/desktop.nix
         ../../roles/desktop-bspwm.nix
+        ../../roles/nvidia.nix
     ];
 
     # Copies `configuration.nix` and links it from the resulting system to
