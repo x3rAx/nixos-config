@@ -42,6 +42,7 @@ in {
                    
                     Fill swapfile
                    
+                        # As a rule of thumb, for hibernation use `RAM + sqrt(RAM)`
                         size_MB=$((2 * 1024))
                         dd if=/dev/zero of="$swapfile" bs=1M count="$size_MB" status=progress
 
@@ -106,8 +107,11 @@ in {
                         ...
 
                     Finally, we use this physical size to calculate the reume offset:
+                    Use for example `qalc` to calculate the offset:
 
+                        $ nix-shell -p libqalculate --run 'qalc 96971939840 / 4096' 
                         96971939840 / 4096 = 23674790
+
                 '';
             };
                    
