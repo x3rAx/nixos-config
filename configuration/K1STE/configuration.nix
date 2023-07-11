@@ -71,7 +71,7 @@ in rec {
     };
 
     boot.kernel.sysctl = {
-        "kernel.sysrq" = 1;
+        "kernel.sysrq" = 1; # Allow system request (e.g. "reisub")
         #"fs.inotify.max_user_watches" = 524288;
         #"vm.swappiness" = 1;
     };
