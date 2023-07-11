@@ -128,6 +128,10 @@ in rec {
         '';
 
 
+    # Enable Nvidia GPUs inside docker containers
+    virtualisation.docker.enableNvidia = true;
+
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
     # (generate hashed passwords with `mkpasswd -m sha512`)
     users.users.root = { hashedPassword = "!"; };
