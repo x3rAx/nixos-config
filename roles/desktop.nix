@@ -33,11 +33,13 @@ in rec {
 
     # Enable Flakes
     nix = {
-        package = pkgs.nixFlakes;
+        package = pkgs.nixVersions.stable;
+
         extraOptions = ''
             # For nix-direnv
             keep-outputs = true
             keep-derivations = true
+
             # For nix flakes
             experimental-features = nix-command flakes
         '';
