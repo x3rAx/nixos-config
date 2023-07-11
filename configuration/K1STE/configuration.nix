@@ -113,6 +113,21 @@ in rec {
         rnix-lsp
     ];
 
+
+    # XSecureLock
+    environment.etc."systemd/system-sleep/xsecurelock".source =
+        pkgs.writeShellScript "xsecurelock" ''
+            #!/bin/bash
+            if [[ "$1" = "post" ]] ; then
+              pkill -x -USR2 xsecurelock
+            fi
+            exit 0
+            #if [ "$1-$SYSTEMD_SLEEP_ACTION" = "post-hibernate" ]; then
+            #    ${pkgs.procps}/bin/pkill slock
+            #fi
+        '';
+
+
     # Define a user account. Don't forget to set a password with ‘passwd’.
     # (generate hashed passwords with `mkpasswd -m sha512`)
     users.users.root = { hashedPassword = "!"; };
