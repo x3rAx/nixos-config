@@ -32,6 +32,14 @@ let myLib = {
         in
             builtins.concatStringsSep newline linkCommands;
 
+
+    # Check if the current NixOS version is at least the given version
+    nixosMinVersion = version:
+        (builtins.compareVersions
+            config.system.nixos.release
+            version
+        ) >= 0;
+
 };
 
 in myLib

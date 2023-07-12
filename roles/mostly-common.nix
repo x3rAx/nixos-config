@@ -1,6 +1,6 @@
 # Stuff that currently should be on all machines but has the potentil to be
 # specific to only some machines in the future
-{ config, pkgs, ... }:
+{ config, pkgs, myLib, ... }:
 
 {
     # List packages installed in system profile. To search, run:
@@ -80,13 +80,24 @@
     # Enable the OpenSSH daemon.
     services.openssh = {
         enable = true;
-        passwordAuthentication = false;
-        permitRootLogin = "prohibit-password";
         extraConfig = ''
             Match Address 127.0.0.1,::1
                 PermitRootLogin prohibit-password
         '';
-    };
+    } // (
+        let
+            settings = {
+                PasswordAuthentication = false;
+                PermitRootLogin = "prohibit-password";
+            };
+         in
+            if myLib.nixosMinVersion "23.05" then {
+                inherit settings;
+            } else {
+                passwordAuthentication = settings.PasswordAuthentication;
+                permitRootLogin = settings.PermitRootLogin;
+            }
+    );
 
     virtualisation.docker.enable = true;
 
@@ -97,11 +108,18 @@
 
             # Create a `docker` alias for podman, to use it as a drop-in replacement
             #dockerCompat = true;
-
-            # Required for containers under podman-compose to be able to talk to each other.
-            # This is the definition that was outdated when I updated on 2023-01-09:
-            defaultNetwork.dnsname.enable = true;
-        };
+        } // (
+            let
+                # Required for containers under podman-compose to be able to talk to each other.
+                # This is the definition that was outdated when I updated on 2023-01-09:
+                dns_enabled = true;
+            in
+                if myLib.nixosMinVersion "23.05" then {
+                    defaultNetwork.settings.dns_enabled = dns_enabled;
+                } else {
+                    defaultNetwork.dnsname.enable = dns_enabled;
+                }
+        );
     };
 
     environment.etc."NIXOS_LUSTRATE.template" = {

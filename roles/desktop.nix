@@ -75,7 +75,6 @@ in rec {
         };
         grub = {
             enable = true;
-            version = 2;
             device = "nodev";
             efiSupport = true;
             efiInstallAsRemovable = false;
@@ -104,7 +103,13 @@ in rec {
             # 
             # See the boot.initrd.secrets option documentation for more information.
             #extraInitrd = /boot/initrd.keys.gz;
-        };
+        } // (
+            if (myLib.nixosMinVersion "23.05") then {
+                # `boot.loader.grub.version` does not have any effect anymore
+            } else { # >= 23.05
+                version = 2;
+            }
+        );
     };
 
     # List packages installed in system profile. To search, run:

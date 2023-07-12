@@ -32,22 +32,30 @@ rec {
         pulse.enable = true;
         # If you want to use JACK applications, uncomment this
         #jack.enable = true;
-
-        config.pipewire = {
-            "context.properties" = {
-                #"link.max-buffers" = 64;
-                "link.max-buffers" = 16; # version < 3 clients can't handle more than this
-                "log.level" = 2; # https://docs.pipewire.org/page_daemon.html
-                #"default.clock.rate" = 48000;
-                #"default.clock.quantum" = 1024;
-                "default.clock.quantum" = 32;
-                #"default.clock.min-quantum" = 32;
-                "default.clock.min-quantum" = 32;
-                #"default.clock.max-quantum" = 8192;
-                "default.clock.max-quantum" = 2048;
+    } // (
+        if myLib.nixosMinVersion "23.05" then {
+            # NOTE: Overriding default Pipewire configuration through NixOS
+            #       options never worked correctly and is no longer supported.
+            #       Please create drop-in files in
+            #       /etc/pipewire/pipewire.conf.d/ to make the desired setting
+            #       changes instead.
+        } else {
+            config.pipewire = {
+                "context.properties" = {
+                    #"link.max-buffers" = 64;
+                    "link.max-buffers" = 16; # version < 3 clients can't handle more than this
+                    "log.level" = 2; # https://docs.pipewire.org/page_daemon.html
+                    #"default.clock.rate" = 48000;
+                    #"default.clock.quantum" = 1024;
+                    "default.clock.quantum" = 32;
+                    #"default.clock.min-quantum" = 32;
+                    "default.clock.min-quantum" = 32;
+                    #"default.clock.max-quantum" = 8192;
+                    "default.clock.max-quantum" = 2048;
+                };
             };
-        };
-    };
+        }
+    );
     hardware.pulseaudio.enable = false;
 
     hardware.openrazer.enable = true;
