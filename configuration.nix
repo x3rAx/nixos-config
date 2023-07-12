@@ -1,11 +1,13 @@
-{ config, pkgs, ... }:
+args@{ config, pkgs, ... }:
 
 let
-    lib = import ./lib.nix;
     hostname = import ./hostname.nix;
+    myLib = (import ./myLib.nix) args;
 in {
+    _module.args.myLib = myLib;
+
     imports = [
-        (lib.toPath "./configuration/${hostname}/configuration.nix")
+        (myLib.toPath "./configuration/${hostname}/configuration.nix")
     ];
 
     system.activationScripts = {
