@@ -1,9 +1,7 @@
 # Configuration for workstations (desktops / laptops)
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, myLib, ... }:
 
 let
-    myLib = import ../lib.nix;
-
     baseconfig = { allowUnfree = true; };
     stable =
         let result = builtins.tryEval (import <nixos-stable>);
