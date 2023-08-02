@@ -102,10 +102,6 @@ in rec {
     # Enable Bluetooth
     hardware.bluetooth.enable = true;
 
-    # Enable touchpad support.
-    services.xserver.libinput.enable = true;
-    services.xserver.libinput.touchpad.naturalScrolling = true;
-
     services.xserver.xkbOptions = "caps:escape";
 
     # Use systemd-resolved for DNS

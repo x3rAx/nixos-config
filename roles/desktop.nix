@@ -261,12 +261,15 @@ in rec {
     services.xserver.enable = true;
 
     # Enable touchpad support (enabled default in most desktopManager).
-    # services.xserver.libinput.enable = true;
-    # services.xserver.libinput.touchpad.naturalScrolling = true;
     services.xserver.libinput = {
         enable = true;
         mouse = {
             accelProfile = "flat";
+        };
+        touchpad = {
+            naturalScrolling = true;
+            tappingDragLock = false;
+
         };
     };
 
