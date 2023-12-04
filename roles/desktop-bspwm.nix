@@ -8,14 +8,32 @@ rec {
         #sddm-kcm # For SDDM settings to appear in KDE settings
     ];
 
-    services.xserver.enable = true;
-    # Enable the Plasma 5 Desktop Environment.
-    services.xserver.displayManager.sddm = {
+    services.xserver = {
         enable = true;
-        autoNumlock = true;
-        #enableHidpi = true;
+
+        #displayManager.lightdm = {
+        #    enable = true;
+        #    background = (myLib.toPath "/home/x3ro/Pictures/[Wallpapers]/1920x1080/tree-on-a-hill.jpg");
+        #};
+        displayManager.sddm = {
+            enable = true;
+            autoNumlock = true;
+            #enableHidpi = true;
+        };
+
+        desktopManager.xfce = {
+            enable = true;
+            enableXfwm = false;
+            noDesktop = true;
+        };
+
+        windowManager.bspwm = {
+            enable = true;
+            #package = "pkgs.bspwm-unstable";
+            configFile = "/home/x3ro/.config/bspwm/bspwmrc";
+            sxhkd.configFile= "/home/x3ro/.config/sxhkd/sxhkdrc";
+        };
     };
-    services.xserver.windowManager.bspwm.enable = true;
 }
 
 
