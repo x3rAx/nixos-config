@@ -8,12 +8,17 @@ rec {
         sddm-kcm # For SDDM settings to appear in KDE settings
     ];
 
-    services.xserver.enable = true;
-    # Enable the Plasma 5 Desktop Environment.
-    services.xserver.displayManager.sddm = {
+    services.xserver = {
         enable = true;
-        autoNumlock = true;
-        #enableHidpi = true;
+
+        displayManager.sddm = {
+            enable = true;
+            autoNumlock = true;
+            #enableHidpi = true;
+        };
+
+        desktopManager = {
+            plasma5.enable = true;
+        };
     };
-    services.xserver.desktopManager.plasma5.enable = true;
 }
