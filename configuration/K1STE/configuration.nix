@@ -31,7 +31,7 @@ rec {
         alsa.support32Bit = true;
         pulse.enable = true;
         # If you want to use JACK applications, uncomment this
-        #jack.enable = true;
+        jack.enable = true;
     } // (
         if myLib.nixosMinVersion "23.05" then {
             # NOTE: Overriding default Pipewire configuration through NixOS
