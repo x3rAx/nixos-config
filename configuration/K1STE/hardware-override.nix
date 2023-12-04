@@ -1,5 +1,5 @@
 # This comment enables syntax highlighting in nvim 🤪
-{ pkgs, lib, ... }:
+{ pkgs, lib, myLib, ... }:
 
 let
     ssd_options = [
@@ -10,10 +10,11 @@ let
         "noautodefrag" # TODO: Might cause freezes? I had no freezes when this was on "autodefrag". But "autodefrag" is bad for SSDs.
         #"autodefrag" # TODO: This is bad for SSDs but it's a test to see if the freezes go away
     ];
-in {
+in rec {
     imports = [
         (../../modules/x3ro/btrfs-swapfile.nix)
     ];
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     services.fstrim.enable = true;
 

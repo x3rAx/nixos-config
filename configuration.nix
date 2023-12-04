@@ -9,6 +9,7 @@ in {
     imports = [
         (myLib.toPath "./configuration/${hostname}/configuration.nix")
     ];
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     system.activationScripts = {
         symlinkCurrentHost = {
