@@ -392,4 +392,21 @@ in rec {
     #    package = pinned-for-virtualbox.pkgs.virtualbox;
     #};
 
+    services.udev.extraRules = ''
+        # Enable NumLock on keyboard connect
+        # NOTE: It seems to be a udev rule that turns off the numpad state
+        #       after a keyboard is connected.
+        #       This rule tries to counterack this but at the cost of
+        #       introducing a delay when a device is connected. Since (some?)
+        #       udev rules are executed in serial (or devices are connected in
+        #       serial?), the sleep causes some delay if a device like a
+        #       keyboard connects as multiple devices.
+        # TODO: Try if this is fixed in a future update and disable this rule again.
+            ACTION=="add",
+            SUBSYSTEM=="usb", # maybe "input"?
+            ENV{XAUTHORITY}="/home/x3ro/.Xauthority",
+            ENV{DISPLAY}=":0",
+            ATTRS{product}=="USB Keyboard",
+            RUN+="${pkgs.su}/bin/su x3ro -c '${pkgs.coreutils}/bin/sleep 0.1; [ -f $XAUTHORITY ] && ${pkgs.numlockx}/bin/numlockx on'"
+    '';
 }
