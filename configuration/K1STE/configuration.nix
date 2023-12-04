@@ -61,7 +61,7 @@ rec {
     hardware.openrazer.enable = true;
 
     # Use the X configuration provided by the nvidia-settings tool
-    services.xserver.config = lib.mkAfter (builtins.readFile ./xserver-nvidia.conf);
+    #services.xserver.config = lib.mkAfter (builtins.readFile ./xserver-nvidia.conf);
     # For diagnostics, symlink the config to `/etc/X11/xorg.conf`
     services.xserver.exportConfiguration = true;
     boot.loader = {
