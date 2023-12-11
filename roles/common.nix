@@ -43,6 +43,7 @@
         ssh-tmp = "ssh -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
         scp-tmp = "scp -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
         gdiff = "git diff --no-index \"$@\"";
+        grep = "grep --color=auto";
     };
 
     # Update Intel microcode
