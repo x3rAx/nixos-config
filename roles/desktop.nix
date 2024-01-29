@@ -189,7 +189,7 @@ in rec {
         parted
         pciutils
         pdfmixtool
-        picom-next
+        picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
         playerctl # Control media players from cli
         polybarFull
         postman
