@@ -431,4 +431,7 @@ in rec {
             xdg-desktop-portal-gtk # Required for flatpak
         ];
     };
+
+    # Symlink current rofi themes to /etc
+    environment.etc."rofi/themes".source = "${pkgs.rofi}/share/rofi/themes";
 }
