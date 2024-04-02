@@ -5,7 +5,7 @@ rec {
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
-        #sddm-kcm # For SDDM settings to appear in KDE settings
+        xtitle # To get window titles from scripts
     ];
 
     services.xserver = {
