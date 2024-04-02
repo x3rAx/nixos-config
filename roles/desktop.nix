@@ -248,7 +248,7 @@ in rec {
     environment.shellAliases = {
         mnt = "bashmount";
         doc = "docker-compose";
-        sudocode = "sudo -i code --user-data-dir /root/.config/sudocode";
+        sudocode = "sudo -i code --no-sandbox --user-data-dir /root/.config/sudocode";
         nixos-config = "sudocode /etc/nixos/{,{configuration,hardware-configuration}.nix}";
     };
 
