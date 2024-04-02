@@ -2,7 +2,7 @@
 
 {
     # NVIDIA drivers are unfree.
-    nixpkgs.config.allowUnfree = true;
+    #nixpkgs.config.allowUnfree = true;
   
     services.xserver.videoDrivers = [ "nvidia" ];
     hardware.opengl.enable = true;
@@ -11,7 +11,7 @@
     # See here:
     #   https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
     # for a list of available packages.
-    # - stable     = `latest` (or `legacy_398` if host platform is 'i686-linux')
+    # - stable     = `latest` (or `legacy_390` if host platform is 'i686-linux')
     # - latest     = "New Feature Branch" (or `production` which ever is newer)
     # - production = "Production Branch"
     # The default is `stable`.
