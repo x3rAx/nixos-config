@@ -190,7 +190,7 @@ in rec {
         picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
         playerctl # Control media players from cli
         polybarFull
-        postman
+        #postman # Postman removes older builds and only keeps the latest version online -> bad for NixOS. See https://github.com/NixOS/nixpkgs/issues/259147
         pv
         python3Packages.bpython # Alternative python repl
         quickemu
