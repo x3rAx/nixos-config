@@ -233,9 +233,17 @@ in rec {
         zip
     ];
 
-    fonts.fonts = with pkgs; [
-        font-awesome
-    ];
+    fonts =
+        let
+            packages = with pkgs; [
+                font-awesome
+            ];
+        in
+            if (myLib.nixosMinVersion "23.11") then {
+                inherit packages;
+            } else {
+                fonts = packages;
+            };
 
     environment.shellAliases = {
         mnt = "bashmount";
