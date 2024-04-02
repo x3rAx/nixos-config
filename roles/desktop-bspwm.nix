@@ -26,8 +26,9 @@ rec {
 
         desktopManager.xfce = {
             enable = true;
-            enableXfwm = false;
-            noDesktop = true;
+            enableXfwm = false; # Disable default XFCE window manager
+            noDesktop = true; # Don’t install XFCE desktop components (xfdesktop and panel).
+            enableScreensaver = false; # I will bring my own screensaver, thanks.
         };
 
         windowManager.bspwm = {
