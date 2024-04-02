@@ -92,7 +92,7 @@ in rec {
         glib
         hdparm
         pkg-config
-        rnix-lsp
+        #rnix-lsp # TODO: Remove or re-enable: Depends on `nix-2.15.3` which is marked as insecure due to CVE-2024-27297
     ];
 
     programs.ssh.startAgent = true;

@@ -154,7 +154,7 @@ rec {
         glib
         hdparm
         pkg-config
-        #rnix-lsp # Disabled due to CVE-2024-27297 (See: https://discourse.nixos.org/t/nixos-need-help-finding-out-what-is-pulling-in-nix-2-15-3-in-my-config/41103/2)
+        #rnix-lsp # TODO: Remove or re-enable: Depends on `nix-2.15.3` which is marked as insecure due to CVE-2024-27297 (See: https://discourse.nixos.org/t/nixos-need-help-finding-out-what-is-pulling-in-nix-2-15-3-in-my-config/41103/2)
     ];
 
     #systemd.services.systemd-udevd.restartIfChanged = false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
