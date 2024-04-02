@@ -110,6 +110,7 @@ rec {
         #"fs.inotify.max_user_watches" = 524288;
         #"vm.swappiness" = 1;
         "vm.max_map_count" = 16777216; # For StarCitizen
+        #"fs.file-max" = 16777216; # For StarCitizen # However, it is now set to the largest possible value by default when using systemd (see `cat /proc/sys/fs/file-max` and https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812) 
     };
 
     networking.hostName = "K1STE"; # Define your hostname.
