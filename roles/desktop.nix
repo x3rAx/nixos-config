@@ -149,11 +149,9 @@ in rec {
         ffmpeg
         file
         firefox
-        firefox
         fzf
         gimp
-        gimp
-        gitui
+        gitFull # Enable full-featured git (needed e.g. for `gitk`)
         glances
         glances
         gnumake # for `dake`
@@ -200,7 +198,6 @@ in rec {
         restic
         rofi
         rofimoji
-        rustup
         rxvt-unicode
         shellcheck
         signal-desktop
@@ -211,7 +208,6 @@ in rec {
         syncthing
         syncthing
         syncthingtray
-        tdesktop # Telegram Desktop
         teamspeak_client
         thunderbird
         tmate
@@ -225,7 +221,6 @@ in rec {
         unzip
         usbutils
         ventoy-bin
-        veracrypt
         virt-manager
         vlc
         vscode
