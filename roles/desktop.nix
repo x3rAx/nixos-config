@@ -290,6 +290,9 @@ in rec {
     # Enable udev rules for ZSA keyboards (Moonlander)
     hardware.keyboard.zsa.enable = true;
 
+    # Enable support for Wooting keyboards
+    hardware.wooting.enable = true;
+
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
