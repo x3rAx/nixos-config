@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, myLib, ... }:
+{ config, pkgs, lib, myLib, hostname, ... }:
 
 rec {
     imports = [
@@ -118,7 +118,7 @@ rec {
         #"fs.file-max" = 16777216; # For StarCitizen # However, it is now set to the largest possible value by default when using systemd (see `cat /proc/sys/fs/file-max` and https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812) 
     };
 
-    networking.hostName = "K1STE"; # Define your hostname.
+    networking.hostName = hostname; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     networking.networkmanager.enable = true;
 
