@@ -119,7 +119,6 @@
         } // (
             let
                 # Required for containers under podman-compose to be able to talk to each other.
-                # This is the definition that was outdated when I updated on 2023-01-09:
                 dns_enabled = true;
             in
                 if myLib.nixosMinVersion "23.05" then {
