@@ -182,6 +182,8 @@ rec {
             "input"
             "tty"
             "libvirtd"
+            "openrazer"
+            "corectrl" # Control CPU / GPU profiles
         ];
         initialPassword = "changeMe!";
     };
