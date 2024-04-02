@@ -11,6 +11,8 @@ in rec {
     ];
     system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
+    nixpkgs.overlays = import ./overlays;
+
     system.activationScripts = {
         symlinkCurrentHost = {
             deps = [];
