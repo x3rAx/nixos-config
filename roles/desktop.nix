@@ -421,4 +421,14 @@ in rec {
             #ATTRS{product}=="USB Keyboard",
             #RUN+="${pkgs.su}/bin/su x3ro -c '${pkgs.coreutils}/bin/sleep 0.1; [ -f $XAUTHORITY ] && ${pkgs.numlockx}/bin/numlockx on'"
     '';
+
+    # Flatpak
+    services.flatpak.enable = true;
+
+    xdg.portal = {
+        enable = true;
+        extraPortals = with pkgs; [
+            xdg-desktop-portal-gtk # Required for flatpak
+        ];
+    };
 }
