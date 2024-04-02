@@ -22,7 +22,7 @@ rec {
     # `/run/current-system/configuration.nix`
     #system.copySystemConfiguration = true;
     # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     security.rtkit.enable = true;
     services.pipewire = {

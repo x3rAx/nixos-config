@@ -5,8 +5,6 @@ with lib;
 let
     cfg = config.x3ro.hdd-sleep-service;
 in {
-    imports = [];
-
     options = {
         x3ro.hdd-sleep-service = {
 

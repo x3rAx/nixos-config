@@ -25,7 +25,7 @@ in rec {
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
     system.copySystemConfiguration = true;
     # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     # Fix GDM not starting on Framework Laptop
     boot.kernelPackages = pkgs.linuxPackages_6_0;
