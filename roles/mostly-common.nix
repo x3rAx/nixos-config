@@ -9,11 +9,11 @@
         btrfs-progs
         docker-compose
         entr
-        exa
         file
         fzf
         glances
         iotop-c
+        lsd
         ncdu
         nfs-utils
         pv
