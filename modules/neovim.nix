@@ -49,7 +49,7 @@ in {
     };
 
     environment.shellAliases = {
-        sudo = "\\sudo EDITOR=\${EDITOR:-nvim}";
+        #sudo = "\\sudo EDITOR=\${EDITOR:-nvim}"; # TODO: This alias breaks kitty integration (bash complains during startup when sourcing the kitty.bash file). But this should not be necessary anyways because `environment.variables.EDITOR` seems to also set this for `sudo`
         vimdiff = "nvim -d";
     };
 }
