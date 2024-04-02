@@ -46,6 +46,7 @@ in rec {
     nixpkgs.overlays = [
         # Speech support for mumble
         (import ../overlays/mumble)
+        (import ../overlays/wooting-udev-rules)
     ];
 
     nixpkgs.config = baseconfig // {
