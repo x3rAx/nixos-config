@@ -268,6 +268,7 @@ in rec {
         enable = true;
         mouse = {
             accelProfile = "flat";
+            middleEmulation = false; # Disable middle mouse button emulation
         };
         touchpad = {
             naturalScrolling = true;
