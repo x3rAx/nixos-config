@@ -76,6 +76,23 @@ rec {
     programs.seahorse.enable = true; # GUI for managing keyring
     programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass"; # Use KDE askpass programm since the default X11 program is weird ^^'
 
+
+    # Original:
+    # ```
+    # $ ulimit -u
+    # 127646
+    #
+    # $ ulimit -Hu
+    # 127646
+    # ```
+    security.pam.loginLimits = [{
+        domain = "*";
+        type = "hard";
+        item = "nproc";
+        value = "127648"; # Increase by 2 from original value to make arch distrobox container work again
+    }];
+
+
     boot.loader = {
         grub = {
             configurationName = "K1STE";
