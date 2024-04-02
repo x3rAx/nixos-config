@@ -12,6 +12,8 @@ rec {
         enable = true;
 
         displayManager = {
+            defaultSession = "xfce+bspwm";
+
             #lightdm = {
             #    enable = true;
             #    background = (myLib.toPath "/home/x3ro/Pictures/[Wallpapers]/1920x1080/tree-on-a-hill.jpg");
