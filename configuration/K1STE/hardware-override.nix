@@ -23,8 +23,6 @@ in rec {
     #    #"delayacct" # For `iotop` to display `SWAPIN` and `IO %` (but seems to be unavailable in NixOS)
     #];
 
-    boot.resumeDevice = "/dev/mapper/fsroot_crypt";
-
     boot.initrd.luks.devices."fsroot_crypt" = {
         allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
         bypassWorkqueues = true; # Improve SSD performance
@@ -63,7 +61,7 @@ in rec {
         hibernation = {
             enable = true;
             resume_device = "/dev/mapper/fsroot_crypt"; # This is new, is this correct?
-            resume_offset = 176981550;
+            resume_offset = 177480960;
         };
     };
 
