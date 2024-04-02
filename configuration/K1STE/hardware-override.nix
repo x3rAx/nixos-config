@@ -33,22 +33,14 @@ in rec {
     };
     fileSystems."/".options = ssd_options;
 
-    #boot.initrd.luks.devices."old_rootfs_crypt" = {
-    #    allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
-    #    bypassWorkqueues = true; # Improve SSD performance
-    #    keyFile = "/crypto_keyfile.bin";
-    #    preLVM = true;
-    #};
-    #fileSystems."/home".options = ssd_options;
-
     # Data mount
-    #fileSystems."/data/extended" = {
+    #fileSystems."/storage/data" = {
     #    # NOTE: The `encryped` option does not have an option for
     #    #       `allowDiscards` and `bypassWorkqueues` so I can't use it. I'm
     #    #       using `boot.initrd.luks.devices.<name>` instead.
     #    encrypted = {
     #        enable = true;
-    #        label = "extended_crypt";
+    #        label = "data_crypt";
     #        blkDev = "/dev/disk/by-uuid/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"; # UUID for encrypted disk
     #        # NOTE: At the time this keyfile is accessed, the neededForBoot
     #        #       filesystems (see fileSystems.<name?>.neededForBoot) will
@@ -57,13 +49,13 @@ in rec {
     #        keyFile = "/mnt-root/etc/secrets/initrd/crypto_keyfile.bin";
     #    };
     #};
-    #boot.initrd.luks.devices."extended_crypt" = {
-    #    allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
-    #    bypassWorkqueues = true; # Improve SSD performance
-    #    device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776"; # UUID for encrypted disk
-    #    keyFile = "/crypto_keyfile.bin";
-    #};
-    #fileSystems."/data/extended".options = ssd_options;
+    boot.initrd.luks.devices."data_crypt" = {
+        allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
+        bypassWorkqueues = true; # Improve SSD performance
+    #    device = "/dev/disk/by-uuid/778b63a3-cc84-45ef-8a58-dfe8c858f37c"; # UUID for encrypted disk
+        keyFile = "/crypto_keyfile.bin";
+    };
+    fileSystems."/data/data".options = ssd_options;
 
     x3ro.btrfs-swapfile = {
         enable = true;

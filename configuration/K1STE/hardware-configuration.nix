@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -20,12 +20,6 @@
     };
 
   boot.initrd.luks.devices."fsroot_crypt".device = "/dev/disk/by-uuid/78506b62-7474-4a17-865e-19584d6e0817";
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
-      fsType = "btrfs";
-      options = [ "subvol=NixOS/@home" ];
-    };
 
   fileSystems."/etc/nixos" =
     { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
@@ -39,6 +33,12 @@
       options = [ "subvol=NixOS/@etc@secrets" ];
     };
 
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
+      fsType = "btrfs";
+      options = [ "subvol=NixOS/@home" ];
+    };
+
   fileSystems."/swap" =
     { device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
       fsType = "btrfs";
@@ -50,12 +50,12 @@
       fsType = "vfat";
     };
 
-  #fileSystems."/data/extended" =
-  #  { device = "/dev/disk/by-uuid/8a9ff2f6-75b1-41fa-8ad2-84668ceacaaa";
-  #    fsType = "btrfs";
-  #  };
+  fileSystems."/data/data" =
+    { device = "/dev/disk/by-uuid/2be26bea-2c86-46ce-9882-654be0f7c65d";
+      fsType = "btrfs";
+    };
 
-  #boot.initrd.luks.devices."extended_crypt".device = "/dev/disk/by-uuid/72709ae5-8e3c-4b99-9e13-b384014c1776";
+  boot.initrd.luks.devices."data_crypt".device = "/dev/disk/by-uuid/778b63a3-cc84-45ef-8a58-dfe8c858f37c";
 
   swapDevices = [ ];
 
