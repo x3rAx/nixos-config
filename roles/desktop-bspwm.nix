@@ -11,14 +11,17 @@ rec {
     services.xserver = {
         enable = true;
 
-        #displayManager.lightdm = {
-        #    enable = true;
-        #    background = (myLib.toPath "/home/x3ro/Pictures/[Wallpapers]/1920x1080/tree-on-a-hill.jpg");
-        #};
-        displayManager.sddm = {
-            enable = true;
-            autoNumlock = true;
-            #enableHidpi = true;
+        displayManager = {
+            #lightdm = {
+            #    enable = true;
+            #    background = (myLib.toPath "/home/x3ro/Pictures/[Wallpapers]/1920x1080/tree-on-a-hill.jpg");
+            #};
+
+            sddm = {
+                enable = true;
+                autoNumlock = true;
+                #enableHidpi = true;
+            };
         };
 
         desktopManager.xfce = {
