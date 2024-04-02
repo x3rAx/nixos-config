@@ -28,7 +28,8 @@ in rec {
     system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     # Fix GDM not starting on Framework Laptop
-    boot.kernelPackages = pkgs.linuxPackages_6_0;
+    # See here for kernel versions: https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/linux-kernels.nix
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     boot.loader = {
         grub = {
