@@ -57,7 +57,7 @@ in rec {
 
     nixpkgs.config = baseconfig // {
         permittedInsecurePackages = [
-            "electron-13.6.9" # For `super-productivity`
+            "electron-17.4.1" # For `super-productivity`
         ];
         # NOTE: This also replaces the packages when they are used as dependency
         #       for other packages
