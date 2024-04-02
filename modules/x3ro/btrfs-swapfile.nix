@@ -5,8 +5,6 @@ with lib;
 let
     cfg = config.x3ro.btrfs-swapfile;
 in {
-    imports = [];
-
     options = {
         x3ro.btrfs-swapfile = {
 
@@ -36,13 +34,20 @@ in {
                    
                         chattr +C "$swapfile"
                    
-                    Disable compression for swapfile:
-                   
-                        btrfs property set "$swapfile" compression none
+                    > [!note]
+                    > According to https://forum.endeavouros.com/t/27485/7
+                    > since mid 2022, disabling compression is not necessary
+                    > anymore (and the command fails).
+                    >
+                    > I'll still leave this here in case I'll need it again
+                    >
+                    > > Disable compression for swapfile:
+                    > >
+                    > >     btrfs property set "$swapfile" compression none
                    
                     Fill swapfile
                    
-                        # As a rule of thumb, for hibernation use `RAM + sqrt(RAM)`
+                        # As a rule of thumb, for hibernation use `ceil(RAM + sqrt(RAM))`
                         size_MB=$((2 * 1024))
                         dd if=/dev/zero of="$swapfile" bs=1M count="$size_MB" status=progress
 
@@ -111,7 +116,6 @@ in {
 
                         $ nix-shell -p libqalculate --run 'qalc 96971939840 / 4096' 
                         96971939840 / 4096 = 23674790
-
                 '';
             };
                    
