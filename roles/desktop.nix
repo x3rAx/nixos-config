@@ -46,11 +46,11 @@ in rec {
     nixpkgs.overlays = [
         # Speech support for mumble
         (slef: super: {
-            speechd = super.speechd.override {
-                withEspeak = false; withPico = true; withFlite = false;
-            };
-                mumble = super.mumble.override {
+            mumble = super.mumble.override {
                 speechdSupport = true; 
+                speechd = super.speechd.override {
+                    withEspeak = false; withPico = true; withFlite = false;
+                };
             };
         })
     ];
