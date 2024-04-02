@@ -64,6 +64,14 @@ rec {
     #services.xserver.config = lib.mkAfter (builtins.readFile ./xserver-nvidia.conf);
     # For diagnostics, symlink the config to `/etc/X11/xorg.conf`
     services.xserver.exportConfiguration = true;
+
+    networking.firewall = {
+        #allowedUDPPorts = [ 51821 35408 ];
+        allowedTCPPorts = [
+            24800 # barrier - mouse / keyboard sharing server
+        ];
+    };
+
     boot.loader = {
         grub = {
             configurationName = "K1STE";
