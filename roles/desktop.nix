@@ -23,6 +23,7 @@ in rec {
     imports = [
         #../modules/nixos-rebuild-wrapper.nix
         ../modules/ios-usb.nix
+        ../modules/steam.nix
     ] ++ [
         # Overridden Modules
         #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
@@ -287,8 +288,6 @@ in rec {
     # };
 
     programs.ssh.startAgent = true;
-
-    programs.steam.enable = true;
 
     programs.dconf.enable = true;
 
