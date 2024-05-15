@@ -1,5 +1,5 @@
 # Configuration for workstations (desktops / laptops)
-{ config, pkgs, lib, myLib, ... }:
+{ config, pkgs, lib, myLib, mkUnstable, ... }:
 
 let
     baseconfig = { allowUnfree = true; };
@@ -9,7 +9,7 @@ let
             if result.success then result.value
             else import <nixos>
         ) { config = baseconfig; };
-    unstable = import <nixos-unstable> { config = baseconfig; };
+    unstable = mkUnstable { config = baseconfig; };
     #pinned-for-virtualbox = builtins.fetchTarball {
     #    #name = "nixos-pinned-for-virtualbox";
     #    url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.11.tar.gz";
