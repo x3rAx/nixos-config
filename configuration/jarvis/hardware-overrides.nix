@@ -6,7 +6,7 @@
 {
     x3ro.btrfs-swapfile = {
         enable = true;
-        location = "/swap/SWAPFILE"
+        location = "/swap/SWAPFILE";
         size = 3900;
     };
 }
