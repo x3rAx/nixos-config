@@ -4,9 +4,7 @@
 
 { config, pkgs, lib, myLib, ... }:
 
-let
-    importIfExists = path: lib.optional (builtins.pathExists path) path;
-in rec {
+rec {
     imports =
         [
             # Include the results of the hardware scan.
@@ -18,7 +16,7 @@ in rec {
             ../../roles/desktop.nix
             ../../roles/desktop-gnome.nix
         ]
-        ++ importIfExists ./local-configuration.nix;
+        ++ myLib.importIfExists ./local-configuration.nix;
 
     # TODO: system.nixos.label
 
