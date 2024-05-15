@@ -16,6 +16,7 @@ rec {
         ../../roles/desktop.nix
         ../../roles/desktop-bspwm.nix
         ../../roles/nvidia.nix
+        ../../modules/sunshine.nix
     ];
 
     # Copies `configuration.nix` and links it from the resulting system to
