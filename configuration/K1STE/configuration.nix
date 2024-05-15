@@ -82,6 +82,7 @@ rec {
     programs.seahorse.enable = true; # GUI for managing keyring
     programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass"; # Use KDE askpass programm since the default X11 program is weird ^^'
 
+    security.pam.services.gdm.enableGnomeKeyring = true; # TODO: Is this necessary when not using GDM?
 
     # Original:
     # ```
