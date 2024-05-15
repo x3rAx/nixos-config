@@ -10,15 +10,16 @@
         let
             system = "x86_64-linux";
 
-            # Create Nixpkgs with config from a custom input
-            mkNixpkgs = custom_nixpkgs: config:
-                import custom_nixpkgs ({ inherit system; } // config);
-            mkUnstable = config: mkNixpkgs nixpkgs-unstable config;
+            nixpkgs-unstable-overlay =  ({...}: {
+                nixpkgs.overlays = [
+                    (final: prev: {
+                        unstable = import nixpkgs-unstable final;
+                    })
+                ];
+            });
 
             specialArgs = {
                 inherit inputs;
-                inherit mkNixpkgs;
-                inherit mkUnstable;
             };
 
         in {
@@ -28,6 +29,7 @@
                     hostname = "K1STE";
                 };
                 modules = [
+                    nixpkgs-unstable-overlay
                     ./configuration.nix
                 ];
             };
