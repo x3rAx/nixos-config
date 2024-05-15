@@ -1,5 +1,17 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, mkUnstable, ... }:
 
+let
+    nixpkgs-config = {
+        #allowUnfree = true;
+        permittedInsecurePackages = [ ];
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+            "nvidia-x11"
+            "nvidia-settings"
+            "nvidia-persistenced"
+        ];
+    };
+    unstable = mkUnstable { config = nixpkgs-config; };
+in
 {
     # NVIDIA drivers are unfree.
     #nixpkgs.config.allowUnfree = true;
@@ -16,4 +28,7 @@
     # - production = "Production Branch"
     # The default is `stable`.
     hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+    # TODO: Maybe remove again - Fix for "V rising" to get nvidia driver from unstable
+    boot.kernelPackages = unstable.linuxPackages;
 }
