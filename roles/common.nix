@@ -21,6 +21,7 @@ rec {
         ripgrep
         tmux
         wget
+        alejandra # Nix code formatter
     ];
 
     programs.git = {
