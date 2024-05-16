@@ -15,6 +15,15 @@ fi
 
 cd "$_SCRIPT_DIR"
 
+# --- Functions ---
+
+heading() {
+    local msg="$1"
+    echo ''
+    echo ''
+    echo "==> ${msg} <=="
+    echo ''
+}
 
 # --- Track local files with git (for flake) but do not stage their contents ---
 
@@ -36,14 +45,21 @@ done <.local-files
 
 # --- Format and git-add ---
 
+heading 'Formatting Nix expressions...'
+
 alejandra . # Autoformat
+
+
+heading 'Changes to be committed'
+
 git diff -U0
 git add .
 
 
 # --- Rebuild ---
 
-echo "NixOS Rebuilding..."
+heading 'NixOS Rebuilding...'
+
 if command -v nh >/dev/null; then
     nh os "$action"
 else
@@ -52,6 +68,8 @@ fi
 
 
 # --- Auto-commit ---
+
+heading 'Auto-committing...'
 
 gen_info=$(nixos-rebuild list-generations --json | jq -r 'map(select(.current == true)) | first')
 
