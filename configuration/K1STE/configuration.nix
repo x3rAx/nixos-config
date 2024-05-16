@@ -14,6 +14,7 @@
     ./hardware-configuration.nix
     ./hardware-override.nix
     ./openrgb.nix
+    ./wireguard.nix
 
     ../../roles/common.nix
     ../../roles/mostly-common.nix

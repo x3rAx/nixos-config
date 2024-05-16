@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+_SCRIPT="$(realpath ${BASH_SOURCE})"
+_SCRIPT_DIR="${_SCRIPT%/*}"
+
+# ------------------------------------------------------------------------------
+
+action=${1:-"switch"}
+
+if [[ $EUID -ne 0 ]]; then
+    exec sudo "$0" "$@"
+fi
+
+cd "$_SCRIPT_DIR"
+
+
+# --- Track local files with git (for flake) but do not stage their contents ---
+
+while read -r line || [[ -n $line ]]; do
+    # Ignore comments
+    if [[ $line =~ '^[[:space:]]*#' ]]; then
+        continue
+    fi
+
+    git ls-files -o "$line" | while read -r file; do
+        if ! git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+            echo "--- Skipping worktree for: $file ---"
+            git add --intent-to-add "$file"
+        fi
+        git update-index --skip-worktree "$file"
+    done
+done <.local-files
+
+
+# --- Format and git-add ---
+
+alejandra . # Autoformat
+git diff -U0
+git add .
+
+
+# --- Rebuild ---
+
+echo "NixOS Rebuilding..."
+if command -v nh >/dev/null; then
+    nh os "$action"
+else
+    sudo nixos-rebuild $action
+fi
+
+
+# --- Auto-commit ---
+
+gen_info=$(nixos-rebuild list-generations --json | jq -r 'map(select(.current == true)) | first')
+
+nixos_version="$(echo "$gen_info" |
+	jq -r '.nixosVersion')"
+date="$(echo "$gen_info" |
+	jq -r '.date | fromdate | strftime("%Y-%m-%d %H:%M")')"
+generation="$(echo "$gen_info" |
+	jq -r '.generation')"
+kernel="$(echo "$gen_info" |
+	jq -r '.kernelVersion')"
+
+git commit -am "❄️ REBUILD: [${action}] $(hostname): Gen. ${generation} - ${nixos_version}
+
+Date:          ${date}
+Generation:    ${generation}
+NixOS version: ${nixos_version}
+Kernel:        ${kernel}
+"
+
