@@ -1,4 +1,4 @@
 [
-    (import ./mumble)
-    (import ./wooting-udev-rules)
+  (import ./mumble)
+  (import ./wooting-udev-rules)
 ]

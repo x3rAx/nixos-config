@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   powerManagement = {
     powerDownCommands = ''
       sleep_before_power_down=0
@@ -10,7 +8,7 @@
       _log() { echo >>"$logfile" "[$(date -Ins)] $@"; }
 
       _log "-- START blocking"
-      
+
       devices="''$(${pkgs.utillinux}/bin/rfkill -rno SOFT,DEVICE)"
       _log "devices: $(echo "''$devices" | ${pkgs.gnused}/bin/sed ':a;N;$!ba;s/\n/ | /g')"
       unblocked="''$(echo "''$devices" | ${pkgs.gawk}/bin/awk '/^unblocked/ { print $2 }')"
