@@ -29,6 +29,7 @@ in rec {
       #../modules/nixos-rebuild-wrapper.nix
       ../modules/ios-usb.nix
       ../modules/steam.nix
+      ../modules/lutris.nix
     ]
     ++ [
       # Overridden Modules
