@@ -169,8 +169,8 @@
   ];
 
   systemd.services.systemd-udevd.restartIfChanged = false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
-  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
-  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+  #systemd.services.NetworkManager-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+  #systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
 
   # XSecureLock
   environment.etc."systemd/system-sleep/xsecurelock".source = pkgs.writeShellScript "xsecurelock" ''
