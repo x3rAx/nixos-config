@@ -44,7 +44,7 @@ in rec {
   services.avahi.publish.userServices = true;
 
   networking.firewall = {
-    enable = true;
+    enable = lib.mkDefault true;
     allowedTCPPorts = [47984 47989 47990 48010];
     allowedUDPPortRanges = [
       {
