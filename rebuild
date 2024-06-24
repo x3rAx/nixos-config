@@ -88,6 +88,12 @@ kernel="$(echo "$gen_info" |
 
 git add .
 
+# Test if there are staged changes
+if git diff --cached --quiet; then
+    echo "Nothing to commit."
+    exit
+fi
+
 # NOTE:         v-- There's a snowflake emoji here, but `sudo vim` does not display it for some reason.
 git commit -am "❄️ REBUILD: [${action}] $(hostname): Gen. ${generation} - ${nixos_version}
 
