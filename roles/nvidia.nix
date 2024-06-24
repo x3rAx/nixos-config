@@ -20,5 +20,5 @@
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
 
   # TODO: Maybe remove again - Fix for "V rising" to get nvidia driver from unstable
-  boot.kernelPackages = pkgs.unstable.linuxPackages;
+  #boot.kernelPackages = pkgs.unstable.linuxPackages;
 }
