@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
-
-let
-  neovim-system-config = pkgs.writeTextFile rec{
+{
+  config,
+  pkgs,
+  ...
+}: let
+  neovim-system-config = pkgs.writeTextFile rec {
     name = "neovim-system-config";
     destination = "/etc/xdg/nvim/sysinit.vim";
     text = ''
@@ -47,22 +49,22 @@ let
     '';
   };
 in {
-    # List packages installed in system profile. To search, run:
-    # $ nix search wget
-    environment.systemPackages = with pkgs; [
-        (neovim.override {
-            vimAlias = true;
-            viAlias = true;
-        })
-        neovim-system-config
-    ];
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages = with pkgs; [
+    (neovim.override {
+      vimAlias = true;
+      viAlias = true;
+    })
+    neovim-system-config
+  ];
 
-    environment.variables = {
-        EDITOR = "nvim";
-    };
+  environment.variables = {
+    EDITOR = "nvim";
+  };
 
-    environment.shellAliases = {
-        #sudo = "\\sudo EDITOR=\${EDITOR:-nvim}"; # TODO: This alias breaks kitty integration (bash complains during startup when sourcing the kitty.bash file). But this should not be necessary anyways because `environment.variables.EDITOR` seems to also set this for `sudo`
-        vimdiff = "nvim -d";
-    };
+  environment.shellAliases = {
+    #sudo = "\\sudo EDITOR=\${EDITOR:-nvim}"; # TODO: This alias breaks kitty integration (bash complains during startup when sourcing the kitty.bash file). But this should not be necessary anyways because `environment.variables.EDITOR` seems to also set this for `sudo`
+    vimdiff = "nvim -d";
+  };
 }

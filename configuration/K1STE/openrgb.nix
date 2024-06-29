@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
-
 {
-    services.hardware.openrgb.enable = true;
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  services.hardware.openrgb.enable = true;
 
-    environment.systemPackages = with pkgs; [
-        polychromatic
-    ];
+  environment.systemPackages = with pkgs; [
+    polychromatic
+  ];
 }
