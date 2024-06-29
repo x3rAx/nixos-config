@@ -407,6 +407,21 @@ in rec {
     #    package = pinned-for-virtualbox.pkgs.virtualbox;
     #};
 
+    # Flatpak
+    services.flatpak.enable = true;
+
+    xdg.portal = {
+        enable = true;
+
+        # HACK: The `xdg-desktop-portal-gtk` is necessary to let flatpak apps
+        #       know the system theme. However, gnome comes with its own
+        #       version of the portal, which collides with this one. Therefore,
+        #       the portal is only added when gnome is not enabled.
+        extraPortals = lib.optionals (!config.services.xserver.desktopManager.gnome.enable) (with pkgs; [
+            xdg-desktop-portal-gtk # Required for flatpak
+        ]);
+    };
+
     # Allow passing USB devices into VMs through Spice
     virtualisation.spiceUSBRedirection.enable = true;
 }

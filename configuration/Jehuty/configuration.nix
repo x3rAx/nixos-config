@@ -147,11 +147,6 @@ in rec {
 
     services.xserver.xkbOptions = "caps:escape";
 
-    services.flatpak.enable = true;
-    #xdg.portal.enable = true; # Required for flatpack     
-    #xdg.portal.extraPortals = with pkgs; [
-    #    xdg-desktop-portal-gtk
-    #];
 
     # Set users to be immutable. This will revert all manual changes to users on system activation.
     #users.mutableUsers = false;
