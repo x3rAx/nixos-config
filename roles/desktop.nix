@@ -186,7 +186,6 @@ in rec {
         okular # PDF viewer
         pciutils
         pdfmixtool
-        picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
         playerctl # Control media players from cli
         polybarFull
         #postman # TODO: Postman is frequently broken because they remove older builds and only keep the latest version online -> bad for NixOS. See https://github.com/NixOS/nixpkgs/issues/259147
