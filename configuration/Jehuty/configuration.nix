@@ -7,19 +7,22 @@
   lib,
   myLib,
   ...
-}: rec {
+}: let
+  importIfExists = path: lib.optional (builtins.pathExists path) path;
+in rec {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./hardware-overrides.nix
+      ./wireguard.nix
 
       ../../roles/common.nix
       ../../roles/mostly-common.nix
       ../../roles/desktop.nix
       ../../roles/desktop-gnome.nix
     ]
-    ++ myLib.importIfExists ./local-configuration.nix;
+    ++ importIfExists ./local-configuration.nix;
 
   # TODO: system.nixos.label
 
@@ -31,6 +34,43 @@
   # Fix GDM not starting on Framework Laptop
   # See here for kernel versions: https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/linux-kernels.nix
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Maybe fix sound
+  security.rtkit.enable = true;
+
+  hardware.openrazer = {
+    enable = true;
+    users = ["x3ro"];
+  };
+
+  boot.kernelParams = [
+    # Fix brightness keys not working
+    "module_blacklist=hid_sensor_hub"
+    # Deep sleep
+    "mem_sleep_default=deep"
+  ];
+
+  # Enable fingerprint support
+  services.fprintd.enable = true;
+
+  #virtualisation.libvirtd.qemu.runAsRoot = true; # For WinApps?
+
+  programs.nm-applet.enable = false;
+
+  hardware.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
 
   boot.loader = {
     grub = {
@@ -57,6 +97,11 @@
   networking.hostName = "jehuty"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
+
+  systemd.network.wait-online.anyInterface = true; # Consider the network online when any interface is online (useful on portable machines with LAN / WiFi) (should fix a problem where the wait online status fails on `nixos-rebuild switch`) # TODO: Maybe remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+  systemd.services.systemd-udevd.restartIfChanged = false; # TODO: Maybe remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false; # TODO: Remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false; # TODO: Remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
 
   #networking.useDHCP = true;
   #networking.interfaces.enp8s0.useDHCP = true;
@@ -93,7 +138,12 @@
     glib
     hdparm
     pkg-config
-    #rnix-lsp # TODO: Remove or re-enable: Depends on `nix-2.15.3` which is marked as insecure due to CVE-2024-27297
+    #rnix-lsp # TODO: Remove or re-enable: Depends on `nix-2.15.3` which is marked as insecure due to CVE-2024-27297 (See: https://discourse.nixos.org/t/nixos-need-help-finding-out-what-is-pulling-in-nix-2-15-3-in-my-config/41103/2)
+
+    libinput-gestures
+
+    wineWowPackages.stable
+    winetricks
   ];
 
   programs.ssh.startAgent = true;
@@ -120,12 +170,20 @@
       "networkmanager"
       "docker"
       "vboxusers"
+      "input" # For fingerprint sensor
+      "plugdev" # For OpenRazer
+      "libvirt" # For WinApps
+      "kvm" # For WinApps
     ];
     #packages = with pkgs; [
     #    firefox
     #    thunderbird
     #];
     initialPassword = "changeMe!";
+  };
+  users.groups = {
+    "libvirt" = {};
+    "kvm" = {};
   };
 
   #nix.distributedBuilds = true;
@@ -151,6 +209,8 @@
   #  dates = "weekly";
   #  options = "--delete-older-than 30d";
   #}
+
+  programs.nix-ld.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

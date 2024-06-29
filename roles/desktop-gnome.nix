@@ -3,7 +3,10 @@
   config,
   pkgs,
   ...
-}: rec {
+}: let
+  baseconfig = {allowUnfree = true;};
+  unstable = import <nixos-unstable> {config = baseconfig;};
+in rec {
   services.xserver = {
     enable = true;
 
@@ -15,4 +18,29 @@
       gnome.enable = true;
     };
   };
+
+  environment.systemPackages = with pkgs;
+    [
+      gnome.gnome-tweaks
+      gnome.dconf-editor
+    ]
+    ++ (with gnomeExtensions; [
+      appindicator
+      blur-my-shell
+      caffeine
+      dash-to-dock
+      top-panel-workspace-scroll # Alternative extension: panel-workspace-scroll
+    ])
+    ++ (with unstable.gnomeExtensions; [
+      pop-shell
+    ]);
+
+  services.udev.packages = with pkgs; [
+    gnome.gnome-settings-daemon
+  ];
+
+  # Enable Gnome browser extension to work
+  #services.gnome.chrome-gnome-shell.enable = true;
+  #nixpkgs.config.firefox.enableGnomeExtensions = true;
+  #services.gnome.core-shell.enable = true;
 }

@@ -17,6 +17,7 @@
 
     bat
     bat-extras.batman
+    cryptsetup
     fd
     gdu
     htop

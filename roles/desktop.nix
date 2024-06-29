@@ -51,7 +51,7 @@ in rec {
     baseconfig
     // {
       permittedInsecurePackages = [
-        "electron-17.4.1" # For `super-productivity`
+        #"electron-25.9.0" # For `obsidian` / `super-productivity`
       ];
       # NOTE: This also replaces the packages when they are used as dependency
       #       for other packages
@@ -118,29 +118,42 @@ in rec {
       # Custom derivations
     ]
     ++ [
+      #alacritty
+      #autokey
+      #bc # Replaced by qalc
+      #borgbackup
+      #dropbox # Replaced with SyncThing
+      #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
+      #nox # Broken?
+      #parted
+      #texlive.combined.scheme-full
+      #trilium-desktop # Replaced with Obsidian
+      #vlc
+
+      # burpsuite # Builds chromium???
+
       ack # Alternative grep "for sourcecode"
-      alacritty
       anydesk
       appimage-run
       arandr
       ark # KDE archive gui (.tar.gz, etc.)
       audacious
       audacity
-      autokey
+      barrier
       bashmount
-      bc
       birdtray
-      blanket
-      borgbackup
+      blanket # Ambient sounds
       brave
       broot
       btop
       copyq
       cryptsetup
+      dbeaver-bin
       delta # Better `git diff`
       deno
       direnv
-      dropbox
+      discord
+      element-desktop
       entr
       escrotum
       ethtool
@@ -149,6 +162,7 @@ in rec {
       #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
       ffmpeg
       file
+      filezilla
       firefox
       fzf
       gimp
@@ -163,35 +177,35 @@ in rec {
       inkscape
       jq
       keepassxc
-      kopia
+      kitty
+      #kopia
       ksnip
       libnotify
-      libqalculate
+      libqalculate # qalc
       libreoffice
+      linux-wifi-hotspot
       lshw
       mariadb-client
       minio-client
       mpc-qt
-      mtr
+      mtr # Better traceroute
       mumble
-      ncdu
+      ncdu # Replaced with gdu
       nix-direnv
       nodePackages.pnpm
       nodePackages.zx
       nodejs
-      nomacs
-      nox
+      nomacs # Image viewer
       nushell
       obs-studio
+      #obsidian
       octave
-      okular
-      parted
+      okular # PDF viewer
       pciutils
       pdfmixtool
-      picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
       playerctl # Control media players from cli
       polybarFull
-      #postman # Postman removes older builds and only keeps the latest version online -> bad for NixOS. See https://github.com/NixOS/nixpkgs/issues/259147
+      #postman # TODO: Postman is frequently broken because they remove older builds and only keep the latest version online -> bad for NixOS. See https://github.com/NixOS/nixpkgs/issues/259147
       pv
       python3Packages.bpython # Alternative python repl
       quickemu
@@ -203,33 +217,37 @@ in rec {
       shellcheck
       signal-desktop
       spotify
-      super-productivity
-      super-productivity
+      sshfs-fuse
+      #super-productivity
       sxhkd
-      syncthing
       syncthing
       syncthingtray
       teamspeak_client
-      thunderbird
+      #thunderbird # Installed through home-manager
+      #thunderbird-bin # Installed through home-manager
       tmate
-      tmate
+      tor
       tor-browser-bundle-bin
       translate-shell
       tree
-      trilium-desktop
-      ueberzug # To show images in ranger
+      ueberzug # To show images in ranger (not necessary for Kitty)
       unrar
       unzip
       usbutils
       ventoy-bin
       virt-manager
-      vlc
+      virt-viewer
+      virtiofsd # HOTFIX: Required by virt-manager: "ERROR: virtiofsd not executable"
       vscode
       wally-cli # Mechanical keyboard flashing tool
+      wireshark-qt
       xclip
-      xdotool #desktop
+      xdotool
       xorg.xev
+      xorg.xhost
+      xournalpp
       xxd
+      yadm
       youtube-dl
       zip
     ];
@@ -249,12 +267,12 @@ in rec {
 
   environment.shellAliases = {
     mnt = "bashmount";
-    doc = "docker-compose";
+    doc = "docker compose";
     sudocode = "sudo -i code --no-sandbox --user-data-dir /root/.config/sudocode";
     nixos-config = "sudocode /etc/nixos/{,{configuration,hardware-configuration}.nix}";
   };
 
-  boot.supportedFilesystems = ["ntfs-3g"];
+  boot.supportedFilesystems = ["ntfs" "ntfs-3g"];
 
   console = {
     useXkbConfig = true;
@@ -263,7 +281,7 @@ in rec {
   };
 
   # Enable the X11 windowing system.
-  #services.xserver.enable = true;
+  services.xserver.enable = lib.mkDefault true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput = {
@@ -308,7 +326,7 @@ in rec {
 
   programs.kdeconnect.enable = true;
 
-  programs.nm-applet.enable = true;
+  programs.nm-applet.enable = lib.mkDefault true; # TODO: Maybe this should go into the desktop-specific config files? It conflicts with the config for Jehuty that has to disable it.
 
   # List services that you want to enable:
 
@@ -441,4 +459,7 @@ in rec {
 
   # Symlink current rofi themes to /etc
   environment.etc."rofi/themes".source = "${pkgs.rofi}/share/rofi/themes";
+
+  # Allow passing USB devices into VMs through Spice
+  virtualisation.spiceUSBRedirection.enable = true;
 }
