@@ -43,18 +43,6 @@ in rec {
         '';
     };
 
-    nixpkgs.overlays = [
-        # Speech support for mumble
-        (self: super: {
-            mumble = super.mumble.override {
-                speechdSupport = true; 
-                speechd = super.speechd.override {
-                    withEspeak = false; withPico = true; withFlite = false;
-                };
-            };
-        })
-    ];
-
     nixpkgs.config = baseconfig // {
         permittedInsecurePackages = [
             # For `super-productivity`
