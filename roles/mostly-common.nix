@@ -6,22 +6,51 @@
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+        bat
+        bc
+        binutils
+        broot
+        btop
         btrfs-progs
-        docker-compose
+        curlie
+        delta
+        deno
+        diffutils
+        distrobox
+        #docker-compose # Deprecated
         entr
+        expect
+        fd
         file
         fzf
+        git-filter-repo
+        gitui
         glances
         iotop-c
-        lsd
-        ncdu
         nfs-utils
+        grc
+        httpie
+        inetutils
+        jq
+        #kopia
+        lsd
+        lshw
+        ncdu
+        neofetch
+        nmap
+        nushell
         pv
         python3
         ranger
+        ripgrep-all
         trash-cli
         tree
         unzip
+        ventoy-bin
+        wireguard-tools
+        xxd
+
+        netavark # Fix Podman error: `Error: could not find "netavark" in one of [/usr/local/libexec/podman /usr/local/lib/podman /usr/libexec/podman /usr/lib/podman].  To resolve this error, set the helper_binaries_dir key in the `[engine]` section of containers.conf to the directory containing your helper binaries.`
     ];
 
     environment.shellAliases = {

@@ -2,12 +2,6 @@
 { config, pkgs, ... }:
 
 rec {
-    # List packages installed in system profile. To search, run:
-    # $ nix search wget
-    environment.systemPackages = with pkgs; [
-        xtitle # To get window titles from scripts
-    ];
-
     services.xserver = {
         enable = true;
 
@@ -40,6 +34,17 @@ rec {
             sxhkd.configFile= "/home/x3ro/.config/sxhkd/sxhkdrc";
         };
     };
+
+    # List packages installed in system profile. To search, run:
+    # $ nix search wget
+    environment.systemPackages = with pkgs; [
+        picom
+        picom-next
+        polybar
+        xtitle # To get window titles from scripts
+        picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
+    ];
+
 }
 
 

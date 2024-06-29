@@ -4,7 +4,7 @@
 
 {
     environment.shellAliases = {
-        doc = "sudo docker-compose";
+        doc = "sudo docker compose";
     };
 
     virtualisation.docker.extraOptions = ''

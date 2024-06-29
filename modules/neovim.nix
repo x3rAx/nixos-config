@@ -31,6 +31,19 @@ let
       " Improved line shifting
           vnoremap < <gv
           vnoremap > >gv
+
+      " Enable hybrid relative numbers
+          set number relativenumber
+          highlight LineNr ctermfg=grey ctermbg=black guifg=#aaaaaa guibg=#292929
+
+      " Enable syntax highlighting
+          filetype plugin on
+          syntax on
+
+      " Commands
+          " Alias for toggling lines
+          command! LinesToggle set number! relativenumber!
+          command! LL LinesToggle
     '';
   };
 in {

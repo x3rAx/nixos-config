@@ -14,10 +14,10 @@ rec {
 
         bat
         bat-extras.batman
+        cryptsetup
         fd
         gdu
         htop
-        killall
         ripgrep
         tmux
         wget
