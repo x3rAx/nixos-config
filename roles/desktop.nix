@@ -405,6 +405,9 @@ in rec {
         ]);
     };
 
+    # Symlink current rofi themes to /etc
+    environment.etc."rofi/themes".source = "${pkgs.rofi}/share/rofi/themes";
+
     # Allow passing USB devices into VMs through Spice
     virtualisation.spiceUSBRedirection.enable = true;
 }
