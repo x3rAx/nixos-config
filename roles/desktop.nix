@@ -43,9 +43,25 @@ in rec {
         '';
     };
 
+    nixpkgs.overlays = [
+        # Speech support for mumble
+        (self: super: {
+            mumble = super.mumble.override {
+                speechdSupport = true; 
+                speechd = super.speechd.override {
+                    withEspeak = false; withPico = true; withFlite = false;
+                };
+            };
+        })
+    ];
+
     nixpkgs.config = baseconfig // {
         permittedInsecurePackages = [
-            "electron-17.4.1" # For `super-productivity`
+            # For `super-productivity`
+            #"electron-18.1.0"
+            #"electron-17.4.1"
+            #"electron-21.4.0"
+            "electron-25.9.0"
         ];
         # NOTE: This also replaces the packages when they are used as dependency
         #       for other packages
@@ -105,42 +121,52 @@ in rec {
     environment.systemPackages = with pkgs; [
         # Custom derivations
     ] ++ [
+        #alacritty
+        #autokey
+        #bc # Replaced by qalc
+        #borgbackup
+        #brave
+        #dropbox # Replaced with SyncThing
+        #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
+        #nox # Broken?
+        #parted
+        #texlive.combined.scheme-full
+        #trilium-desktop # Replaced with Obsidian
+        #vlc
+
+        # burpsuite # Builds chromium???
+
         ack # Alternative grep "for sourcecode"
-        alacritty
         anydesk
         appimage-run
         arandr
-        ark # KDE archive gui (.tar.gz, etc.)
         audacious
         audacity
-        autokey
+        barrier
         bashmount
-        bc
         birdtray
-        blanket
-        borgbackup
-        brave
+        blanket # Ambient sounds
         broot
         btop
-        copyq
-        cryptsetup
+        #copyq
+        #dbeaver
         delta # Better `git diff`
         deno
         direnv
-        dropbox
+        discord
+        element-desktop
         entr
         escrotum
         ethtool
         exfat
         feh
-        #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
         ffmpeg
         file
+        filezilla
         firefox
         fzf
         gimp
-        gitFull # Enable full-featured git (needed e.g. for `gitk`)
-        glances
+        gitui
         glances
         gnumake # for `dake`
         handbrake
@@ -150,35 +176,34 @@ in rec {
         inkscape
         jq
         keepassxc
-        kopia
+        kitty
+        #kopia
         ksnip
         libnotify
-        libqalculate
+        libqalculate # qalc
         libreoffice
+        linux-wifi-hotspot
         lshw
         mariadb-client
         minio-client
         mpc-qt
-        mtr
+        mtr # Better traceroute
         mumble
-        ncdu
+        ncdu # Replaced with gdu
         nix-direnv
         nodePackages.pnpm
         nodePackages.zx
         nodejs
-        nomacs
-        nox
+        nomacs # Image viewer
         nushell
         obs-studio
+        obsidian
         octave
-        okular
-        parted
+        okular # PDF viewer
         pciutils
-        pdfmixtool
-        picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
+        #pdfmixtool # TODO: Uncomment when build is not broken anymore
         playerctl # Control media players from cli
-        polybarFull
-        #postman # Postman removes older builds and only keeps the latest version online -> bad for NixOS. See https://github.com/NixOS/nixpkgs/issues/259147
+        #postman # Broken because binary release deleted by postman... again...
         pv
         python3Packages.bpython # Alternative python repl
         quickemu
@@ -186,61 +211,60 @@ in rec {
         restic
         rofi
         rofimoji
+        #rustup
         rxvt-unicode
         shellcheck
         signal-desktop
         spotify
-        super-productivity
-        super-productivity
+        sshfs-fuse
+        #super-productivity
         sxhkd
         syncthing
-        syncthing
         syncthingtray
+        tdesktop # Telegram Desktop
         teamspeak_client
-        thunderbird
+        #thunderbird # Installed through home-manager
+        #thunderbird-bin # Installed through home-manager
         tmate
-        tmate
+        tor
         tor-browser-bundle-bin
         translate-shell
         tree
-        trilium-desktop
-        ueberzug # To show images in ranger
+        ueberzug # To show images in ranger (not necessary for Kitty)
         unrar
         unzip
         usbutils
         ventoy-bin
+        veracrypt
         virt-manager
-        vlc
+        virt-viewer
+        virtiofsd # HOTFIX: Required by virt-manager: "ERROR: virtiofsd not executable"
         vscode
         wally-cli # Mechanical keyboard flashing tool
+        wireshark-qt
         xclip
-        xdotool #desktop
+        xdotool
         xorg.xev
+        xorg.xhost
+        xournalpp
         xxd
+        yadm
         youtube-dl
         zip
     ];
 
-    fonts =
-        let
-            packages = with pkgs; [
-                font-awesome
-            ];
-        in
-            if (myLib.nixosMinVersion "23.11") then {
-                inherit packages;
-            } else {
-                fonts = packages;
-            };
+    fonts.packages = with pkgs; [
+        font-awesome
+    ];
 
     environment.shellAliases = {
         mnt = "bashmount";
-        doc = "docker-compose";
-        sudocode = "sudo -i code --no-sandbox --user-data-dir /root/.config/sudocode";
+        doc = "docker compose";
+        sudocode = "sudo -i code --user-data-dir /root/.config/sudocode";
         nixos-config = "sudocode /etc/nixos/{,{configuration,hardware-configuration}.nix}";
     };
 
-    boot.supportedFilesystems = [ "ntfs-3g" ];
+    boot.supportedFilesystems = [ "ntfs" "ntfs-3g" ];
 
     console = {
         useXkbConfig = true;
@@ -249,14 +273,13 @@ in rec {
     };
 
     # Enable the X11 windowing system.
-    #services.xserver.enable = true;
+    services.xserver.enable = lib.mkDefault true;
 
     # Enable touchpad support (enabled default in most desktopManager).
     services.xserver.libinput = {
         enable = true;
         mouse = {
             accelProfile = "flat";
-            middleEmulation = false; # Disable middle mouse button emulation
         };
         touchpad = {
             naturalScrolling = true;
@@ -272,14 +295,11 @@ in rec {
     services.xserver.autoRepeatInterval = 25; # 1000/25 = 40 keys/sec
 
     # Enable sound.
-    sound.enable = true;
-    hardware.pulseaudio.enable = lib.mkDefault true; # TODO: Switch to PipeWire by default
+    #sound.enable = true;
+    #hardware.pulseaudio.enable = lib.mkDefault true; # TODO: Switch to PipeWire by default
 
     # Enable udev rules for ZSA keyboards (Moonlander)
     hardware.keyboard.zsa.enable = true;
-
-    # Enable support for Wooting keyboards
-    hardware.wooting.enable = true;
 
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
@@ -297,7 +317,7 @@ in rec {
 
     programs.kdeconnect.enable = true;
 
-    programs.nm-applet.enable = true;
+    programs.nm-applet.enable = lib.mkDefault true;
 
     # List services that you want to enable:
 
@@ -309,7 +329,6 @@ in rec {
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
-    services.printing.drivers = with pkgs; [ gutenprint cnijfilter2 ];
     
     # Enable Bluetooth
     #hardware.bluetooth.enable = true;
@@ -388,46 +407,6 @@ in rec {
     #    package = pinned-for-virtualbox.pkgs.virtualbox;
     #};
 
-    services.udev.extraRules = ''
-        # Enable NumLock on keyboard connect
-            # NOTE: It seems to be a udev rule that turns off the numpad state
-            #       after a keyboard is connected.  This rule tries to
-            #       counterack this but at the cost of introducing a delay when
-            #       a device is connected. Since (some?) udev rules are executed
-            #       in serial (or devices are connected in serial?), the sleep
-            #       causes some delay if a device like a keyboard connects as
-            #       multiple devices.
-            #
-            # NOTE: This seems to be fixed now
-            #
-            # WARNING: When enabling this rule, the system can't  boot up
-            #          because the disks can't be found. I guess this is due to
-            #          this rule failing at boot since the user `x3ro` is not
-            #          yet available until the disks are mounted.
-            #
-            #ACTION=="add",
-            #SUBSYSTEM=="usb", # maybe "input"?
-            #ENV{XAUTHORITY}="/home/x3ro/.Xauthority",
-            #ENV{DISPLAY}=":0",
-            #ATTRS{product}=="USB Keyboard",
-            #RUN+="${pkgs.su}/bin/su x3ro -c '${pkgs.coreutils}/bin/sleep 0.1; [ -f $XAUTHORITY ] && ${pkgs.numlockx}/bin/numlockx on'"
-    '';
-
-    # Flatpak
-    services.flatpak.enable = true;
-
-    xdg.portal = {
-        enable = true;
-
-        # HACK: The `xdg-desktop-portal-gtk` is necessary to let flatpak apps
-        #       know the system theme. However, gnome comes with its own
-        #       version of the portal, which collides with this one. Therefore,
-        #       the portal is only added when gnome is not enabled.
-        extraPortals = lib.optionals (!config.services.xserver.desktopManager.gnome.enable) (with pkgs; [
-            xdg-desktop-portal-gtk # Required for flatpak
-        ]);
-    };
-
-    # Symlink current rofi themes to /etc
-    environment.etc."rofi/themes".source = "${pkgs.rofi}/share/rofi/themes";
+    # Allow passing USB devices into VMs through Spice
+    virtualisation.spiceUSBRedirection.enable = true;
 }

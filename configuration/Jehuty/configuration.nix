@@ -25,11 +25,48 @@ in rec {
     # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
     system.copySystemConfiguration = true;
     # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript ([ ./configuration.nix ] ++ imports);
 
     # Fix GDM not starting on Framework Laptop
     # See here for kernel versions: https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/linux-kernels.nix
     boot.kernelPackages = pkgs.linuxPackages_latest;
+
+    # Maybe fix sound
+    security.rtkit.enable = true;
+
+    hardware.openrazer = {
+        enable = true;
+        users = [ "x3ro" ];
+    };
+
+    boot.kernelParams = [
+        # Fix brightness keys not working
+        "module_blacklist=hid_sensor_hub"
+        # Deep sleep
+        "mem_sleep_default=deep"
+    ];
+
+    # Enable fingerprint support
+    services.fprintd.enable = true;
+
+    #virtualisation.libvirtd.qemu.runAsRoot = true; # For WinApps?
+
+    programs.nm-applet.enable = false;
+
+    hardware.pulseaudio.enable = false;
+    services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+
+        # If you want to use JACK applications, uncomment this
+        #jack.enable = true;
+        
+        # use the example session manager (no others are packaged yet so this is enabled by default,
+        # no need to redefine it in your config for now)
+        #media-session.enable = true;
+    };
 
     boot.loader = {
         grub = {
@@ -56,6 +93,11 @@ in rec {
     networking.hostName = "jehuty"; # Define your hostname.
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     networking.networkmanager.enable = true;
+
+    systemd.network.wait-online.anyInterface = true; # Consider the network online when any interface is online (useful on portable machines with LAN / WiFi) (should fix a problem where the wait online status fails on `nixos-rebuild switch`) # TODO: Maybe remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+    systemd.services.systemd-udevd.restartIfChanged = false; # TODO: Maybe remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+    systemd.services.NetworkManager-wait-online.enable = lib.mkForce false; # TODO: Remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+    systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false; # TODO: Remove once https://github.com/NixOS/nixpkgs/issues/180175 is fixed
 
     #networking.useDHCP = true;
     #networking.interfaces.enp8s0.useDHCP = true;
@@ -93,6 +135,8 @@ in rec {
         hdparm
         pkg-config
         #rnix-lsp # TODO: Remove or re-enable: Depends on `nix-2.15.3` which is marked as insecure due to CVE-2024-27297
+
+        libinput-gestures
     ];
 
     programs.ssh.startAgent = true;
@@ -102,8 +146,11 @@ in rec {
 
     services.xserver.xkbOptions = "caps:escape";
 
-    # Use systemd-resolved for DNS
-    services.resolved.enable = true;
+    services.flatpak.enable = true;
+    #xdg.portal.enable = true; # Required for flatpack     
+    #xdg.portal.extraPortals = with pkgs; [
+    #    xdg-desktop-portal-gtk
+    #];
 
     # Set users to be immutable. This will revert all manual changes to users on system activation.
     #users.mutableUsers = false;
@@ -119,12 +166,20 @@ in rec {
             "networkmanager"
             "docker"
             "vboxusers"
+            "input" # For fingerprint sensor
+            "plugdev" # For OpenRazer
+            "libvirt" # For WinApps
+            "kvm" # For WinApps
         ];
         #packages = with pkgs; [
         #    firefox
         #    thunderbird
         #];
         initialPassword = "changeMe!";
+    };
+    users.groups = {
+        "libvirt" = {};
+        "kvm" = {};
     };
 
     #nix.distributedBuilds = true;
@@ -150,6 +205,8 @@ in rec {
     #  dates = "weekly";
     #  options = "--delete-older-than 30d";
     #}
+
+    programs.nix-ld.enable = true;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

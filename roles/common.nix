@@ -1,11 +1,10 @@
 # Stuff that really should be on all machines
-{ config, pkgs, myLib, ... }:
+{ config, pkgs, ... }:
 
-rec {
+{
     imports = [
         ../modules/neovim.nix
     ];
-    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
@@ -13,11 +12,11 @@ rec {
         nix-bash-completions
 
         bat
-        bat-extras.batman
+        cryptsetup
         fd
         gdu
         htop
-        killall
+        #killall # Replaced with pkill / pgrep
         ripgrep
         tmux
         wget
@@ -46,7 +45,6 @@ rec {
         scp-tmp = "scp -o GlobalKnownHostsFile=/dev/null -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
         gdiff = "git diff --no-index \"$@\"";
         grep = "grep --color=auto";
-        man = "batman";
     };
 
     # Update Intel microcode

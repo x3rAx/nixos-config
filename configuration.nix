@@ -3,15 +3,12 @@ args@{ config, pkgs, ... }:
 let
     hostname = import ./hostname.nix;
     myLib = (import ./myLib.nix) args;
-in rec {
+in {
     _module.args.myLib = myLib;
 
     imports = [
         (myLib.toPath "./configuration/${hostname}/configuration.nix")
     ];
-    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
-
-    nixpkgs.overlays = import ./overlays;
 
     system.activationScripts = {
         symlinkCurrentHost = {

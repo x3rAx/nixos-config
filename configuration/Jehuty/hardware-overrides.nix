@@ -1,9 +1,8 @@
-{ myLib, ... }:
-rec {
+{ ... }:
+{
     imports = [
         ../../modules/x3ro/btrfs-swapfile.nix
     ];
-    system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
     boot.initrd.luks.devices = {
         "fsroot_crypt" = {

@@ -5,6 +5,9 @@ rec {
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
+        picom
+        picom-next
+        polybar
         xtitle # To get window titles from scripts
     ];
 
