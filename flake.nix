@@ -38,5 +38,17 @@
         ./configuration.nix
       ];
     };
+    nixosConfigurations."Jehuty" = nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs =
+        specialArgs
+        // {
+          hostname = "Jehuty";
+        };
+      modules = [
+        nixpkgs-unstable-overlay
+        ./configuration.nix
+      ];
+    };
   };
 }
