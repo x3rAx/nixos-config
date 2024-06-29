@@ -151,7 +151,7 @@ in rec {
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
 
-  services.xserver.xkbOptions = "caps:escape";
+  services.xserver.xkb.options = "caps:escape";
 
   # Use systemd-resolved for DNS
   services.resolved.enable = true;

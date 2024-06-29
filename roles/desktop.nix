@@ -284,7 +284,7 @@ in rec {
   services.xserver.enable = lib.mkDefault true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
+  services.libinput = {
     enable = true;
     mouse = {
       accelProfile = "flat";
@@ -297,7 +297,7 @@ in rec {
   };
 
   # Configure keymap in X11
-  services.xserver.layout = "eu";
+  services.xserver.xkb.layout = "eu";
   #services.xserver.xkbOptions = "caps:escape";
   services.xserver.autoRepeatDelay = 200;
   services.xserver.autoRepeatInterval = 25; # 1000/25 = 40 keys/sec
