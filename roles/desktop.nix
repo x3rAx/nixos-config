@@ -45,11 +45,7 @@ in rec {
 
     nixpkgs.config = baseconfig // {
         permittedInsecurePackages = [
-            # For `super-productivity`
-            #"electron-18.1.0"
-            #"electron-17.4.1"
-            #"electron-21.4.0"
-            "electron-25.9.0"
+            #"electron-25.9.0" # For `obsidian` / `super-productivity`
         ];
         # NOTE: This also replaces the packages when they are used as dependency
         #       for other packages
@@ -136,8 +132,8 @@ in rec {
         blanket # Ambient sounds
         broot
         btop
-        #copyq
-        #dbeaver
+        copyq
+        dbeaver-bin
         delta # Better `git diff`
         deno
         direnv
@@ -154,7 +150,7 @@ in rec {
         firefox
         fzf
         gimp
-        gitui
+        gitFull # Enable full-featured git (needed e.g. for `gitk`)
         glances
         gnumake # for `dake`
         handbrake
@@ -185,13 +181,15 @@ in rec {
         nomacs # Image viewer
         nushell
         obs-studio
-        obsidian
+        #obsidian
         octave
         okular # PDF viewer
         pciutils
-        #pdfmixtool # TODO: Uncomment when build is not broken anymore
+        pdfmixtool
+        picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
         playerctl # Control media players from cli
-        #postman # Broken because binary release deleted by postman... again...
+        polybarFull
+        #postman # TODO: Postman is frequently broken because they remove older builds and only keep the latest version online -> bad for NixOS. See https://github.com/NixOS/nixpkgs/issues/259147
         pv
         python3Packages.bpython # Alternative python repl
         quickemu
@@ -199,7 +197,6 @@ in rec {
         restic
         rofi
         rofimoji
-        #rustup
         rxvt-unicode
         shellcheck
         signal-desktop
@@ -209,7 +206,6 @@ in rec {
         sxhkd
         syncthing
         syncthingtray
-        tdesktop # Telegram Desktop
         teamspeak_client
         #thunderbird # Installed through home-manager
         #thunderbird-bin # Installed through home-manager
@@ -223,7 +219,6 @@ in rec {
         unzip
         usbutils
         ventoy-bin
-        veracrypt
         virt-manager
         virt-viewer
         virtiofsd # HOTFIX: Required by virt-manager: "ERROR: virtiofsd not executable"

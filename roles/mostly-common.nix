@@ -27,7 +27,6 @@
         gitui
         glances
         iotop-c
-        ncdu
         nfs-utils
         grc
         httpie
