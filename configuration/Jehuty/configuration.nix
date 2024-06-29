@@ -27,7 +27,7 @@ in rec {
   # TODO: system.nixos.label
 
   # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
-  system.copySystemConfiguration = true;
+  #system.copySystemConfiguration = true;
   # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
   system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
 
