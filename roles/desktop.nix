@@ -301,7 +301,7 @@ in rec {
 
     programs.kdeconnect.enable = true;
 
-    programs.nm-applet.enable = lib.mkDefault true;
+    programs.nm-applet.enable = lib.mkDefault true; # TODO: Maybe this should go into the desktop-specific config files? It conflicts with the config for Jehuty that has to disable it.
 
     # List services that you want to enable:
 
@@ -313,6 +313,7 @@ in rec {
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
+    services.printing.drivers = with pkgs; [ gutenprint cnijfilter2 ];
     
     # Enable Bluetooth
     #hardware.bluetooth.enable = true;
