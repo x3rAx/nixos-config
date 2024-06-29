@@ -14,8 +14,8 @@ rec {
         desktopManager = {
             plasma5.enable = true;
         };
+
     };
-    services.xserver.desktopManager.plasma5.enable = true;
 
     # List packages installed in system profile. To search, run:
     # $ nix search wget
