@@ -38,6 +38,10 @@
         version
       )
       >= 0;
+
+    # Checks if a given path exists and returns either a list with the path as
+    # single element or an empyt list if the path does not exist.
+    importIfExists = path: lib.optional (builtins.pathExists path) path;
   };
 in
   myLib

@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+_SCRIPT="$(realpath ${BASH_SOURCE})"
+_SCRIPT_DIR="${_SCRIPT%/*}"
+
+# ------------------------------------------------------------------------------
+
+action=${1:-"switch"}
+
+if [[ $EUID -ne 0 ]]; then
+    exec sudo "$0" "$@"
+fi
+
+cd "$_SCRIPT_DIR"
+
+# --- Functions ---
+
+heading() {
+    local msg="$1"
+    echo ''
+    echo ''
+    echo "==> ${msg} <=="
+    echo ''
+}
+
+# --- Track local files with git (for flake) but do not stage their contents ---
+
+while read -r line || [[ -n $line ]]; do
+    # Ignore comments
+    if [[ $line =~ '^[[:space:]]*#' ]]; then
+        continue
+    fi
+
+    git ls-files -o "$line" | while read -r file; do
+        if ! git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+            echo "--- Skipping worktree for: $file ---"
+            git add --intent-to-add "$file"
+        fi
+        git update-index --skip-worktree "$file"
+    done
+done <.local-files
+
+
+# --- Format and git-add ---
+
+heading 'Formatting Nix expressions...'
+
+alejandra . # Autoformat
+
+
+heading 'Changes to be committed'
+
+git diff -U0
+
+
+# --- Rebuild ---
+
+heading 'NixOS Rebuilding...'
+
+if command -v nh >/dev/null; then
+    nh os "$action"
+else
+    sudo nixos-rebuild $action
+fi
+
+
+if [[ ! $action =~ ^(switch|boot)$ ]]; then
+    heading 'Skipping auto-commit since there is no new generation'
+    exit
+fi
+
+# --- Auto-commit ---
+
+heading 'Auto-committing...'
+
+gen_info=$(nixos-rebuild list-generations --json | jq -r 'map(select(.current == true)) | first')
+
+nixos_version="$(echo "$gen_info" |
+	jq -r '.nixosVersion')"
+date="$(echo "$gen_info" |
+	jq -r '.date | fromdate | strftime("%Y-%m-%d %H:%M")')"
+generation="$(echo "$gen_info" |
+	jq -r '.generation')"
+kernel="$(echo "$gen_info" |
+	jq -r '.kernelVersion')"
+
+git add .
+
+# Test if there are staged changes
+if git diff --cached --quiet; then
+    echo "Nothing to commit."
+    exit
+fi
+
+# NOTE:         v-- There's a snowflake emoji here, but `sudo vim` does not display it for some reason.
+git commit -am "❄️ REBUILD: [${action}] $(hostname): Gen. ${generation} - ${nixos_version}
+
+Date:          ${date}
+Generation:    ${generation}
+NixOS version: ${nixos_version}
+Kernel:        ${kernel}
+"
+

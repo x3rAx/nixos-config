@@ -21,9 +21,11 @@
     fd
     gdu
     htop
+    killall
     ripgrep
     tmux
     wget
+    alejandra # Nix code formatter
   ];
 
   programs.git = {

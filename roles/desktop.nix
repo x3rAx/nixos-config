@@ -15,7 +15,6 @@
       then result.value
       else import <nixos>
     ) {config = baseconfig;};
-  unstable = import <nixos-unstable> {config = baseconfig;};
   #pinned-for-virtualbox = builtins.fetchTarball {
   #    #name = "nixos-pinned-for-virtualbox";
   #    url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/21.11.tar.gz";
@@ -29,6 +28,8 @@ in rec {
     [
       #../modules/nixos-rebuild-wrapper.nix
       ../modules/ios-usb.nix
+      ../modules/steam.nix
+      ../modules/lutris.nix
     ]
     ++ [
       # Overridden Modules
@@ -44,9 +45,6 @@ in rec {
       # For nix-direnv
       keep-outputs = true
       keep-derivations = true
-
-      # For nix flakes
-      experimental-features = nix-command flakes
     '';
   };
 
@@ -59,8 +57,8 @@ in rec {
       # NOTE: This also replaces the packages when they are used as dependency
       #       for other packages
       packageOverrides = pkgs: {
-        #inherit unstable;
-        #gdu = unstable.gdu;
+        #inherit pkgs.unstable;
+        #gdu = pkgs.unstable.gdu;
       };
     };
 
@@ -125,7 +123,6 @@ in rec {
       #autokey
       #bc # Replaced by qalc
       #borgbackup
-      #brave
       #dropbox # Replaced with SyncThing
       #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
       #nox # Broken?
@@ -140,15 +137,18 @@ in rec {
       anydesk
       appimage-run
       arandr
+      ark # KDE archive gui (.tar.gz, etc.)
       audacious
       audacity
       barrier
       bashmount
       birdtray
       blanket # Ambient sounds
+      brave
       broot
       btop
       copyq
+      cryptsetup
       dbeaver-bin
       delta # Better `git diff`
       deno
@@ -160,6 +160,7 @@ in rec {
       ethtool
       exfat
       feh
+      #ferdi # TODO: Before uncomment, check if CVE-2022-32320 still applies
       ffmpeg
       file
       filezilla
@@ -167,6 +168,7 @@ in rec {
       fzf
       gimp
       gitFull # Enable full-featured git (needed e.g. for `gitk`)
+      glances
       glances
       gnumake # for `dake`
       handbrake
@@ -251,9 +253,18 @@ in rec {
       zip
     ];
 
-  fonts.packages = with pkgs; [
-    font-awesome
-  ];
+  fonts = let
+    packages = with pkgs; [
+      font-awesome
+    ];
+  in
+    if (myLib.nixosMinVersion "23.11")
+    then {
+      inherit packages;
+    }
+    else {
+      fonts = packages;
+    };
 
   environment.shellAliases = {
     mnt = "bashmount";
@@ -274,7 +285,7 @@ in rec {
   services.xserver.enable = lib.mkDefault true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput = {
+  services.libinput = {
     enable = true;
     mouse = {
       accelProfile = "flat";
@@ -287,14 +298,14 @@ in rec {
   };
 
   # Configure keymap in X11
-  services.xserver.layout = "eu";
+  services.xserver.xkb.layout = "eu";
   #services.xserver.xkbOptions = "caps:escape";
   services.xserver.autoRepeatDelay = 200;
   services.xserver.autoRepeatInterval = 25; # 1000/25 = 40 keys/sec
 
   # Enable sound.
-  #sound.enable = true;
-  #hardware.pulseaudio.enable = lib.mkDefault true; # TODO: Switch to PipeWire by default
+  sound.enable = true;
+  hardware.pulseaudio.enable = lib.mkDefault true; # TODO: Switch to PipeWire by default
 
   # Enable udev rules for ZSA keyboards (Moonlander)
   hardware.keyboard.zsa.enable = true;
@@ -311,8 +322,6 @@ in rec {
   # };
 
   programs.ssh.startAgent = true;
-
-  programs.steam.enable = true;
 
   programs.dconf.enable = true;
 

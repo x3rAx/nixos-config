@@ -5,7 +5,6 @@
   ...
 }: let
   baseconfig = {allowUnfree = true;};
-  unstable = import <nixos-unstable> {config = baseconfig;};
 in rec {
   services.xserver = {
     enable = true;
@@ -31,7 +30,7 @@ in rec {
       dash-to-dock
       top-panel-workspace-scroll # Alternative extension: panel-workspace-scroll
     ])
-    ++ (with unstable.gnomeExtensions; [
+    ++ (with pkgs.unstable.gnomeExtensions; [
       pop-shell
     ]);
 

@@ -6,6 +6,7 @@
   pkgs,
   lib,
   myLib,
+  hostname,
   ...
 }: rec {
   imports = [
@@ -13,12 +14,14 @@
     ./hardware-configuration.nix
     ./hardware-override.nix
     ./openrgb.nix
+    ./wireguard.nix
 
     ../../roles/common.nix
     ../../roles/mostly-common.nix
     ../../roles/desktop.nix
     ../../roles/desktop-bspwm.nix
     ../../roles/nvidia.nix
+    ../../modules/sunshine.nix
   ];
 
   # Copies `configuration.nix` and links it from the resulting system to
@@ -88,6 +91,8 @@
   programs.seahorse.enable = true; # GUI for managing keyring
   programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass"; # Use KDE askpass programm since the default X11 program is weird ^^'
 
+  security.pam.services.gdm.enableGnomeKeyring = true; # TODO: Is this necessary when not using GDM?
+
   # Original:
   # ```
   # $ ulimit -u
@@ -125,7 +130,7 @@
     #"fs.file-max" = 16777216; # For StarCitizen # However, it is now set to the largest possible value by default when using systemd (see `cat /proc/sys/fs/file-max` and https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812)
   };
 
-  networking.hostName = "K1STE"; # Define your hostname.
+  networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
@@ -161,9 +166,12 @@
     hdparm
     pkg-config
     #rnix-lsp # TODO: Remove or re-enable: Depends on `nix-2.15.3` which is marked as insecure due to CVE-2024-27297 (See: https://discourse.nixos.org/t/nixos-need-help-finding-out-what-is-pulling-in-nix-2-15-3-in-my-config/41103/2)
+
+    wineWowPackages.stable
+    winetricks
   ];
 
-  #systemd.services.systemd-udevd.restartIfChanged = false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
+  systemd.services.systemd-udevd.restartIfChanged = false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
   #systemd.services.NetworkManager-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
   #systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
 
