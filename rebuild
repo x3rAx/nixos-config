@@ -98,6 +98,7 @@ fi
 git commit -am "❄️ REBUILD: [${action}] $(hostname): Gen. ${generation} - ${nixos_version}
 
 Date:          ${date}
+Host:          $(hostname)
 Generation:    ${generation}
 NixOS version: ${nixos_version}
 Kernel:        ${kernel}
