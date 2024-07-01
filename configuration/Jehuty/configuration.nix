@@ -6,6 +6,7 @@
   pkgs,
   lib,
   myLib,
+  hostname,
   ...
 }: let
   importIfExists = path: lib.optional (builtins.pathExists path) path;
@@ -94,7 +95,7 @@ in rec {
 
   #powerManagement.cpuFreqGovernor = "performance";
 
-  networking.hostName = "jehuty"; # Define your hostname.
+  networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
