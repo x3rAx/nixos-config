@@ -50,8 +50,8 @@ heading() {
 # --- Track local files with git (for flake) but do not stage their contents ---
 
 while read -r line || [[ -n $line ]]; do
-    # Ignore comments
-    if [[ $line =~ '^[[:space:]]*#' ]]; then
+    # Ignore comments and empty lines
+    if [[ $line =~ ^[[:space:]]*# ]] || [[ $line =~ ^[[:space:]]*$ ]]; then
         continue
     fi
 
