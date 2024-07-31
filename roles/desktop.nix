@@ -249,7 +249,7 @@ in rec {
       xournalpp
       xxd
       yadm
-      yt-dlp
+      yt-dlp # Successor of youtube-dl
       zip
     ];
 
