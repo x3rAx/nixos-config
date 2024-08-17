@@ -9,9 +9,31 @@ _SCRIPT_DIR="${_SCRIPT%/*}"
 
 action=${1:-"switch"}
 
-if [[ $EUID -ne 0 ]]; then
-    exec sudo "$0" "$@"
+if [[ $EUID -eq 0 ]]; then
+    echo >&2 -n "$(tput setaf 1)"
+    echo >&2 -n "Don't run rebuild as root. I will call sudo internally as needed"
+    echo >&2 "$(tput sgr0)"
+    exit 1
 fi
+
+sudo() {
+    if [[ $EUID -ne 0 ]]; then
+        command sudo "$@"
+        return $?
+    fi
+
+    "$@"
+    return $?
+}
+
+git() {
+    if [[ $(stat -c %u .git) -eq 0 ]]; then
+        sudo git "$@"
+        return $?
+    fi
+    command git "$@"
+    return $?
+}
 
 cd "$_SCRIPT_DIR"
 
@@ -34,6 +56,7 @@ while read -r line || [[ -n $line ]]; do
     fi
 
     git ls-files -- "$line" | while read -r file; do
+        git update-index --no-skip-worktree "$file"
         git restore --staged -- "$file"
         if ! git ls-files --error-unmatch -- "$file" >/dev/null 2>&1; then
             echo "--- Skipping worktree for: $file ---"
@@ -48,7 +71,7 @@ done <.local-files
 
 heading 'Formatting Nix expressions...'
 
-alejandra . # Autoformat
+sudo alejandra . # Autoformat
 
 
 heading 'Changes to be committed'
@@ -61,7 +84,7 @@ git diff -U0
 heading 'NixOS Rebuilding...'
 
 if command -v nh >/dev/null; then
-    nh os "$action"
+    nh os "$action" .
 else
     sudo nixos-rebuild $action
 fi

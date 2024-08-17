@@ -249,7 +249,7 @@ in rec {
       xournalpp
       xxd
       yadm
-      youtube-dl
+      yt-dlp
       zip
     ];
 

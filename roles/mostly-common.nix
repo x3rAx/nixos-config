@@ -40,6 +40,7 @@
     lshw
     ncdu
     neofetch
+    nh
     nmap
     nushell
     pv
