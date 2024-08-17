@@ -68,7 +68,7 @@
       "en_US.UTF-8/UTF-8"
       "de_DE.UTF-8/UTF-8"
     ];
-    defaultLocale = "en_US.UTF-8";
+    defaultLocale = "en_US.UTF-8"; # TODO: If you encounter issues, consider switching to Ireland: "en_IE.UTF-8"
     extraLocaleSettings = {
       # LANG is set by `i18n.defaultLocale`
       # LC_ALL = (unset)
@@ -142,6 +142,8 @@
           permitRootLogin = settings.PermitRootLogin;
         }
     );
+
+  services.tailscale.enable = true;
 
   virtualisation.docker.enable = true;
 
