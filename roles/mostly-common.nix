@@ -144,7 +144,10 @@
         }
     );
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    package = pkgs.unstable.tailscale;
+  };
 
   virtualisation.docker.enable = true;
 
