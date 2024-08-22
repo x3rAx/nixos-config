@@ -1,0 +1,59 @@
+;; vim: set ft=lisp:
+;;
+;; Comments are prefixed by double-semicolon. A single semicolon is parsed as
+;; the keyboard key. Comments are ignored for the configuration file.
+;;
+;; This configuration language is Lisp-like. If you're unfamiliar with Lisp,
+;; don't be alarmed. The maintainer jtroo is also unfamiliar with Lisp. You
+;; don't need to know Lisp in-depth to be able to configure kanata.
+;;
+;; If you follow along with the examples, you should be fine. Kanata should
+;; also hopefully have helpful error messages in case something goes wrong. If
+;; you need help, you are welcome to ask.
+
+;; Only one defsrc is allowed.
+;;
+;; defsrc defines the keys that will be intercepted by kanata. The order of the
+;; keys matches with deflayer declarations and all deflayer declarations must
+;; have the same number of keys as defsrc. Any keys not listed in defsrc will
+;; be passed straight to the operating system.
+(defsrc
+  esc  F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  del
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt rctl left up   down rght
+)
+
+;; The first layer defined is the layer that will be active by default when
+;; kanata starts up.
+(deflayer default
+  esc  F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  del
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  @esc a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt rctl left up   down rght
+)
+
+;; `XX` `✗` `∅` and `•` are a no-op.
+(deflayer arrows
+  •    •    •    •    •    •    •    •    •    •    •    •    •    •
+  caps F1   F2   F3   F4   F5   F6   F7   F8   F9   F10  F11  F12  del
+  •    home up   end  pgup •    •    •    •    •    •    bspc del  ins
+  •    left down rght pgdn •    left down up   rght •    •    •
+  _    •    •    •    •    •    •    •    •    •    •    •
+  _    _    _              _              •    •    •    •    •    •
+)
+
+;; defalias is used to declare a shortcut for a more complicated action to keep
+;; the deflayer declarations clean and aligned. The alignment in deflayers is
+;; not necessary, but is strongly recommended for ease of understanding
+;; visually.
+;;
+;; Aliases are referred to by `@<alias_name>`.
+(defalias
+  ;; tap: esc, hold: arrows layer
+  esc (tap-hold 200 200 esc (layer-toggle arrows))
+)

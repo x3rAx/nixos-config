@@ -157,6 +157,12 @@ in rec {
   # Use systemd-resolved for DNS
   services.resolved.enable = true;
 
+  # Keyboard remapping
+  services.kanata = {
+    enable = true;
+    keyboards."x3ro".config = builtins.readFile ./kanata-layout.kbd;
+  };
+
   # Set users to be immutable. This will revert all manual changes to users on system activation.
   #users.mutableUsers = false;
 
