@@ -188,7 +188,8 @@
   '';
 
   # Enable Nvidia GPUs inside docker containers
-  virtualisation.docker.enableNvidia = true;
+  #virtualisation.docker.enableNvidia = true; # Deprecated
+  hardware.nvidia-container-toolkit.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # (generate hashed passwords with `mkpasswd -m sha512`)
