@@ -212,6 +212,8 @@
     initialPassword = "changeMe!";
   };
 
+  nix.settings.trusted-users = [config.users.users."x3ro".name];
+
   programs.nix-ld.enable = true;
 
   # This value determines the NixOS release from which the default
