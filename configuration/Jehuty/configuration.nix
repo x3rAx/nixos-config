@@ -193,6 +193,8 @@ in rec {
     "kvm" = {};
   };
 
+  nix.settings.trusted-users = [config.users.users."x3ro".name];
+
   #nix.distributedBuilds = true;
   #nix.buildMachines = [ {
   #  hostName = "nix-builder";
