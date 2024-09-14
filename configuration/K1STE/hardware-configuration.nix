@@ -70,6 +70,16 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
 
+  #networking.interfaces.enp4s0.wakeOnLan.enable = true;
+  systemd.network.links."50-lan" = {
+    matchConfig = {
+      MACAddress = "9c:6b:00:05:8f:c0";
+    };
+    linkConfig = {
+      WakeOnLan = "magic";
+    };
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
