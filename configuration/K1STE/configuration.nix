@@ -228,4 +228,10 @@
   # When do I update `stateVersion`:
   #   https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "21.05"; # Did you read the comment?
+
+  services.wyoming.piper.servers."EN_Ryan" = {
+    enable = true;
+    uri = "tcp://127.0.0.1:10200";
+    voice = "en-us-ryan-medium";
+  };
 }
