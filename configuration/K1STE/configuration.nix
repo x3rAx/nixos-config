@@ -212,6 +212,7 @@
       "corectrl" # Control CPU / GPU profiles
     ];
     initialPassword = "changeMe!";
+    shell = pkgs.zsh;
   };
 
   nix.settings.trusted-users = [config.users.users."x3ro".name];
