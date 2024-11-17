@@ -193,6 +193,9 @@
   #virtualisation.docker.enableNvidia = true; # Deprecated
   hardware.nvidia-container-toolkit.enable = true;
 
+  virtualisation.incus.enable = true;
+  networking.nftables.enable = true; # Required for `incus`
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # (generate hashed passwords with `mkpasswd -m sha512`)
   users.users.root = {hashedPassword = "!";};
@@ -210,6 +213,7 @@
       "libvirtd"
       "openrazer"
       "corectrl" # Control CPU / GPU profiles
+      "incus-admin"
     ];
     initialPassword = "changeMe!";
     shell = pkgs.zsh;
