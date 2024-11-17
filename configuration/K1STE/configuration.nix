@@ -195,6 +195,18 @@
 
   virtualisation.incus.enable = true;
   networking.nftables.enable = true; # Required for `incus`
+  networking.firewall.trustedInterfaces = ["incusbr0"];
+  # The below is only needed when `incusbr0` is not added to `trustedInterfaces`:
+  #networking.firewall.interfaces.incusbr0 = {
+  #  allowedTCPPorts = [
+  #    53
+  #    67
+  #  ];
+  #  allowedUDPPorts = [
+  #    53
+  #    67
+  #  ];
+  #};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # (generate hashed passwords with `mkpasswd -m sha512`)
