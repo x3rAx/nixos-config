@@ -1,4 +1,5 @@
 ./configuration/K1STE/wireguard.nix
+./configuration/K1STE/local-configuration.nix
 
 ./configuration/Jehuty/wireguard.nix
 ./configuration/Jehuty/local-configuration.nix

@@ -8,21 +8,27 @@
   myLib,
   hostname,
   ...
-}: rec {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./hardware-override.nix
-    ./openrgb.nix
-    ./wireguard.nix
+}: let
+  # TODO: Figure out why building fails when using this function from `myLib`
+  importIfExists = path: lib.optional (builtins.pathExists path) path;
+in rec {
+  imports =
+    [
+      # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./hardware-override.nix
+      ./openrgb.nix
+      ./wireguard.nix
+      #./local-configuration.nix
 
-    ../../roles/common.nix
-    ../../roles/mostly-common.nix
-    ../../roles/desktop.nix
-    ../../roles/desktop-bspwm.nix
-    ../../roles/nvidia.nix
-    ../../modules/sunshine.nix
-  ];
+      ../../roles/common.nix
+      ../../roles/mostly-common.nix
+      ../../roles/desktop.nix
+      ../../roles/desktop-bspwm.nix
+      ../../roles/nvidia.nix
+      ../../modules/sunshine.nix
+    ]
+    ++ importIfExists ./local-configuration.nix;
 
   # Copies `configuration.nix` and links it from the resulting system to
   # `/run/current-system/configuration.nix`
