@@ -237,7 +237,8 @@ in rec {
     shell = pkgs.zsh;
   };
 
-  nix.settings.trusted-users = [config.users.users."x3ro".name];
+  # This effectively makes the user ROOT.
+  #nix.settings.trusted-users = [config.users.users."x3ro".name];
 
   programs.nix-ld.enable = true;
 
