@@ -72,7 +72,6 @@ in rec {
         };
       }
     );
-  hardware.pulseaudio.enable = false;
 
   hardware.openrazer.enable = true;
 

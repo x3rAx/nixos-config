@@ -303,10 +303,6 @@ in rec {
   services.xserver.autoRepeatDelay = 200;
   services.xserver.autoRepeatInterval = 25; # 1000/25 = 40 keys/sec
 
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = lib.mkDefault true; # TODO: Switch to PipeWire by default
-
   # Enable udev rules for ZSA keyboards (Moonlander)
   hardware.keyboard.zsa.enable = true;
 
