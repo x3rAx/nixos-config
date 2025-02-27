@@ -362,7 +362,7 @@ in rec {
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "ignore";
     extraConfig = ''
-      HandlePowerKey=hibernate
+      HandlePowerKey=suspend
       HandleSuspendKey=suspend
       HandleHibernateKey=hibernate
       HandleRebootKey=reboot
