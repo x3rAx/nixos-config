@@ -28,7 +28,8 @@
       " Scrolloff
           set scrolloff=5
           " When jumping to end of file, leave 5 lines blank below
-          nnoremap G 5<C-y>G5<C-e>
+          " NOTE: Disabled because it is problematic with animations in LazyVim
+          "nnoremap G 5<C-y>G5<C-e>
 
       " Improved line shifting
           vnoremap < <gv
