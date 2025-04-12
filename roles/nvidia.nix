@@ -19,6 +19,7 @@
   # The default is `stable`.
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   hardware.nvidia.open = true;
+  hardware.nvidia.powerManagement.enable = true;
 
   # TODO: Maybe remove again - Fix for "V rising" to get nvidia driver from unstable
   #boot.kernelPackages = pkgs.unstable.linuxPackages;
