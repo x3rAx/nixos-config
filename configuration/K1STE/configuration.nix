@@ -145,6 +145,7 @@ in rec {
   programs.corectrl.enable = true;
 
   programs.zsh.enable = true;
+  programs.zsh.enableGlobalCompInit = false; # Disable global completion init to speed up `compinit` call in `~/.zshrc`
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
