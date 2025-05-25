@@ -18,7 +18,7 @@
       enable = true;
       #package = "pkgs.bspwm-unstable";
       configFile = "/home/x3ro/.config/bspwm/bspwmrc";
-      sxhkd.configFile = "/home/x3ro/.config/sxhkd/sxhkdrc";
+      #sxhkd.configFile = "/home/x3ro/.config/sxhkd/sxhkdrc";
     };
   };
 
@@ -41,9 +41,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     picom
-    picom-next
     polybar
     xtitle # To get window titles from scripts
-    picom-next # WARN: When changing to `picom` here, make sure to also change to `picom` package in home-manager gamemode config
   ];
 }
