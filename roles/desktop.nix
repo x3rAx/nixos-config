@@ -220,7 +220,6 @@ in rec {
       spotify
       sshfs-fuse
       #super-productivity
-      sxhkd
       syncthing
       syncthingtray
       teamspeak_client

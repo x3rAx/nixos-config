@@ -40,7 +40,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    picom
     polybar
     xtitle # To get window titles from scripts
   ];
