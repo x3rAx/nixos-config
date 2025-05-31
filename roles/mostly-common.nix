@@ -50,7 +50,7 @@
     trash-cli
     tree
     unzip
-    ventoy-bin
+    #ventoy-bin # NOTE: Disabled due to security concerns: Ventoy uses binary blobs which can't be trusted to be free of malware or compliant to their licenses. See https://github.com/NixOS/nixpkgs/issues/404663
     wireguard-tools
     xxd
 

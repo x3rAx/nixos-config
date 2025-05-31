@@ -137,7 +137,7 @@ in rec {
       anydesk
       appimage-run
       arandr
-      ark # KDE archive gui (.tar.gz, etc.)
+      kdePackages.ark # KDE archive gui (.tar.gz, etc.)
       audacious
       audacity
       barrier
@@ -201,7 +201,7 @@ in rec {
       obs-studio
       #obsidian
       octave
-      okular # PDF viewer
+      kdePackages.okular # PDF viewer
       pciutils
       pdfmixtool
       playerctl # Control media players from cli
@@ -234,7 +234,7 @@ in rec {
       unrar
       unzip
       usbutils
-      ventoy-bin
+      #ventoy-bin # NOTE: Disabled due to security concerns: Ventoy uses binary blobs which can't be trusted to be free of malware or compliant to their licenses. See https://github.com/NixOS/nixpkgs/issues/404663
       virt-manager
       virt-viewer
       virtiofsd # HOTFIX: Required by virt-manager: "ERROR: virtiofsd not executable"
