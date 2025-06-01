@@ -25,10 +25,10 @@
 
   boot.initrd.luks.devices."fsroot_crypt".device = "/dev/disk/by-uuid/78506b62-7474-4a17-865e-19584d6e0817";
 
-  fileSystems."/etc/nixos" = {
-    device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
-    fsType = "btrfs";
-    options = ["subvol=NixOS/@etc@nixos"];
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/2DFE-0F1A";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
   };
 
   fileSystems."/etc/secrets" = {
@@ -37,21 +37,16 @@
     options = ["subvol=NixOS/@etc@secrets"];
   };
 
-  fileSystems."/home" = {
+  fileSystems."/etc/nixos" = {
     device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
     fsType = "btrfs";
-    options = ["subvol=NixOS/@home"];
+    options = ["subvol=NixOS/@etc@nixos"];
   };
 
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
     fsType = "btrfs";
     options = ["subvol=NixOS/@swap"];
-  };
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/2DFE-0F1A";
-    fsType = "vfat";
   };
 
   fileSystems."/data/data" = {
@@ -61,6 +56,14 @@
 
   boot.initrd.luks.devices."data_crypt".device = "/dev/disk/by-uuid/778b63a3-cc84-45ef-8a58-dfe8c858f37c";
 
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/e3618ca9-c797-40f7-bac5-790de9b733b3";
+    fsType = "btrfs";
+    options = ["subvol=@home"];
+  };
+
+  boot.initrd.luks.devices."secondary_crypt".device = "/dev/disk/by-uuid/2044b4f0-7bfa-447c-8c21-30df9a4c86d3";
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -68,19 +71,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
-
-  #networking.interfaces.enp4s0.wakeOnLan.enable = true;
-  systemd.network.links."50-lan" = {
-    matchConfig = {
-      MACAddress = "9c:6b:00:05:8f:c0";
-    };
-    linkConfig = {
-      WakeOnLan = "magic";
-    };
-  };
+  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

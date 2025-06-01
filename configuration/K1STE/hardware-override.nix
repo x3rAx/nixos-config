@@ -34,6 +34,14 @@ in rec {
   };
   fileSystems."/".options = ssd_options;
 
+  boot.initrd.luks.devices."secondary_crypt" = {
+    allowDiscards = true; # SSD (Potential security risk: https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD) )
+    bypassWorkqueues = true; # Improve SSD performance
+    keyFile = "/crypto_keyfile.bin";
+    preLVM = true;
+  };
+  fileSystems."/home".options = ssd_options;
+
   # Data mount
   #fileSystems."/storage/data" = {
   #    # NOTE: The `encryped` option does not have an option for
@@ -79,6 +87,5 @@ in rec {
   #    in ["${automount_opts},credentials=/etc/secrets/samba/x3ro@NAS"];
   #};
 
-  # TODO: This is set to "powersave" in `hardware-configuration.nix`. Is it a good idea to unset it?
   powerManagement.cpuFreqGovernor = lib.mkForce null; # "ondemand", "powersave", "performance"
 }
