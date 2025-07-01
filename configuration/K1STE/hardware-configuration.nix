@@ -64,6 +64,12 @@
 
   boot.initrd.luks.devices."secondary_crypt".device = "/dev/disk/by-uuid/2044b4f0-7bfa-447c-8c21-30df9a4c86d3";
 
+  fileSystems."/data/fsroot" = {
+    device = "/dev/disk/by-uuid/dfa39452-8b32-4fdf-a548-2af6f0fc3178";
+    fsType = "btrfs";
+    options = ["subvol=NixOS/@data@fsroot"];
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
