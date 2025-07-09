@@ -141,6 +141,8 @@ in rec {
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
+  networking.interfaces."enp4s0".wakeOnLan.enable = true;
+
   programs.gamemode.enable = true;
   programs.corectrl.enable = true;
 
