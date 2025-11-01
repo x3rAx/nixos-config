@@ -33,7 +33,7 @@ in rec {
       ./hardware-configuration.nix
       ./hardware-override.nix
       ./openrgb.nix
-      ./wireguard.nix
+      #./wireguard.nix
       #./local-configuration.nix
 
       ../../roles/common.nix
