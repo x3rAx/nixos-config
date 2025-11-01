@@ -231,6 +231,16 @@ in rec {
   #virtualisation.docker.enableNvidia = true; # Deprecated
   hardware.nvidia-container-toolkit.enable = true;
 
+  virtualisation.docker.extraOptions = ''
+    --userns-remap=x3ro:users
+  '';
+  systemd.services.docker-userns-socat = {
+    requiredBy = ["docker.service"];
+    serviceConfig = {
+      ExecStart = ''${pkgs.socat}/bin/socat UNIX-LISTEN:/var/run/docker-userns.sock,user=100000,group=100000,mode=0600,fork UNIX-CLIENT:/var/run/docker.sock'';
+    };
+  };
+
   #virtualisation.incus.enable = true;
   #networking.nftables.enable = true; # Required for `incus`
   #networking.firewall.trustedInterfaces = ["incusbr0"];
