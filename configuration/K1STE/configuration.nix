@@ -120,6 +120,8 @@ in rec {
   programs.seahorse.enable = true; # GUI for managing keyring
   programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass"; # Use KDE askpass programm since the default X11 program is weird ^^'
 
+  services.resolved.enable = true;
+
   security.pam.services.gdm.enableGnomeKeyring = true; # TODO: Is this necessary when not using GDM?
 
   # Original:
@@ -207,6 +209,12 @@ in rec {
   #systemd.services.NetworkManager-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
   #systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false; # TODO: Remove when https://github.com/NixOS/nixpkgs/issues/180175 is fixed
 
+  services.wyoming.piper.servers."EN_Ryan" = {
+    enable = true;
+    uri = "tcp://127.0.0.1:10200";
+    voice = "en-us-ryan-medium";
+  };
+
   # XSecureLock
   environment.etc."systemd/system-sleep/xsecurelock".source = pkgs.writeShellScript "xsecurelock" ''
     #!/bin/bash
@@ -276,10 +284,4 @@ in rec {
   # When do I update `stateVersion`:
   #   https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "21.05"; # Did you read the comment?
-
-  services.wyoming.piper.servers."EN_Ryan" = {
-    enable = true;
-    uri = "tcp://127.0.0.1:10200";
-    voice = "en-us-ryan-medium";
-  };
 }
