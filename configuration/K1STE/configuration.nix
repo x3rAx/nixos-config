@@ -42,6 +42,7 @@ in rec {
       ../../roles/desktop-bspwm.nix
       ../../roles/nvidia.nix
       ../../modules/sunshine.nix
+      ../../modules/virt-manager.nix
     ]
     ++ importIfExists ./local-configuration.nix;
 
