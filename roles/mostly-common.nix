@@ -150,6 +150,7 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.package = pkgs.unstable.docker;
 
   boot.enableContainers = false;
   virtualisation = {
