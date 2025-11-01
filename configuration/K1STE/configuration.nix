@@ -103,11 +103,16 @@ in rec {
   services.xserver.exportConfiguration = true;
 
   networking.firewall = {
+    enable = true;
+    trustedInterfaces = [
+      #"virbr0" # Virt-Manager
+    ];
     #allowedUDPPorts = [ 51821 35408 ];
     allowedTCPPorts = [
       24800 # barrier - mouse / keyboard sharing server
     ];
   };
+  networking.nftables.enable = true;
 
   services.teamviewer.enable = true;
 
