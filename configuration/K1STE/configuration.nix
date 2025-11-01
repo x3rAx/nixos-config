@@ -231,9 +231,9 @@ in rec {
   #virtualisation.docker.enableNvidia = true; # Deprecated
   hardware.nvidia-container-toolkit.enable = true;
 
-  virtualisation.incus.enable = true;
-  networking.nftables.enable = true; # Required for `incus`
-  networking.firewall.trustedInterfaces = ["incusbr0"];
+  #virtualisation.incus.enable = true;
+  #networking.nftables.enable = true; # Required for `incus`
+  #networking.firewall.trustedInterfaces = ["incusbr0"];
   # The below is only needed when `incusbr0` is not added to `trustedInterfaces`:
   #networking.firewall.interfaces.incusbr0 = {
   #  allowedTCPPorts = [
