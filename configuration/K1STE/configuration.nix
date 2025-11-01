@@ -88,6 +88,7 @@ in rec {
         };
       }
     );
+  hardware.alsa.enablePersistence = true;
 
   hardware.openrazer.enable = true;
 
