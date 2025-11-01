@@ -53,6 +53,7 @@ in rec {
     // {
       permittedInsecurePackages = [
         #"electron-25.9.0" # For `obsidian` / `super-productivity`
+        "mbedtls-2.28.10" # For openrgb
       ];
       # NOTE: This also replaces the packages when they are used as dependency
       #       for other packages
