@@ -103,7 +103,7 @@ in rec {
   services.xserver.exportConfiguration = true;
 
   networking.firewall = {
-    enable = true;
+    enable = false;
     trustedInterfaces = [
       #"virbr0" # Virt-Manager
     ];
