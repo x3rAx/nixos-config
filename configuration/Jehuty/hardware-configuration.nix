@@ -12,58 +12,51 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "uas" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/5845441d-d28b-478b-a33c-c0bf96a23514";
+    device = "/dev/mapper/fsroot_crypt";
     fsType = "btrfs";
     options = ["subvol=NixOS/@"];
   };
 
-  boot.initrd.luks.devices."fsroot_crypt".device = "/dev/disk/by-uuid/0f6a9900-d064-413d-bc2d-627e339fb890";
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/0A9D-18D9";
-    fsType = "vfat";
-  };
-
-  fileSystems."/etc/nixos" = {
-    device = "/dev/disk/by-uuid/5845441d-d28b-478b-a33c-c0bf96a23514";
-    fsType = "btrfs";
-    options = ["subvol=NixOS/@etc@nixos"];
-  };
+  boot.initrd.luks.devices."fsroot_crypt".device = "/dev/disk/by-uuid/ef3dc0c1-1715-4844-b9b1-61c74f44ff61";
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/5845441d-d28b-478b-a33c-c0bf96a23514";
+    device = "/dev/mapper/fsroot_crypt";
     fsType = "btrfs";
     options = ["subvol=NixOS/@home"];
   };
 
-  fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/5845441d-d28b-478b-a33c-c0bf96a23514";
+  fileSystems."/etc/nixos" = {
+    device = "/dev/mapper/fsroot_crypt";
     fsType = "btrfs";
-    options = ["subvol=NixOS/@swap"];
+    options = ["subvol=NixOS/@etc@nixos"];
   };
 
   fileSystems."/etc/secrets" = {
-    device = "/dev/disk/by-uuid/5845441d-d28b-478b-a33c-c0bf96a23514";
+    device = "/dev/mapper/fsroot_crypt";
     fsType = "btrfs";
     options = ["subvol=NixOS/@etc@secrets"];
   };
 
+  fileSystems."/swap" = {
+    device = "/dev/mapper/fsroot_crypt";
+    fsType = "btrfs";
+    options = ["subvol=NixOS/@swap"];
+  };
+
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/D463-22A2";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
+  };
+
   swapDevices = [];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp166s0.useDHCP = lib.mkDefault true;
-
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
