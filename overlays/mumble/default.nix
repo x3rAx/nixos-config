@@ -1,5 +1,5 @@
 self: super: {
-  mumble = super.mumble.override {
+  mumble-tts = super.mumble.override {
     # Speech support for mumble
     speechdSupport = true;
     # speechd = super.speechd.override {
