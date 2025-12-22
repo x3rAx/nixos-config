@@ -148,6 +148,7 @@ in rec {
       brave
       broot
       btop
+      chezmoi
       copyq
       cryptsetup
       dbeaver-bin
