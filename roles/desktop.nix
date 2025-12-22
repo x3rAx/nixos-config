@@ -191,7 +191,7 @@ in rec {
       minio-client
       mpc-qt
       mtr # Better traceroute
-      mumble
+      #mumble
       ncdu # Replaced with gdu
       nix-direnv
       nodePackages.pnpm
