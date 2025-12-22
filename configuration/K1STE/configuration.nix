@@ -109,7 +109,7 @@ in rec {
     ];
     #allowedUDPPorts = [ 51821 35408 ];
     allowedTCPPorts = [
-      24800 # barrier - mouse / keyboard sharing server
+      #24800 # barrier - mouse / keyboard sharing server (removed from NixPkgs because it was unmaintained)
     ];
   };
   networking.nftables.enable = true;
@@ -147,6 +147,11 @@ in rec {
     };
   };
 
+  # Generate keyfiles using openssl:
+  #
+  # ```
+  # openssl rand -base64 4096 > /etc/secrets/initrd/luks-<name>.key
+  # ```
   boot.initrd.secrets = {
     # ATTENTION: Always use quotes for the paths. Otherwise the secret will be
     #            copied into the Nix store and will be WORLD READABLE!

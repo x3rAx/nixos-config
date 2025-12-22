@@ -12,16 +12,15 @@ in rec {
     displayManager = {
       gdm.enable = true;
     };
-
-    desktopManager = {
-      gnome.enable = true;
-    };
+  };
+  services.desktopManager = {
+    gnome.enable = true;
   };
 
   environment.systemPackages = with pkgs;
     [
-      gnome.gnome-tweaks
-      gnome.dconf-editor
+      gnome-tweaks
+      dconf-editor
     ]
     ++ (with gnomeExtensions; [
       appindicator
@@ -35,8 +34,11 @@ in rec {
     ]);
 
   services.udev.packages = with pkgs; [
-    gnome.gnome-settings-daemon
+    gnome-settings-daemon
   ];
+
+  # Do not start the OpenSSH agent agent on login. Gnome already has the GCR SSH agent enabled.
+  programs.ssh.startAgent = false;
 
   # Enable Gnome browser extension to work
   #services.gnome.chrome-gnome-shell.enable = true;

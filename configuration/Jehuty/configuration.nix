@@ -21,7 +21,7 @@ in rec {
       ../../roles/common.nix
       ../../roles/mostly-common.nix
       ../../roles/desktop.nix
-      ../../roles/desktop-gnome.nix
+      #../../roles/desktop-gnome.nix
     ]
     ++ importIfExists ./local-configuration.nix;
 
@@ -58,7 +58,7 @@ in rec {
 
   programs.nm-applet.enable = false;
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -147,7 +147,7 @@ in rec {
     winetricks
   ];
 
-  programs.ssh.startAgent = true;
+  programs.ssh.startAgent = lib.mkDefault true;
 
   # Enable Bluetooth
   hardware.bluetooth.enable = true;

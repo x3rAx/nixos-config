@@ -141,7 +141,6 @@ in rec {
       kdePackages.ark # KDE archive gui (.tar.gz, etc.)
       audacious
       audacity
-      barrier
       bashmount
       birdtray
       blanket # Ambient sounds
@@ -188,7 +187,7 @@ in rec {
       libreoffice
       linux-wifi-hotspot
       lshw
-      mariadb-client
+      mariadb.client
       minio-client
       mpc-qt
       mtr # Better traceroute
@@ -224,12 +223,12 @@ in rec {
       #super-productivity
       syncthing
       syncthingtray
-      teamspeak_client
+      #teamspeak3 # NOTE: Disabled because qtwebengine-5.15.19 is marked insecure / unmaintained
       #thunderbird # Installed through home-manager
       #thunderbird-bin # Installed through home-manager
       tmate
       tor
-      tor-browser-bundle-bin
+      tor-browser
       translate-shell
       tree
       ueberzug # To show images in ranger (not necessary for Kitty)
@@ -318,7 +317,7 @@ in rec {
   #   enableSSHSupport = true;
   # };
 
-  programs.ssh.startAgent = true;
+  programs.ssh.startAgent = lib.mkDefault true;
 
   programs.dconf.enable = true;
 
@@ -362,12 +361,12 @@ in rec {
     lidSwitch = "ignore";
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "ignore";
-    extraConfig = ''
-      HandlePowerKey=suspend
-      HandleSuspendKey=suspend
-      HandleHibernateKey=hibernate
-      HandleRebootKey=reboot
-    '';
+    settings.Login = {
+      HandlePowerKey = "suspend";
+      HandleSuspendKey = "suspend";
+      HandleHibernateKey = "hibernate";
+      HandleRebootKey = "reboot";
+    };
   };
 
   # TODO: Find out how to set up ananicy so that it does not change niceness of other processes
@@ -450,7 +449,7 @@ in rec {
     #       know the system theme. However, gnome comes with its own
     #       version of the portal, which collides with this one. Therefore,
     #       the portal is only added when gnome is not enabled.
-    extraPortals = lib.optionals (!config.services.xserver.desktopManager.gnome.enable) (with pkgs; [
+    extraPortals = lib.optionals (!config.services.desktopManager.gnome.enable) (with pkgs; [
       xdg-desktop-portal-gtk # Required for flatpak
     ]);
   };
