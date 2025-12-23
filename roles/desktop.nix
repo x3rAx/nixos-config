@@ -348,12 +348,12 @@ in rec {
   systemd.services.anydesk.enable = true;
 
   services = {
-    syncthing = {
-      enable = true;
-      user = "x3ro";
-      dataDir = "/home/x3ro/Syncthing";
-      configDir = "/home/x3ro/.config/syncthing";
-    };
+    #syncthing = {
+    #  enable = true;
+    #  user = "x3ro";
+    #  dataDir = "/home/x3ro/Syncthing";
+    #  configDir = "/home/x3ro/.config/syncthing";
+    #};
   };
 
   # Logind config
