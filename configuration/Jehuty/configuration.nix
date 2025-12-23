@@ -16,12 +16,11 @@ in rec {
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./hardware-overrides.nix
-      ./wireguard.nix
 
       ../../roles/common.nix
       ../../roles/mostly-common.nix
       ../../roles/desktop.nix
-      #../../roles/desktop-gnome.nix
+      ../../roles/desktop-kde.nix
     ]
     ++ importIfExists ./local-configuration.nix;
 
@@ -81,6 +80,11 @@ in rec {
 
   boot.supportedFilesystems = ["ntfs-3g"];
 
+  # Generate keyfiles using openssl:
+  #
+  # ```
+  # openssl rand -base64 4096 > /etc/secrets/initrd/luks-<name>.key
+  # ```
   boot.initrd.secrets = {
     # ATTENTION: Always use quotes for the paths. Otherwise the secret will be
     #            copied into the Nix store and will be WORLD READABLE!
