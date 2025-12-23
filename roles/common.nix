@@ -54,6 +54,18 @@
     man = "batman";
   };
 
+  system.activationScripts = {
+    ensureSecretsDirPermissions = {
+      deps = [];
+      text = ''
+        dir=/etc/secrets
+        mkdir -p "$dir"
+        chown -R root:root "$dir"
+        chmod -R go-rwx "$dir"
+      '';
+    };
+  };
+
   # Update Intel microcode
   hardware.cpu.intel.updateMicrocode = true;
 }
