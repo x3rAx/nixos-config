@@ -156,6 +156,9 @@ in rec {
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
 
+  # Fan control for Framework Laptops
+  hardware.fw-fanctrl.enable = true;
+
   services.xserver.xkb.options = "caps:escape";
 
   # Use systemd-resolved for DNS
