@@ -317,7 +317,8 @@ in rec {
   #   enableSSHSupport = true;
   # };
 
-  programs.ssh.startAgent = lib.mkDefault true;
+  # Enable ssh agent only when gcr-ssh-agent is not enabled (which is enabled by default when gnome-keyring is enabled).
+  programs.ssh.startAgent = lib.mkDefault (!config.services.gnome.gcr-ssh-agent.enable);
 
   programs.dconf.enable = true;
 
