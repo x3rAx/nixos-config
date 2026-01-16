@@ -8,7 +8,7 @@
   imports = [
     ../modules/neovim.nix
   ];
-  system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

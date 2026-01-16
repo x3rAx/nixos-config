@@ -29,7 +29,7 @@ in rec {
   # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
   #system.copySystemConfiguration = true;
   # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-  system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   # Fix GDM not starting on Framework Laptop
   # See here for kernel versions: https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/linux-kernels.nix

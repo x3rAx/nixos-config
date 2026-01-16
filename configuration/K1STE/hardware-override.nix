@@ -17,7 +17,7 @@ in rec {
   imports = [
     ../../modules/x3ro/btrfs-swapfile.nix
   ];
-  system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   services.fstrim.enable = true;
 

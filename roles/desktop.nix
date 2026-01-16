@@ -35,7 +35,7 @@ in rec {
       # Overridden Modules
       #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
     ];
-  system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   # Enable Flakes
   nix = {
@@ -358,9 +358,11 @@ in rec {
 
   # Logind config
   services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "ignore";
+    settings.Login = {
+      HandleLidSwitch = "ignore";
+      HandleLidSwitchDocked = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+    };
     settings.Login = {
       HandlePowerKey = "suspend";
       HandleSuspendKey = "suspend";

@@ -3,7 +3,7 @@
     ../../modules/x3ro/btrfs-swapfile.nix
     ../../modules/x3ro/hdd-sleep-service.nix
   ];
-  system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   boot.initrd.luks.devices = {
     "rootfs_crypt" = {

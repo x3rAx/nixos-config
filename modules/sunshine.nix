@@ -18,7 +18,7 @@ in rec {
   #imports = [
   #    (import "${inputs.nixpkgs-unstable}/nixos/modules/services/networking/sunshine.nix" { inherit config lib utils; pkgs = pkgs.unstable; })
   #];
-  ##system.extraSystemBuilderCmds = myLib.createCopyExtraConfigFilesScript imports;
+  ##system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   #services.sunshine = {
   #    enable = true;
