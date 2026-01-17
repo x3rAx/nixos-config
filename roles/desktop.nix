@@ -26,7 +26,6 @@ in rec {
   ];
   imports =
     [
-      ../modules/steam.nix
     ]
     ++ [
       # Overridden Modules
@@ -36,8 +35,11 @@ in rec {
 
   x3ro = {
     ios-usb.enable = true;
-    programs.lutris.enable = true;
-    #programs.nixos-rebuild-wrapper.enable = true;
+    programs = {
+      lutris.enable = true;
+      #nixos-rebuild-wrapper.enable = true;
+      steam.enable = true;
+    };
   };
 
   # Enable Flakes

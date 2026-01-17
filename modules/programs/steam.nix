@@ -1,10 +1,12 @@
 {
   config,
-  pkgs,
   lib,
   myLib,
+  pkgs,
   ...
 }: let
+  cfg = config.x3ro.programs.steam;
+
   overlay-steam-with-custom-desktop-file = final: prev: {
     steamPackages = prev.steamPackages.overrideScope (final: prev: {
       steam = prev.steam.overrideAttrs (oldAttrs: {
@@ -24,8 +26,16 @@
     });
   };
 in {
-  nixpkgs.overlays = [
-    overlay-steam-with-custom-desktop-file
-  ];
-  programs.steam.enable = true;
+  options = {
+    x3ro.programs.steam = {
+      enable = lib.mkEnableOption "Enable Steam with custom `.desktop` file";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    nixpkgs.overlays = [
+      overlay-steam-with-custom-desktop-file
+    ];
+    programs.steam.enable = true;
+  };
 }
