@@ -5,6 +5,7 @@
     ./programs/neovim.nix
     ./programs/nixos-rebuild-wrapper.nix
     ./programs/steam.nix
+    ./programs/sunshine.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 }

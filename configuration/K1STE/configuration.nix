@@ -41,16 +41,19 @@ in rec {
       ../../roles/desktop.nix
       ../../roles/desktop-bspwm.nix
       ../../roles/nvidia.nix
-      ../../modules/sunshine.nix
       ../../modules/virt-manager.nix
     ]
     ++ importIfExists ./local-configuration.nix;
+  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+
+  x3ro = {
+    programs.sunshine.enable = true;
+  };
 
   # Copies `configuration.nix` and links it from the resulting system to
   # `/run/current-system/configuration.nix`
   #system.copySystemConfiguration = true;
-  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   security.rtkit.enable = true;
   services.pipewire =
