@@ -42,6 +42,13 @@
       ];
     };
 
+    # Add symlink to the flake used to build the derivation in `$out/_flake`
+    symlink-flake = {...}: {
+      system.extraSystemBuilderCmds = ''
+        ln -s ${self.outPath} $out/_flake
+      '';
+    };
+
     specialArgs = {
       inherit inputs;
     };
@@ -54,6 +61,7 @@
           hostname = "K1STE";
         };
       modules = [
+        symlink-flake
         copy-extra-config-files
         nixpkgs-unstable-overlay
         ./modules
@@ -68,6 +76,7 @@
           hostname = "Jehuty";
         };
       modules = [
+        symlink-flake
         copy-extra-config-files
         nixpkgs-unstable-overlay
         ./modules
