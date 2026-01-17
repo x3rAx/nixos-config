@@ -15,6 +15,8 @@
     ./roles/mostly-common.nix
     ./roles/server.nix
     ./roles/virtualisation.nix
+
+    ./services/hdd-sleep.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 }

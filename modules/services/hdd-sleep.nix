@@ -4,11 +4,11 @@
   lib,
   ...
 }: let
-  cfg = config.x3ro.hdd-sleep-service;
+  cfg = config.x3ro.services.hdd-sleep;
 in {
   options = {
-    x3ro.hdd-sleep-service = {
-      enable = lib.mkEnableOption "hdd-sleep service";
+    x3ro.services.hdd-sleep = {
+      enable = lib.mkEnableOption "Enable hdd-sleep service";
 
       device = lib.mkOption {
         type = lib.types.str;

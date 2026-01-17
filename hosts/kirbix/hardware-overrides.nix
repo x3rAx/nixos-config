@@ -1,7 +1,6 @@
 {myLib, ...}: rec {
   imports = [
     ../../modules/x3ro/btrfs-swapfile.nix
-    ../../modules/x3ro/hdd-sleep-service.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
@@ -16,7 +15,7 @@
       };
     };
 
-    hdd-sleep-service = {
+    services.hdd-sleep = {
       enable = true;
       device = "/dev/disk/by-id/ata-ST1000LM014-1EJ164_W770GLTD";
       timeout-level = 12; # 12 = 60 seconds
