@@ -13,6 +13,7 @@
     ./roles/common.nix
     ./roles/desktop
     ./roles/mostly-common.nix
+    ./roles/server.nix
     ./roles/virtualisation.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;

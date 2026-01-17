@@ -10,8 +10,6 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./hardware-overrides.nix
-
-    ../../roles/server.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
@@ -19,6 +17,7 @@
     roles = {
       common.enable = true;
       mostly-common.enable = true;
+      server.enable = true;
     };
   };
 
