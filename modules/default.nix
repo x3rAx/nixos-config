@@ -20,5 +20,4 @@
 
     ./btrfs-swapfile.nix
   ];
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 }

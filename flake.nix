@@ -38,6 +38,7 @@
         ./flake.nix
         ./flake.lock
         ./configuration.nix
+        ./modules
       ];
     };
 
