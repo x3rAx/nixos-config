@@ -37,8 +37,6 @@ in rec {
       #./local-configuration.nix
     ]
     ++ importIfExists ./local-configuration.nix;
-  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   x3ro = {
     roles = {

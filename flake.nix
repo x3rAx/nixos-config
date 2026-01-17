@@ -33,15 +33,6 @@
       ];
     };
 
-    copy-extra-config-files = {myLib, ...}: {
-      system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript [
-        ./flake.nix
-        ./flake.lock
-        ./configuration.nix
-        ./modules
-      ];
-    };
-
     # Add symlink to the flake used to build the derivation in `$out/_flake`
     symlink-flake = {...}: {
       system.extraSystemBuilderCmds = ''
@@ -62,7 +53,6 @@
         };
       modules = [
         symlink-flake
-        copy-extra-config-files
         nixpkgs-unstable-overlay
         ./modules
         ./configuration.nix
@@ -77,7 +67,6 @@
         };
       modules = [
         symlink-flake
-        copy-extra-config-files
         nixpkgs-unstable-overlay
         ./modules
         ./configuration.nix

@@ -11,7 +11,6 @@
     ./hardware-configuration.nix
     ./hardware-overrides.nix
   ];
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   x3ro = {
     roles = {

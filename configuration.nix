@@ -11,7 +11,6 @@ in rec {
   imports = [
     (myLib.toPath "./hosts/${hostname}/configuration.nix")
   ];
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   nixpkgs.overlays = import ./overlays;
 
