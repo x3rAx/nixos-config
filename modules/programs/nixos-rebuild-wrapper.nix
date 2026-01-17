@@ -1,9 +1,12 @@
 # Configuration for workstations (desktops / laptops)
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
+  cfg = config.x3ro.programs.nixos-rebuild-wrapper;
+
   nixos-rebuild-wrapper = pkgs.writeShellScriptBin "nixos-rebuild" ''
     orig_PWD="$PWD"
     check=false
@@ -41,9 +44,17 @@
     ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$@"
   '';
 in rec {
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    nixos-rebuild-wrapper
-  ];
+  options = {
+    x3ro.programs.nixos-rebuild-wrapper = {
+      enable = lib.mkEnableOption "Enable the nixos-rebuild-wrapper";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    # List packages installed in system profile. To search, run:
+    # $ nix search wget
+    environment.systemPackages = with pkgs; [
+      nixos-rebuild-wrapper
+    ];
+  };
 }

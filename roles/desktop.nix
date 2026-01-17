@@ -26,7 +26,6 @@ in rec {
   ];
   imports =
     [
-      #../modules/nixos-rebuild-wrapper.nix
       ../modules/steam.nix
     ]
     ++ [
@@ -38,6 +37,7 @@ in rec {
   x3ro = {
     ios-usb.enable = true;
     programs.lutris.enable = true;
+    #programs.nixos-rebuild-wrapper.enable = true;
   };
 
   # Enable Flakes
