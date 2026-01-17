@@ -46,6 +46,7 @@
         };
       modules = [
         nixpkgs-unstable-overlay
+        ./modules
         ./configuration.nix
       ];
     };
@@ -58,6 +59,7 @@
         };
       modules = [
         nixpkgs-unstable-overlay
+        ./modules
         ./configuration.nix
       ];
     };
