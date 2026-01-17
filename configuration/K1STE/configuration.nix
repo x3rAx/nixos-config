@@ -35,8 +35,6 @@ in rec {
       ./openrgb.nix
       #./wireguard.nix
       #./local-configuration.nix
-
-      ../../roles/desktop-bspwm.nix
     ]
     ++ importIfExists ./local-configuration.nix;
   # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
@@ -46,7 +44,7 @@ in rec {
     roles = {
       common.enable = true;
       mostly-common.enable = true;
-      desktop.enable = true;
+      desktop.bspwm.enable = true;
       virtualisation.enable = true;
     };
     graphics.nvidia.enable = true;

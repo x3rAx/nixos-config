@@ -23,6 +23,10 @@
   #    sha256 = "162dywda2dvfj1248afxc45kcrg83appjd0nmdb541hl7rnncf02";
   #};
 in {
+  imports = [
+    ./bspwm.nix
+  ];
+
   options = {
     x3ro.roles.desktop = {
       enable = lib.mkEnableOption "Enable desktop role";
