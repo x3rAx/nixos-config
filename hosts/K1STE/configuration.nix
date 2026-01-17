@@ -32,7 +32,6 @@ in rec {
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./hardware-override.nix
-      ./openrgb.nix
       #./wireguard.nix
       #./local-configuration.nix
     ]
@@ -46,6 +45,7 @@ in rec {
       virtualisation.enable = true;
     };
     graphics.nvidia.enable = true;
+    hardware.openrgb.enable = true;
     programs.sunshine.enable = true;
   };
 

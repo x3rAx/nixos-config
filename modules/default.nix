@@ -3,6 +3,7 @@
     ./graphics/nvidia.nix
 
     ./hardware/ios-usb.nix
+    ./hardware/openrgb.nix
 
     ./programs/lutris.nix
     ./programs/neovim.nix
