@@ -9,6 +9,7 @@
     ./programs/sunshine.nix
 
     ./roles/common.nix
+    ./roles/mostly-common.nix
     ./roles/virtualisation.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;

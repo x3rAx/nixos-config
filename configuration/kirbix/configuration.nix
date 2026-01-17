@@ -17,7 +17,6 @@ in rec {
       ./hardware-overrides.nix
       ./rfkill-powerDown.nix
 
-      ../../roles/mostly-common.nix
       ../../roles/desktop.nix
       ../../roles/desktop-kde.nix
       ../../roles/nvidia.nix
@@ -29,6 +28,7 @@ in rec {
   x3ro = {
     roles = {
       common.enable = true;
+      mostly-common.enable = true;
     };
   };
 

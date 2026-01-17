@@ -36,7 +36,6 @@ in rec {
       #./wireguard.nix
       #./local-configuration.nix
 
-      ../../roles/mostly-common.nix
       ../../roles/desktop.nix
       ../../roles/desktop-bspwm.nix
       ../../roles/nvidia.nix
@@ -48,6 +47,7 @@ in rec {
   x3ro = {
     roles = {
       common.enable = true;
+      mostly-common.enable = true;
       virtualisation.enable = true;
     };
     programs.sunshine.enable = true;

@@ -11,7 +11,6 @@
     ./hardware-configuration.nix
     ./hardware-overrides.nix
 
-    ../../roles/mostly-common.nix
     ../../roles/server.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
@@ -19,6 +18,7 @@
   x3ro = {
     roles = {
       common.enable = true;
+      mostly-common.enable = true;
     };
   };
 

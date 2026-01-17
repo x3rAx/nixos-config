@@ -17,7 +17,6 @@ in rec {
       ./hardware-configuration.nix
       ./hardware-overrides.nix
 
-      ../../roles/mostly-common.nix
       ../../roles/desktop.nix
       ../../roles/desktop-kde.nix
     ]
@@ -28,6 +27,7 @@ in rec {
   x3ro = {
     roles = {
       common.enable = true;
+      mostly-common.enable = true;
     };
   };
 
