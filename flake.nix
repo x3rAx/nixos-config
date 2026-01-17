@@ -33,6 +33,14 @@
       ];
     };
 
+    copy-extra-config-files = {myLib, ...}: {
+      system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript [
+        ./flake.nix
+        ./flake.lock
+        ./configuration.nix
+      ];
+    };
+
     specialArgs = {
       inherit inputs;
     };
@@ -45,6 +53,7 @@
           hostname = "K1STE";
         };
       modules = [
+        copy-extra-config-files
         nixpkgs-unstable-overlay
         ./modules
         ./configuration.nix
@@ -58,6 +67,7 @@
           hostname = "Jehuty";
         };
       modules = [
+        copy-extra-config-files
         nixpkgs-unstable-overlay
         ./modules
         ./configuration.nix
