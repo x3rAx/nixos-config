@@ -9,7 +9,7 @@ in rec {
   _module.args.myLib = myLib;
 
   imports = [
-    (myLib.toPath "./configuration/${hostname}/configuration.nix")
+    (myLib.toPath "./hosts/${hostname}/configuration.nix")
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
@@ -29,7 +29,7 @@ in rec {
       deps = [];
       text = ''
         link='/etc/nixos/current-host'
-        dest='/etc/nixos/configuration/${hostname}'
+        dest='/etc/nixos/hosts/${hostname}'
 
         ln -sfr -T "$dest" "$link"
       '';
