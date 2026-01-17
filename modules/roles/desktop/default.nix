@@ -26,6 +26,7 @@ in {
   imports = [
     ./bspwm.nix
     ./gnome.nix
+    ./kde.nix
   ];
 
   options = {

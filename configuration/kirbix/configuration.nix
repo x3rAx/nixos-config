@@ -16,8 +16,6 @@ in rec {
       ./hardware-configuration.nix
       ./hardware-overrides.nix
       ./rfkill-powerDown.nix
-
-      ../../roles/desktop-kde.nix
     ]
     ++ importIfExists ./local-configuration.nix;
   # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
@@ -27,7 +25,7 @@ in rec {
     roles = {
       common.enable = true;
       mostly-common.enable = true;
-      desktop.enable = true;
+      desktop.kde.enable = true;
     };
     graphics.nvidia.enable = true;
   };
