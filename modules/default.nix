@@ -6,6 +6,7 @@
     ./programs/nixos-rebuild-wrapper.nix
     ./programs/steam.nix
     ./programs/sunshine.nix
+    ./roles/virtualisation.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 }
