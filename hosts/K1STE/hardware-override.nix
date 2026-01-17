@@ -14,10 +14,6 @@
     #"autodefrag" # TODO: This is bad for SSDs but it's a test to see if the freezes go away
   ];
 in rec {
-  imports = [
-  ];
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
-
   x3ro = {
     btrfs-swapfile = {
       enable = true;

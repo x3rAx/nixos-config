@@ -1,8 +1,4 @@
 {myLib, ...}: rec {
-  imports = [
-  ];
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
-
   x3ro = {
     btrfs-swapfile = {
       enable = true;
