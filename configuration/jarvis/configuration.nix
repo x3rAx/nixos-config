@@ -11,10 +11,16 @@
     ./hardware-configuration.nix
     ./hardware-overrides.nix
 
-    ../../roles/common.nix
     ../../roles/mostly-common.nix
     ../../roles/server.nix
   ];
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+
+  x3ro = {
+    roles = {
+      common.enable = true;
+    };
+  };
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;

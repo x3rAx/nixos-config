@@ -17,20 +17,25 @@ in rec {
       ./hardware-overrides.nix
       ./rfkill-powerDown.nix
 
-      ../../roles/common.nix
       ../../roles/mostly-common.nix
       ../../roles/desktop.nix
       ../../roles/desktop-kde.nix
       ../../roles/nvidia.nix
     ]
     ++ importIfExists ./local-configuration.nix;
+  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+
+  x3ro = {
+    roles = {
+      common.enable = true;
+    };
+  };
 
   # TODO: system.nixos.label
 
   # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
   system.copySystemConfiguration = true;
-  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   boot.loader = {
     grub = {

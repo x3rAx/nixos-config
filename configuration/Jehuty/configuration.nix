@@ -17,19 +17,24 @@ in rec {
       ./hardware-configuration.nix
       ./hardware-overrides.nix
 
-      ../../roles/common.nix
       ../../roles/mostly-common.nix
       ../../roles/desktop.nix
       ../../roles/desktop-kde.nix
     ]
     ++ importIfExists ./local-configuration.nix;
+  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
+  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+
+  x3ro = {
+    roles = {
+      common.enable = true;
+    };
+  };
 
   # TODO: system.nixos.label
 
   # Copys `configuration.nix` and links it from the resulting system to `/run/current-system/configuration.nix`
   #system.copySystemConfiguration = true;
-  # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
-  system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   # Fix GDM not starting on Framework Laptop
   # See here for kernel versions: https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/linux-kernels.nix
