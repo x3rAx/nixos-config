@@ -3,16 +3,15 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.x3ro.btrfs-swapfile;
 in {
   options = {
     x3ro.btrfs-swapfile = {
-      enable = mkEnableOption "BTRFS swapfile";
+      enable = lib.mkEnableOption "BTRFS swapfile";
 
-      location = mkOption {
-        type = types.str;
+      location = lib.mkOption {
+        type = lib.types.str;
         example = "/swap/SWAPFILE";
 
         #To create the swapfile, either use option
@@ -37,18 +36,18 @@ in {
         '';
       };
 
-      #size = mkOption {
-      #    type = types.ints.unsigned;
+      #size = lib.mkOption {
+      #    type = lib.types.ints.unsigned;
       #    example = "20 * 1024";
       #    description = ''
       #        The size of the SWAPFILE in MIB
       #    '';
       #};
 
-      hibernation.enable = mkEnableOption "hibernation";
+      hibernation.enable = lib.mkEnableOption "hibernation";
 
-      hibernation.resume_device = mkOption {
-        type = types.str;
+      hibernation.resume_device = lib.mkOption {
+        type = lib.types.str;
         example = "/dev/mapper/rootfs_crypt";
         description = ''
           The device that should be used for resume.
@@ -57,8 +56,8 @@ in {
         '';
       };
 
-      hibernation.resume_offset = mkOption {
-        type = types.ints.unsigned;
+      hibernation.resume_offset = lib.mkOption {
+        type = lib.types.ints.unsigned;
         example = 38912;
         description = ''
           The offset where the SWAPFILE is located on the partition.
@@ -88,8 +87,8 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    boot = mkIf cfg.hibernation.enable {
+  config = lib.mkIf cfg.enable {
+    boot = lib.mkIf cfg.hibernation.enable {
       resumeDevice = cfg.hibernation.resume_device;
       kernelParams = ["resume_offset=${toString cfg.hibernation.resume_offset}"];
     };

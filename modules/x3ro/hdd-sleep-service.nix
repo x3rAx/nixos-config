@@ -3,16 +3,15 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   cfg = config.x3ro.hdd-sleep-service;
 in {
   options = {
     x3ro.hdd-sleep-service = {
-      enable = mkEnableOption "hdd-sleep service";
+      enable = lib.mkEnableOption "hdd-sleep service";
 
-      device = mkOption {
-        type = types.str;
+      device = lib.mkOption {
+        type = lib.types.str;
         example = "/dev/disk/by-id/ata-XXXXXXXXXXX-XXXXXX_XXXXXXXX";
 
         description = ''
@@ -21,8 +20,8 @@ in {
         '';
       };
 
-      timeout-level = mkOption {
-        type = types.ints.unsigned;
+      timeout-level = lib.mkOption {
+        type = lib.types.ints.unsigned;
         example = 1;
 
         description = ''
@@ -46,7 +45,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     systemd.services."hdd-sleep" = {
       # Unit
       description = "Set HDD standby timeout immediately after wake up";
