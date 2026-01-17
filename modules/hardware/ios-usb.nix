@@ -5,10 +5,10 @@
   pkgs,
   ...
 }: let
-  cfg = config.x3ro.ios-usb;
+  cfg = config.x3ro.hardware.ios-usb;
 in {
   options = {
-    x3ro.ios-usb = {
+    x3ro.hardware.ios-usb = {
       enable = lib.mkEnableOption "Enable iOS USB support";
     };
   };

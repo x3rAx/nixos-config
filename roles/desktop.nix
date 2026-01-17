@@ -34,7 +34,7 @@ in rec {
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
   x3ro = {
-    ios-usb.enable = true;
+    hardware.ios-usb.enable = true;
     programs = {
       lutris.enable = true;
       #nixos-rebuild-wrapper.enable = true;
