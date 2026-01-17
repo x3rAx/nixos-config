@@ -19,7 +19,6 @@ in rec {
 
       ../../roles/desktop.nix
       ../../roles/desktop-kde.nix
-      ../../roles/nvidia.nix
     ]
     ++ importIfExists ./local-configuration.nix;
   # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
@@ -30,6 +29,7 @@ in rec {
       common.enable = true;
       mostly-common.enable = true;
     };
+    graphics.nvidia.enable = true;
   };
 
   # TODO: system.nixos.label

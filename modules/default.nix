@@ -1,5 +1,7 @@
 {myLib, ...}: rec {
   imports = [
+    ./graphics/nvidia.nix
+
     ./hardware/ios-usb.nix
 
     ./programs/lutris.nix

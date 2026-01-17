@@ -38,7 +38,6 @@ in rec {
 
       ../../roles/desktop.nix
       ../../roles/desktop-bspwm.nix
-      ../../roles/nvidia.nix
     ]
     ++ importIfExists ./local-configuration.nix;
   # !!! DO NOT DO THIS --> # myLib.createCopyExtraConfigFilesScript [ ./. ] !!!
@@ -50,6 +49,7 @@ in rec {
       mostly-common.enable = true;
       virtualisation.enable = true;
     };
+    graphics.nvidia.enable = true;
     programs.sunshine.enable = true;
   };
 
