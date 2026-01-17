@@ -17,6 +17,8 @@
     ./roles/virtualisation.nix
 
     ./services/hdd-sleep.nix
+
+    ./btrfs-swapfile.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 }

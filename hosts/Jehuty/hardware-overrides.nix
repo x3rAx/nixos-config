@@ -1,6 +1,5 @@
 {myLib, ...}: rec {
   imports = [
-    ../../modules/x3ro/btrfs-swapfile.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
