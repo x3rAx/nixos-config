@@ -28,7 +28,6 @@ in rec {
     [
       #../modules/nixos-rebuild-wrapper.nix
       ../modules/steam.nix
-      ../modules/lutris.nix
     ]
     ++ [
       # Overridden Modules
@@ -38,6 +37,7 @@ in rec {
 
   x3ro = {
     ios-usb.enable = true;
+    programs.lutris.enable = true;
   };
 
   # Enable Flakes

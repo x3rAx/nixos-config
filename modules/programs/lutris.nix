@@ -1,10 +1,12 @@
 {
   config,
-  pkgs,
   lib,
   myLib,
+  pkgs,
   ...
 }: let
+  cfg = config.x3ro.programs.lutris;
+
   overlay-lutris-with-custom-desktop-file = final: prev: {
     lutris-unwrapped = prev.lutris-unwrapped.overrideAttrs (old: {
       postInstall =
@@ -27,18 +29,26 @@
     });
   };
 in {
-  nixpkgs.overlays = [
-    overlay-lutris-with-custom-desktop-file
-  ];
-  environment.systemPackages = with pkgs; [
-    lutris
-    #(lutris.override {
-    #  extraLibraries = pkgs: [
-    #    # List library dependencies here
-    #  ];
-    #  extraPkgs = pkgs: [
-    #    # List package dependencies here
-    #  ];
-    #})
-  ];
+  options = {
+    x3ro.programs.lutris = {
+      enable = lib.mkEnableOption "Enable Lutris with custom `.desktop` file";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    nixpkgs.overlays = [
+      overlay-lutris-with-custom-desktop-file
+    ];
+    environment.systemPackages = with pkgs; [
+      lutris
+      #(lutris.override {
+      #  extraLibraries = pkgs: [
+      #    # List library dependencies here
+      #  ];
+      #  extraPkgs = pkgs: [
+      #    # List package dependencies here
+      #  ];
+      #})
+    ];
+  };
 }
