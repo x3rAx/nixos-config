@@ -6,9 +6,12 @@
   ...
 }: rec {
   imports = [
-    ../modules/neovim.nix
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+
+  x3ro = {
+    programs.neovim.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

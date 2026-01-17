@@ -1,8 +1,11 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: let
+  cfg = config.x3ro.programs.neovim;
+
   neovim-system-config = pkgs.writeTextFile rec {
     name = "neovim-system-config";
     destination = "/etc/xdg/nvim/sysinit.vim";
@@ -50,22 +53,30 @@
     '';
   };
 in {
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    (neovim.override {
-      vimAlias = true;
-      viAlias = true;
-    })
-    neovim-system-config
-  ];
-
-  environment.variables = {
-    EDITOR = "nvim";
+  options = {
+    x3ro.programs.neovim = {
+      enable = lib.mkEnableOption "Enable basic global neovim config";
+    };
   };
 
-  environment.shellAliases = {
-    #sudo = "\\sudo EDITOR=\${EDITOR:-nvim}"; # TODO: This alias breaks kitty integration (bash complains during startup when sourcing the kitty.bash file). But this should not be necessary anyways because `environment.variables.EDITOR` seems to also set this for `sudo`
-    vimdiff = "nvim -d";
+  config = lib.mkIf cfg.enable {
+    # List packages installed in system profile. To search, run:
+    # $ nix search wget
+    environment.systemPackages = with pkgs; [
+      (neovim.override {
+        vimAlias = true;
+        viAlias = true;
+      })
+      neovim-system-config
+    ];
+
+    environment.variables = {
+      EDITOR = "nvim";
+    };
+
+    environment.shellAliases = {
+      #sudo = "\\sudo EDITOR=\${EDITOR:-nvim}"; # TODO: This alias breaks kitty integration (bash complains during startup when sourcing the kitty.bash file). But this should not be necessary anyways because `environment.variables.EDITOR` seems to also set this for `sudo`
+      vimdiff = "nvim -d";
+    };
   };
 }
