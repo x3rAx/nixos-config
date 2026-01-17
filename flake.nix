@@ -35,7 +35,7 @@
 
     # Add symlink to the flake used to build the derivation in `$out/_flake`
     symlink-flake = {...}: {
-      system.extraSystemBuilderCmds = ''
+      system.systemBuilderCommands = ''
         ln -s ${self.outPath} $out/_flake
       '';
     };
