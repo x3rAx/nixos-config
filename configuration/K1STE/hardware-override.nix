@@ -72,7 +72,7 @@ in rec {
     hibernation = {
       enable = true;
       resume_device = "/dev/mapper/fsroot_crypt"; # This is new, is this correct?
-      resume_offset = 177480960;
+      resume_offset = 52700416;
     };
   };
 
