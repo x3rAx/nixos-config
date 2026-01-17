@@ -86,48 +86,37 @@ in {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot/efi";
       };
-      grub =
-        {
-          enable = true;
-          device = "nodev";
-          efiSupport = true;
-          efiInstallAsRemovable = false;
-          #configurationLimit = 100;
-          memtest86.enable = true;
-          backgroundColor = "#000000";
-          splashImage = ../../../res/nixos-boot-background-scaled.png;
-          # Get gfxmodes from the grub cli with `videoinfo`
-          gfxmodeEfi = "1280x1024";
-          enableCryptodisk = true;
-          # - The option definition `boot.loader.grub.extraInitrd' in `/etc/nixos/configuration.nix' no longer has any effect; please remove it.
-          # This option has been replaced with the bootloader agnostic
-          # boot.initrd.secrets option. To migrate to the initrd secrets system,
-          # extract the extraInitrd archive into your main filesystem:
-          #
-          #   # zcat /boot/extra_initramfs.gz | cpio -idvmD /etc/secrets/initrd
-          #   /path/to/secret1
-          #   /path/to/secret2
-          #
-          # then replace boot.loader.grub.extraInitrd with boot.initrd.secrets:
-          #
-          #   boot.initrd.secrets = {
-          #     "/path/to/secret1" = "/etc/secrets/initrd/path/to/secret1";
-          #     "/path/to/secret2" = "/etc/secrets/initrd/path/to/secret2";
-          #   };
-          #
-          # See the boot.initrd.secrets option documentation for more information.
-          #extraInitrd = /boot/initrd.keys.gz;
-        }
-        // (
-          if (myLib.nixosMinVersion "23.05")
-          then {
-            # `boot.loader.grub.version` does not have any effect anymore
-          }
-          else {
-            # >= 23.05
-            version = 2;
-          }
-        );
+      grub = {
+        enable = true;
+        device = "nodev";
+        efiSupport = true;
+        efiInstallAsRemovable = false;
+        #configurationLimit = 100;
+        memtest86.enable = true;
+        backgroundColor = "#000000";
+        splashImage = ../../../res/nixos-boot-background-scaled.png;
+        # Get gfxmodes from the grub cli with `videoinfo`
+        gfxmodeEfi = "1280x1024";
+        enableCryptodisk = true;
+        # - The option definition `boot.loader.grub.extraInitrd' in `/etc/nixos/configuration.nix' no longer has any effect; please remove it.
+        # This option has been replaced with the bootloader agnostic
+        # boot.initrd.secrets option. To migrate to the initrd secrets system,
+        # extract the extraInitrd archive into your main filesystem:
+        #
+        #   # zcat /boot/extra_initramfs.gz | cpio -idvmD /etc/secrets/initrd
+        #   /path/to/secret1
+        #   /path/to/secret2
+        #
+        # then replace boot.loader.grub.extraInitrd with boot.initrd.secrets:
+        #
+        #   boot.initrd.secrets = {
+        #     "/path/to/secret1" = "/etc/secrets/initrd/path/to/secret1";
+        #     "/path/to/secret2" = "/etc/secrets/initrd/path/to/secret2";
+        #   };
+        #
+        # See the boot.initrd.secrets option documentation for more information.
+        #extraInitrd = /boot/initrd.keys.gz;
+      };
     };
 
     # List packages installed in system profile. To search, run:
@@ -270,18 +259,11 @@ in {
         zip
       ];
 
-    fonts = let
+    fonts = {
       packages = with pkgs; [
         font-awesome
       ];
-    in
-      if (myLib.nixosMinVersion "23.11")
-      then {
-        inherit packages;
-      }
-      else {
-        fonts = packages;
-      };
+    };
 
     environment.shellAliases = {
       mnt = "bashmount";
