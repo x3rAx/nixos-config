@@ -1,4 +1,5 @@
 {
   imports = [
+    ./ios-usb.nix
   ];
 }

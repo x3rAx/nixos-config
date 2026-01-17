@@ -27,7 +27,6 @@ in rec {
   imports =
     [
       #../modules/nixos-rebuild-wrapper.nix
-      ../modules/ios-usb.nix
       ../modules/steam.nix
       ../modules/lutris.nix
     ]
@@ -36,6 +35,10 @@ in rec {
       #"${pinned-for-virtualbox}/nixos/modules/virtualisation/virtualbox-host.nix"
     ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+
+  x3ro = {
+    ios-usb.enable = true;
+  };
 
   # Enable Flakes
   nix = {
