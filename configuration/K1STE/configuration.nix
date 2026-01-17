@@ -36,7 +36,6 @@ in rec {
       #./wireguard.nix
       #./local-configuration.nix
 
-      ../../roles/desktop.nix
       ../../roles/desktop-bspwm.nix
     ]
     ++ importIfExists ./local-configuration.nix;
@@ -47,6 +46,7 @@ in rec {
     roles = {
       common.enable = true;
       mostly-common.enable = true;
+      desktop.enable = true;
       virtualisation.enable = true;
     };
     graphics.nvidia.enable = true;

@@ -11,6 +11,7 @@
     ./programs/sunshine.nix
 
     ./roles/common.nix
+    ./roles/desktop
     ./roles/mostly-common.nix
     ./roles/virtualisation.nix
   ];

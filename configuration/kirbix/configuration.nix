@@ -17,7 +17,6 @@ in rec {
       ./hardware-overrides.nix
       ./rfkill-powerDown.nix
 
-      ../../roles/desktop.nix
       ../../roles/desktop-kde.nix
     ]
     ++ importIfExists ./local-configuration.nix;
@@ -28,6 +27,7 @@ in rec {
     roles = {
       common.enable = true;
       mostly-common.enable = true;
+      desktop.enable = true;
     };
     graphics.nvidia.enable = true;
   };
