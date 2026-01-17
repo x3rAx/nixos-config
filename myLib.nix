@@ -16,6 +16,35 @@
       else throw "Path must be either absolute (starting with \"/\") or relative (starting with \"./\")";
 
     # Copy other files to store and link them to `/run/current-system/`
+    #
+    # Usage:
+    #
+    # !!! DO NOT DO THE FOLLOWING:                                          !!!
+    # !!!                                                                   !!!
+    # !!! ```                                                               !!!
+    # !!! myLib.createCopyExtraConfigFilesScript [ ./. ];                   !!!
+    # !!! ```                                                               !!!
+    # !!!                                                                   !!!
+    # !!! This will copy the whole directory with all potentially secret    !!!
+    # !!! files into the nix store.                                         !!!
+    #
+    # ```
+    # system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript [
+    #   ./flake.nix
+    #   ./flake.lock
+    #   ./configuration.nix
+    #   ./modules
+    # ];
+    # ```
+    #
+    # Or, to automatically add all imports:
+    #
+    # ```
+    # imports = [
+    #   ./hardware-configuration.nix
+    # ];
+    # system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
+    # ```
     createCopyExtraConfigFilesScript = paths: let
       newline = ''
       '';
