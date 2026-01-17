@@ -19,6 +19,18 @@ in rec {
   ];
   system.systemBuilderCommands = myLib.createCopyExtraConfigFilesScript imports;
 
+  x3ro = {
+    btrfs-swapfile = {
+      enable = true;
+      location = "/swap/SWAPFILE";
+      hibernation = {
+        enable = true;
+        resume_device = "/dev/mapper/fsroot_crypt"; # This is new, is this correct?
+        resume_offset = 52700416;
+      };
+    };
+  };
+
   services.fstrim.enable = true;
 
   #boot.initrd.availableKernelModules = [
@@ -65,16 +77,6 @@ in rec {
     keyFile = "/crypto_keyfile.bin";
   };
   fileSystems."/data/data".options = ssd_options;
-
-  x3ro.btrfs-swapfile = {
-    enable = true;
-    location = "/swap/SWAPFILE";
-    hibernation = {
-      enable = true;
-      resume_device = "/dev/mapper/fsroot_crypt"; # This is new, is this correct?
-      resume_offset = 52700416;
-    };
-  };
 
   #environment.systemPackages = [ pkgs.cifs-utils ];
   #fileSystems."/data/NAS/^x3ro" = {
