@@ -51,6 +51,8 @@ in {
       };
     };
 
+    services.blueman.enable = true; # Bluetooth UI with tray applet
+
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [

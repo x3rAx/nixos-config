@@ -69,7 +69,6 @@ in rec {
   hardware.xpadneo.enable = true; # For Xbox controller
 
   hardware.bluetooth.enable = true; # For Bluetooth
-  services.blueman.enable = true; # Bluetooth UI
 
   # Use the X configuration provided by the nvidia-settings tool
   #services.xserver.config = lib.mkAfter (builtins.readFile ./xserver-nvidia.conf);
