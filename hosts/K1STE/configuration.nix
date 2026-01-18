@@ -41,7 +41,7 @@ in rec {
     roles = {
       common.enable = true;
       mostly-common.enable = true;
-      desktop.bspwm.enable = true;
+      desktop.kde.enable = true;
       virtualisation.enable = true;
     };
     graphics.nvidia.enable = true;
