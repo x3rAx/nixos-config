@@ -66,18 +66,15 @@ while read -r line || [[ -n $line ]]; do
     done
 done <.local-files
 
-
 # --- Format and git-add ---
 
 heading 'Formatting Nix expressions...'
 
 sudo alejandra . # Autoformat
 
-
 heading 'Changes to be committed'
 
 git diff -U0
-
 
 # --- Rebuild ---
 
@@ -88,7 +85,6 @@ if command -v nh >/dev/null; then
 else
     sudo nixos-rebuild $action
 fi
-
 
 if [[ ! $action =~ ^(switch|boot)$ ]]; then
     heading 'Skipping auto-commit since there is no new generation'
@@ -102,13 +98,15 @@ heading 'Auto-committing...'
 gen_info=$(nixos-rebuild list-generations --json | jq -r 'map(select(.current == true)) | first')
 
 nixos_version="$(echo "$gen_info" |
-	jq -r '.nixosVersion')"
+    jq -r '.nixosVersion')"
+#date="$(echo "$gen_info" |
+#	jq -r '.date | fromdate | strftime("%Y-%m-%d %H:%M")')"
 date="$(echo "$gen_info" |
-	jq -r '.date | fromdate | strftime("%Y-%m-%d %H:%M")')"
+    jq -r '.date')"
 generation="$(echo "$gen_info" |
-	jq -r '.generation')"
+    jq -r '.generation')"
 kernel="$(echo "$gen_info" |
-	jq -r '.kernelVersion')"
+    jq -r '.kernelVersion')"
 
 git add .
 
@@ -127,4 +125,3 @@ Generation:    ${generation}
 NixOS version: ${nixos_version}
 Kernel:        ${kernel}
 "
-
