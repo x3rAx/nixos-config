@@ -44,8 +44,8 @@ in {
     ];
 
     security.pam.services.kwallet = {
+      enable = true;
       name = "kwallet";
-      enableKwallet = true;
     };
   };
 }
