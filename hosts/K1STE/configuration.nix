@@ -89,10 +89,6 @@ in rec {
 
   services.teamviewer.enable = true;
 
-  services.gnome.gnome-keyring.enable = true; # Enable gnome-keyring
-  programs.seahorse.enable = true; # GUI for managing keyring
-  programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass"; # Use KDE askpass programm since the default X11 program is weird ^^'
-
   services.resolved.enable = true;
 
   security.pam.services.gdm.enableGnomeKeyring = true; # TODO: Is this necessary when not using GDM?

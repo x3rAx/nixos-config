@@ -53,6 +53,10 @@ in {
 
     services.blueman.enable = true; # Bluetooth UI with tray applet
 
+    services.gnome.gnome-keyring.enable = true; # Enable gnome-keyring
+    programs.seahorse.enable = true; # GUI for managing keyring
+    programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass"; # Use KDE askpass programm since the default X11 program is weird ^^'
+
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; [
