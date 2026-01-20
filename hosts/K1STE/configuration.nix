@@ -46,7 +46,11 @@ in rec {
     };
     graphics.nvidia.enable = true;
     hardware.openrgb.enable = true;
-    programs.sunshine.enable = true;
+
+    programs = {
+      steam.enable = true;
+      sunshine.enable = true;
+    };
   };
 
   # Copies `configuration.nix` and links it from the resulting system to
