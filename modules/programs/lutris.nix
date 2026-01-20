@@ -15,6 +15,7 @@
           desktop_file="$out/share/applications/net.lutris.Lutris.desktop"
           new_desktop_file="$out/share/applications/net.lutris.Lutris-system.desktop"
           awk '
+                  BEGIN { print "# Modified by ^x3ro"}
                   /^\[/ { section = $0 };
                   (section == "[Desktop Entry]") && /^Name=/ {
                       $0 = $0 " (System)"
