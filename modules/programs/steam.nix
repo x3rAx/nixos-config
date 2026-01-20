@@ -8,22 +8,42 @@
   cfg = config.x3ro.programs.steam;
 
   overlay-steam-with-custom-desktop-file = final: prev: {
-    steamPackages = prev.steamPackages.overrideScope (final: prev: {
-      steam = prev.steam.overrideAttrs (oldAttrs: {
-        postInstall =
-          oldAttrs.postInstall
-          + ''
-            awk '
-                    /^\[/ { section = $0 };
-                    (section == "[Desktop Entry]") && /^Name=/ {
-                        $0 = $0 " (System)"
-                    }
-                    1
-                ' $out/share/applications/steam.desktop > $out/share/applications/.steam.desktop
-            mv $out/share/applications/.steam.desktop $out/share/applications/steam.desktop
-          '';
-      });
+    #steamPackages = prev.steamPackages.overrideScope (final: prev: {
+    #  steam = prev.steam.overrideAttrs (oldAttrs: {
+    #    postInstall =
+    #      oldAttrs.postInstall
+    #      + ''
+    #        awk '
+    #                BEGIN { print "# Modified by ^x3ro"}
+    #                /^\[/ { section = $0 };
+    #                (section == "[Desktop Entry]") && /^Name=/ {
+    #                    $0 = $0 " (System)"
+    #                }
+    #                1
+    #            ' $out/share/applications/steam.desktop > $out/share/applications/.steam.desktop
+    #        mv $out/share/applications/.steam.desktop $out/share/applications/steam.desktop
+    #      '';
+    #  });
+    #});
+
+    steam-unwrapped-with-custom-desktop-file = prev.steam-unwrapped.overrideAttrs (oldAttrs: {
+      postInstall =
+        (oldAttrs.postInstall or "")
+        + ''
+          awk '
+                  BEGIN { print "# Modified by ^x3ro"}
+                  /^\[/ { section = $0 };
+                  (section == "[Desktop Entry]") && /^Name=/ {
+                      $0 = $0 " (System)"
+                  }
+                  1
+              ' $out/share/applications/steam.desktop > $out/share/applications/.steam.desktop
+          mv $out/share/applications/.steam.desktop $out/share/applications/steam.desktop
+        '';
     });
+    steam-with-custom-desktop-file = prev.steam.override {
+      steam-unwrapped = final.steam-unwrapped-with-custom-desktop-file;
+    };
   };
 in {
   options = {
@@ -36,6 +56,10 @@ in {
     nixpkgs.overlays = [
       overlay-steam-with-custom-desktop-file
     ];
-    programs.steam.enable = true;
+
+    programs.steam = {
+      enable = true;
+      package = pkgs.steam-with-custom-desktop-file;
+    };
   };
 }
