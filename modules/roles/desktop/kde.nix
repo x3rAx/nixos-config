@@ -20,14 +20,10 @@ in {
       roles.desktop.enable = true;
     };
 
-    services.xserver = {
+    services.displayManager.sddm = {
       enable = true;
-
-      displayManager.sddm = {
-        enable = true;
-        autoNumlock = true;
-        #enableHidpi = true;
-      };
+      autoNumlock = true;
+      #enableHidpi = true;
     };
     services.desktopManager = {
       plasma6.enable = true;
