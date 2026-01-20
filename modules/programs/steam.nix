@@ -30,15 +30,17 @@
       postInstall =
         (oldAttrs.postInstall or "")
         + ''
-          awk '
+          desktop_file="$out/share/applications/steam.desktop"
+          tmp_desktop_file="$out/share/applications/.steam.desktop.tmp"
+          awk < $desktop_file '
                   BEGIN { print "# Modified by ^x3ro"}
                   /^\[/ { section = $0 };
                   (section == "[Desktop Entry]") && /^Name=/ {
                       $0 = $0 " (System)"
                   }
                   1
-              ' $out/share/applications/steam.desktop > $out/share/applications/.steam.desktop
-          mv $out/share/applications/.steam.desktop $out/share/applications/steam.desktop
+              ' > $tmp_desktop_file
+          mv $tmp_desktop_file $desktop_file
         '';
     });
     steam-with-custom-desktop-file = prev.steam.override {
